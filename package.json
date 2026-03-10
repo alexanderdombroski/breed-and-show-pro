@@ -1,0 +1,25 @@
+{
+  "name": "breed-and-show-pro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexanderdombroski/breed-and-show-pro.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/alexanderdombroski/breed-and-show-pro/issues"
+  },
+  "homepage": "https://github.com/alexanderdombroski/breed-and-show-pro#readme",
+  "workspaces": [
+    "packages/breeder",
+    "packages/exhibitor",
+    "packages/backend"
+  ]
+}
