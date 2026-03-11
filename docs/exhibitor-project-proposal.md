@@ -33,6 +33,7 @@ The team will communicate through Discord for daily updates, code reviews, and p
 ## Key Features
 
 ### Pig Management System
+
 - **Add New Pig**: Create detailed profiles including:
   - Photos (multiple images)
   - Ear Notch (identification number)
@@ -54,11 +55,13 @@ The team will communicate through Discord for daily updates, code reviews, and p
 - **Delete Pigs**: Remove pig records when no longer needed (with confirmation to prevent accidental deletion)
 
 ### Data Visualization
+
 - Progress charts showing weight gain over time
 - Show preparation timelines
 - Health and vaccination tracking
 
 ### User Interface
+
 - Responsive design for mobile and desktop use
 - Intuitive navigation and forms
 - Photo upload and gallery functionality
@@ -67,17 +70,20 @@ The team will communicate through Discord for daily updates, code reviews, and p
 ## Technology Stack
 
 ### Frontend
+
 - **Framework**: Astro with Svelte components
 - **Language**: TypeScript for type safety and better development experience
 - **Styling**: Venilla CSS and bitsUI
 - **State Management**: Svelte stores for component state
 
 ### Backend
+
 - **API**: Simple RESTful API built with Node.js and Express
 - **Database**: MongoDB for flexible document storage
 - **Authentication**: OAuth with Google
 
 ### Development Tools
+
 - **Version Control**: Git
 - **Package Management**: pnpm or npm
 - **Testing**: Jest for unit tests, Cypress for end-to-end testing
@@ -93,6 +99,7 @@ The application follows a modern web architecture:
 - **File Storage**: uploadthing for pig photos
 
 ### API Endpoints
+
 Codes (200, 400, 401, 403, 404, 500)
 Code 200: OK
 
@@ -105,9 +112,11 @@ The RESTful API will include the following endpoints for pig management:
 - **DELETE /api/pigs/:id**: Delete a pig by ID (delete pig)
 
 **Error Handling**:
+
 - **404 Not Found**: Returned when a requested pig ID does not exist or an invalid endpoint is accessed
 
 ### Data Model
+
 ```javascript
 // Pig Schema Example
 {
@@ -133,6 +142,7 @@ The RESTful API will include the following endpoints for pig management:
 ## Implementation Plan
 
 ### Phase 1: Core Setup and Basic CRUD
+
 - Set up Astro project with Svelte integration
 - Configure TypeScript
 - Create basic UI components
@@ -141,6 +151,7 @@ The RESTful API will include the following endpoints for pig management:
 - Create add/view pig forms
 
 ### Phase 2: Advanced Features
+
 - Photo upload functionality
 - Data visualization components
 - Search and filter capabilities
@@ -148,12 +159,13 @@ The RESTful API will include the following endpoints for pig management:
 - User authentication (if needed)
 
 ### Phase 3: Testing and Deployment
+
 - Unit and integration testing
 - Deployment to production environment
 
-##  Task List
+## Task List
 
-
+See the [trello](https://trello.com/b/yc29Obfy/breed-and-show-pro)
 
 ## Timeline
 
