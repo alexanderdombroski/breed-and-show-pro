@@ -3,3 +3,6 @@ packages:
   - "packages/breeder"
   - "packages/exhibitor"
   - "packages/backend"
+allowBuilds:
+  esbuild: true
+  sharp: true

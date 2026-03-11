@@ -6,4 +6,6 @@ node_modules
 
 # IDE FIles
 .idea/
-.vscode
+.vscode/**
+!.vscode/extensions.json
+!.vscode/launch.json
