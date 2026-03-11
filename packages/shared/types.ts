@@ -7,10 +7,16 @@ export const pigSchema = z.object({
   userId: z.string(),
   earNotch: z.string(),
   name: z.string(),
+  description: z.string(),
   childIds: z.array(z.string()),
   birthDate: z.date(),
-  weight: z.number(),
-  notes: z.string(),
+  notes: z.array(
+    z.object({
+      date: z.date(),
+      weight: z.number().describe("weight in lbs").optional(),
+      notes: z.string().optional(),
+    }),
+  ),
   vaccinations: z.array(
     z.object({
       vaccine: z.string(),
