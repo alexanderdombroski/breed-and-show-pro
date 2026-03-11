@@ -119,29 +119,9 @@ The RESTful API will include the following endpoints for pig management:
 
 ### Data Model
 
-See all [schemas](../packages/shared/types.ts)
+We're using zod to create our schemas.
 
-```javascript
-// Pig Schema Example
-{
-  _id: ObjectId,
-  earNotch: String,
-  name: String,
-  child: String, // offspring info
-  date: Date, // birth/acquisition date
-  weight: Number,
-  notes: String,
-  vaccinations: [{
-    vaccine: String,
-    date: Date,
-    notes: String
-  }],
-  showDate: Date,
-  photos: [String], // URLs to stored images
-  createdAt: Date,
-  updatedAt: Date
-}
-```
+See all [schemas](../packages/shared/types.ts)
 
 ## Implementation Plan
 

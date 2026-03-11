@@ -1,7 +1,10 @@
 import { z } from "zod";
 
+// -------------------- PIGS --------------------
+
 export const pigSchema = z.object({
   _id: z.string(),
+  userId: z.string(),
   earNotch: z.string(),
   name: z.string(),
   childIds: z.array(z.string()),
@@ -20,5 +23,13 @@ export const pigSchema = z.object({
   createdAt: z.date(),
   updatedAt: z.date(),
 });
-
 export type Pig = z.infer<typeof pigSchema>;
+
+// -------------------- USERS --------------------
+
+export const userSchema = z.object({
+  _id: z.string(),
+  name: z.string(),
+  email: z.email(),
+});
+export type User = z.infer<typeof userSchema>;
