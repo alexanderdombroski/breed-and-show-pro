@@ -100,6 +100,8 @@ The application follows a modern web architecture:
 
 ### API Endpoints
 
+See all [endpoints](./endpoints.md)
+
 Codes (200, 400, 401, 403, 404, 500)
 Code 200: OK
 
@@ -116,6 +118,8 @@ The RESTful API will include the following endpoints for pig management:
 - **404 Not Found**: Returned when a requested pig ID does not exist or an invalid endpoint is accessed
 
 ### Data Model
+
+See all [schemas](../packages/shared/types.ts)
 
 ```javascript
 // Pig Schema Example
