@@ -1,7 +1,7 @@
 # Breed Show & Pro: Breeder Side Project Specification
 
 **Version:** 1.0  
-**Last Updated:** March 11, 2026
+**Last Updated:** March 12, 2026
 
 ---
 
@@ -34,22 +34,26 @@ Jenna McHargue
 ## 3. Technologies
 
 ### Frontend
+
 - **Astro** - Static site generation and page routing
 - **Svelte 5** - Interactive UI components and client-side interactivity (islands architecture)
 - **JavaScript/TypeScript** - Primary language for frontend logic
 - **CSS** - Custom styling (no Tailwind CSS per project constraints)
 
 ### Backend
+
 - **Node.js** - JavaScript runtime environment
 - **Express** - Web application framework for API routes
 - **MongoDB Native Driver** - Database operations (no Mongoose per project constraints)
 
 ### Development Tools
+
 - **pnpm** - Package manager (monorepo workspace)
 - **ESLint** - Code linting and quality
 - **Git** - Version control
 
 ### Hosting & Deployment (Planned)
+
 - **Frontend+Backend:** Render
 - **Database:** MongoDB Atlas (cloud-hosted)
 
@@ -58,11 +62,13 @@ Jenna McHargue
 ## 4. Team Management & Communication Strategy
 
 ### Communication Tools
+
 - **Primary Communication:** Discord - Daily updates, questions, and quick coordination
 - **Code Collaboration:** GitHub - Pull requests, code reviews, issue tracking
 - **Documentation:** GitHub project README files
 
 ### Workflow
+
 - **Version Control:** Git with feature branch workflow
   - `main` branch - Production-ready code
   - Feature branches - Individual feature development (`feature/pig-profile`, `feature/breeding-calculator`, etc.)
@@ -77,7 +83,7 @@ Jenna McHargue
 The following features are essential for the Minimum Viable Product (MVP) and must be implemented:
 
 - Registration and login
-- Messaging betwee breeder and exhibitors
+- Messaging between breeder and exhibitors
 - Create records for sows(open, bred, farrowing) and sires
 - Filter and sort pigs by multiple criteria
 - Quick status updates from list view
@@ -93,6 +99,7 @@ The following features are essential for the Minimum Viable Product (MVP) and mu
 These features are planned for post-MVP releases:
 
 ### Phase 2 (Short-term Enhancements)
+
 - **Messaging System:** Internal notifications or communication between breeders
 - **Weight Tracking:** Monitor pig weight over time with growth charts
 - **Health Records:** Track vaccinations, vet visits, medications, and treatments
@@ -100,6 +107,7 @@ These features are planned for post-MVP releases:
 - **Export/Reports:** Generate PDF reports for breeding records, herd summaries, litter statistics
 
 ### Phase 3 (Long-term Vision)
+
 - **Multi-User Support:** User authentication, multiple farms, role-based permissions
 - **Mobile Apps:** Native iOS/Android apps with offline support
 - **Marketplace:** List pigs for sale, connect buyers with breeders
@@ -109,7 +117,7 @@ These features are planned for post-MVP releases:
 
 ---
 
-## 7. Wireframes & Mockups
+## 7. Wireframe & Mockups
 
 ### Dashboard Wireframe
 
@@ -141,6 +149,7 @@ These features are planned for post-MVP releases:
 ```
 
 ### Herd List View Wireframe
+
 ```
 +----------------------------------------------------------+
 |  HERD MANAGEMENT                                          |
@@ -158,6 +167,7 @@ These features are planned for post-MVP releases:
 ```
 
 ### Individual Pig Profile Wireframe
+
 ```
 +----------------------------------------------------------+
 |  [< Back to Herd]                           [Edit] [⋮]   |
@@ -190,6 +200,7 @@ These features are planned for post-MVP releases:
 ```
 
 ### Breeding Calculator Wireframe
+
 ```
 +----------------------------------------------------------+
 |  BREEDING CALCULATOR                                      |
@@ -213,6 +224,7 @@ These features are planned for post-MVP releases:
 ```
 
 ### Tasks Page Wireframe
+
 ```
 +----------------------------------------------------------+
 |  TASKS                                      [+ New Task]  |
@@ -227,15 +239,17 @@ These features are planned for post-MVP releases:
 | ⚠ □    | Confirm Sow #401  | OVERDUE    | Sow #401      |
 +----------------------------------------------------------+
 ```
+
 ---
 
 ## 8. Database Schema
 
 ### Collections Overview
+
 - `pigs` - Individual pig records
 - `litters` - Farrowing/litter records
 - `tasks` - Farm task records
-- `users` - User accounts 
+- `users` - User accounts
 
 ### Pigs Collection
 
@@ -249,7 +263,7 @@ These features are planned for post-MVP releases:
   dateOfBirth: Date,
   sireId: ObjectId,          // Reference to father (nullable)
   status: String,            // "open" | "bred" | "farrowed" | "sire" | "archived"
-  
+
   // Reproductive tracking (for females)
   heatDates: [
     {
@@ -257,9 +271,9 @@ These features are planned for post-MVP releases:
       notes: String
     }
   ],
-  
+
   lastFarrowedDate: Date,    // Most recent farrowing (nullable)
-  
+
   // Current breeding info (for bred sows)
   currentBreeding: {
     bredDate: Date,
@@ -267,8 +281,8 @@ These features are planned for post-MVP releases:
     confirmedDate: Date,     // Date pregnancy was confirmed (nullable)
     expectedFarrowingDate: Date
   },
-  
-  
+
+
   // Metadata
   createdAt: Date,
   updatedAt: Date,
@@ -286,17 +300,17 @@ These features are planned for post-MVP releases:
   sireId: ObjectId,          // Father (required, indexed)
   bredDate: Date,
   farrowingDate: Date,       // Birth date (indexed)
-  
+
   // Litter statistics
   bornAlive: Number,
   stillborn: Number,
   survivedToWeaning: Number,
-  
+
   weaningDate: Date,         // Date piglets were weaned (nullable)
-  
+
   // Notes
   notes: String,
-  
+
   // Metadata
   createdAt: Date,
   updatedAt: Date
@@ -312,14 +326,14 @@ These features are planned for post-MVP releases:
   notes: String,             // Optional details
   dueDate: Date,             // Optional due date (indexed)
   status: String,           // "incomplete" | "complete"
-  
+
   // Optional associations
   relatedPigId: ObjectId,    // Link to specific pig (nullable)
   relatedLitterId: ObjectId, // Link to specific litter (nullable)
-  
+
   // Completion tracking
   completedAt: Date,         // Null if incomplete
-  
+
   // Metadata
   createdAt: Date,
   updatedAt: Date
@@ -409,4 +423,5 @@ POST   /api/breeding-calculator
 ```
 GET    /api/upcoming-dates
 ```
+
 ---

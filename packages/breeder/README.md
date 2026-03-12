@@ -1,43 +1,26 @@
-# Astro Starter Kit: Minimal
+# Breed and Show Pro
 
-```sh
-pnpm create astro@latest -- --template minimal
-```
+## Overview
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+This is a web application that serves both breeders and show participants in the livestock management industry. The Breeder Side of the application, inspired by GESDATE breeding management systems, enables pig breeders to efficiently manage their breeding operations through: Herd Management, Reproductive Cycle Tracking, Farrowing Management, Automated Date Calculations, Task Management, Lineage Tracking, and Upcoming dates Dashboard.
 
-## 🚀 Project Structure
+<!-- Minimum Requirements
+A clear user purpose or problem it solves
+At least two distinct user interfaces or views
+At least one data model in MongoDB with schema validation
 
-Inside of your Astro project, you'll see the following folders and files:
+link for professor's page: https://course-tools.netlify.app/wdd360/ -->
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Team Members
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+- Caitlyn Caldwell
+- Jenna McHargue
+- Sara Burbank
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+[Software Demo Video](insert link here)
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Setup and Installation Instructions
 
-## 🧞 Commands
+## API documentation
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `pnpm install`         | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Known issues or future improvements
