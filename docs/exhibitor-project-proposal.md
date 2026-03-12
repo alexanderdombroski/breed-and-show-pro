@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-Breed and Show Pro is a comprehensive web application designed to help pig exhibitors manage their livestock information for shows and fairs. The application provides a user-friendly interface for tracking detailed pig data, including photos, identification, health records, and show preparation metrics. Built with modern web technologies, the app ensures efficient data management and real-time insights to support exhibitors in preparing their pigs for competitive events.
+Breed and Show Pro is a comprehensive web application designed to help livestock exhibitors manage their animal information for shows and fairs. The application provides a user-friendly interface for tracking detailed animal data, including photos, identification, health records, and show preparation metrics. Built with modern web technologies, the app ensures efficient data management and real-time insights to support exhibitors in preparing their animals for competitive events.
 
 ## Team Members
 
@@ -11,10 +11,10 @@ Breed and Show Pro is a comprehensive web application designed to help pig exhib
 
 ## Objectives
 
-- Provide exhibitors with a centralized platform to manage pig information
-- Enable comprehensive tracking of pig health, growth, and show preparation
-- Facilitate easy CRUD operations for pig data management
-- Offer visual and analytical tools for monitoring pig progress
+- Provide exhibitors with a centralized platform to manage animal information
+- Enable comprehensive tracking of animal health, growth, and show preparation
+- Facilitate easy CRUD operations for animal data management
+- Offer visual and analytical tools for monitoring animal progress
 - Ensure data security and accessibility across devices
 
 ## Target Audience
@@ -32,9 +32,9 @@ The team will communicate through Discord for daily updates, code reviews, and p
 
 ## Key Features
 
-### Pig Management System
+### Animal Management System
 
-- **Add New Pig**: Create detailed profiles including:
+- **Add New Animal**: Create detailed profiles including:
   - Photos (multiple images)
   - Ear Notch (identification number)
   - Name
@@ -43,16 +43,19 @@ The team will communicate through Discord for daily updates, code reviews, and p
   - Weight (current weight)
   - Notes (general observations)
   - Vaccinations (vaccination history and schedules)
-  - Date of Show
+  - Dates of Shows (list of show dates)
+  - Show Notes (notes from each show)
+  - Prep Notes (preparation activities done for the animal)
+  - Journal Entry (add to a journal of the past shows as well as a photo)
   - Days Until Show (calculated field)
   - Weekly Average Weight Gain
   - Estimated Weight at Show (calculated projection)
 
-- **View All Pigs**: Dashboard displaying all pigs with key information in a sortable, filterable table or card layout
+- **View All Animals**: Dashboard displaying all animals with key information in a sortable, filterable table or card layout
 
-- **Edit Pig Information**: Update any field for existing pigs, including adding new photos or updating health records
+- **Edit Animal Information**: Update any field for existing animals, including adding new photos or updating health records
 
-- **Delete Pigs**: Remove pig records when no longer needed (with confirmation to prevent accidental deletion)
+- **Delete Animals**: Remove animal records when no longer needed (with confirmation to prevent accidental deletion)
 
 ### Data Visualization
 
