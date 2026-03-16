@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: sleep-outside
+    name: breed-and-show-pro
     runtime: node
     plan: free
 
