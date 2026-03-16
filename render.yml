@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: sleep-outside
+    runtime: node
+    plan: free
+
+    buildCommand: npm ci
+    startCommand: node packages/backend/server.ts
+    branch: main
+    autoDeployTrigger: commit
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: NODE_ENV
+        value: production
+    buildFilter:
+      ignoredPaths:
+        - packages/breeder/**
+        - packages/exhibitor/**
