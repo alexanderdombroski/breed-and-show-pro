@@ -27,6 +27,7 @@
     "packages/backend"
   ],
   "dependencies": {
+    "@astrojs/svelte": "^8.0.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
