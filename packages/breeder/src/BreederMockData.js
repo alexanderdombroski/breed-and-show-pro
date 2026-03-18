@@ -15,7 +15,7 @@ export const BreederMockData = {
       status: "open",
       birthDate: "2023-04-12",
       lastHeatDate: "2026-03-01",
-      nextHeatDate: "2026-03-22",
+      nextHeatDate: "2026-03-25",
     },
     {
       id: 2,

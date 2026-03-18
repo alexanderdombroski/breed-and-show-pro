@@ -1,0 +1,51 @@
+---
+import { BreederMockData } from "../../BreederMockData.js";
+
+const openAnimals = BreederMockData.animals.filter(
+  (animal) => animal.status === "open",
+);
+
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  const options: Intl.DateTimeFormatOptions = { month: "long", day: "numeric" };
+  return date.toLocaleDateString("en-US", options);
+}
+
+function calculateNextHeatDate(lastHeatDate: string) {
+  const pastHeatDate = new Date(lastHeatDate);
+  pastHeatDate.setDate(pastHeatDate.getDate() + 21); // Add 21 days for next heat cycle
+  const options: Intl.DateTimeFormatOptions = { month: "long", day: "numeric" };
+  return pastHeatDate.toLocaleDateString("en-US", options);
+}
+
+function getNextHeatDisplay(animal: any): string {
+  if (animal.nextHeatDate) {
+    return formatDate(animal.nextHeatDate);
+  } else if (animal.lastHeatDate) {
+    return calculateNextHeatDate(animal.lastHeatDate);
+  } else {
+    return "unknown";
+  }
+}
+---
+
+<h1>Open Sows</h1>
+
+{
+  openAnimals.length === 0 ? (
+    <p>No open sows at this time.</p>
+  ) : (
+    <div class="animals-list">
+      {openAnimals.map((animal) => (
+        <a href="#" class="animal-card">
+          <div class="animal-info">
+            <h2>
+              {animal.name}: {animal.earNotch}
+            </h2>
+            <p>Next Heat: {getNextHeatDisplay(animal)}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  )
+}
