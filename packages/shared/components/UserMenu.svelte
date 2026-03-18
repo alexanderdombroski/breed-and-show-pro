@@ -51,7 +51,7 @@
   
   <nav class="user__menu" class:open={visible}>
     <a href="/index.html">Dashboard</a>
-    <a href="/">Herd</a>
+    <a href="/herd/">Herd</a>
     <a href="/">Upcoming Dates</a>
     <a href="/">Tasks</a>
     <a href="/">Breeding Calculator</a>

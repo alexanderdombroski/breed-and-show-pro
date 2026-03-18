@@ -1,0 +1,100 @@
+export const BreederMockData = {
+  user: {
+    id: 1,
+    name: "Sarah Miller",
+    farmName: "Miller Show Pigs",
+  },
+
+  animals: [
+    {
+      id: 1,
+      name: "Ruby",
+      earNotch: "3-2",
+      breed: "Yorkshire",
+      sex: "sow",
+      status: "open",
+      birthDate: "2023-04-12",
+      lastHeatDate: "2026-03-01",
+      nextHeatDate: "2026-03-22",
+    },
+    {
+      id: 2,
+      name: "Daisy",
+      earNotch: "5-1",
+      breed: "Duroc",
+      sex: "sow",
+      status: "bred",
+      birthDate: "2023-01-05",
+      breedingDate: "2026-02-20",
+      expectedFarrowDate: "2026-06-14",
+      bredTo: 4,
+      nextHeatDate: "2026-03-13",
+    },
+    {
+      id: 3,
+      name: "Belle",
+      earNotch: "2-4",
+      breed: "Crossbred",
+      sex: "sow",
+      status: "farrowed",
+      birthDate: "2022-12-01",
+      lastFarrowDate: "2026-01-10",
+      nextHeatDate: "2026-02-01",
+    },
+    {
+      id: 4,
+      name: "Titan",
+      breed: "Duroc",
+      sex: "boar",
+      status: "active",
+      birthDate: "2022-07-20",
+    },
+    {
+      id: 5,
+      name: "Crusher",
+      breed: "Hampshire",
+      sex: "boar",
+      status: "active",
+      birthDate: "2021-09-15",
+    },
+  ],
+
+  litters: [
+    {
+      id: 1,
+      sowId: 3,
+      sireId: 5,
+      farrowDate: "2026-01-10",
+      bornAlive: 9,
+      stillBorn: 1,
+      weanedDate: "2026-02-29",
+    },
+  ],
+
+  tasks: [
+    {
+      id: 1,
+      title: "Check Ruby for heat",
+      dueDate: "2026-03-22",
+      completed: false,
+    },
+    {
+      id: 2,
+      title: "Prepare farrowing crate for Daisy",
+      dueDate: "2026-06-01",
+      completed: false,
+    },
+    {
+      id: 3,
+      title: "Record Belle litter weights",
+      dueDate: "2026-01-12",
+      completed: true,
+    },
+    {
+      id: 4,
+      title: "Vaccinate Titan",
+      dueDate: "2026-03-05",
+      completed: true,
+    },
+  ],
+};

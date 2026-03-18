@@ -1,0 +1,38 @@
+---
+import Layout from "../../../../shared/layouts/Layout.astro";
+const title = "Herd";
+
+import { BreederMockData } from "../../BreederMockData.js";
+
+function countByStatus(status: string) {
+  return BreederMockData.animals.filter((pig) => pig.status === status).length;
+}
+
+function countPastLitters() {
+  const today = new Date();
+
+  return BreederMockData.litters.filter((litter) => {
+    // If it has a weaned date → count it
+    if (litter.weanedDate) return true;
+
+    // Otherwise, check if 30 days past farrow date
+    if (litter.farrowDate) {
+      const farrowDate = new Date(litter.farrowDate);
+      // Add 30 days to the farrow date
+      farrowDate.setDate(farrowDate.getDate() + 30);
+      return farrowDate <= today;
+    }
+
+    return false;
+  }).length;
+}
+---
+
+<Layout title={title} client:load>
+  <a href="#">({countByStatus("open")})Open</a>
+  <a href="#">({countByStatus("bred")})Bred</a>
+  <a href="#">({countByStatus("farrowed")})Farrow</a>
+  <a href="#">({countByStatus("active")})Sires</a>
+  <a href="#">({countPastLitters()})Past Litters</a>
+  <a href="#">({countByStatus("archived")})Archived</a>
+</Layout>
