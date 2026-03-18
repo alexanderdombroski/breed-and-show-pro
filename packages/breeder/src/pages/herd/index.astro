@@ -1,6 +1,6 @@
 ---
-// import Layout from "../../../../shared/layouts/Layout.astro";
-// const title = "Herd";
+import Layout from "../../../../shared/layouts/Layout.astro";
+const title = "Herd";
 
 import { BreederMockData } from "../../BreederMockData.js";
 
@@ -28,11 +28,11 @@ function countPastLitters() {
 }
 ---
 
-<!-- <Layout title={title} client:load> -->
-<a href="#">({countByStatus("open")})Open</a>
-<a href="#">({countByStatus("bred")})Bred</a>
-<a href="#">({countByStatus("farrowed")})Farrow</a>
-<a href="#">({countByStatus("active")})Sires</a>
-<a href="#">({countPastLitters()})Past Litters</a>
-<a href="#">({countByStatus("archived")})Archived</a>
-<!-- </Layout> -->
+<Layout title={title} client:load>
+  <a href="#">({countByStatus("open")})Open</a>
+  <a href="#">({countByStatus("bred")})Bred</a>
+  <a href="#">({countByStatus("farrowed")})Farrow</a>
+  <a href="#">({countByStatus("active")})Sires</a>
+  <a href="#">({countPastLitters()})Past Litters</a>
+  <a href="#">({countByStatus("archived")})Archived</a>
+</Layout>
