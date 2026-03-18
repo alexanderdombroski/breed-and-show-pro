@@ -46,13 +46,19 @@
     title="User Management"
     onclick={openUserMenu}
   >
-    <img src="/images/noun-hiker.svg" alt="user icon" />
+    <img src="/user.png" alt="user icon" />
   </button>
   
   <nav class="user__menu" class:open={visible}>
-    <a href="/login/index.html">Login</a>
+    <a href="/index.html">Dashboard</a>
+    <a href="/">Herd</a>
+    <a href="/">Upcoming Dates</a>
+    <a href="/">Tasks</a>
+    <a href="/">Breeding Calculator</a>
+    <a href="/">Archived</a>
     <a href="/profile/index.html">Profile</a>
-    <a href="/">Orders</a>
+    <a href="/login/index.html">Login</a>
+    <a href="/">Logout</a>
   </nav>
 </div>
 

@@ -1,11 +1,10 @@
 <script>
-  import UserMenu from "./UserMenu.svelte";  
+  import UserMenu from "./UserMenu.svelte";
 </script>
 
     <header class="divider">
       <div class="logo">
-        <img src="/" alt="Breed & Show logo" />
-        <a href="/">Breed & Show <span class="highlight">Pro</span></a>
+        <a href="/"><img src="/BSP_logo.png" alt="Breed & Show logo" /></a>
       </div>
       <nav class="menu-right">
         <div class="user-menu-container">
