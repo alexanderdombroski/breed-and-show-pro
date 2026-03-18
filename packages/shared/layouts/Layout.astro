@@ -1,0 +1,26 @@
+---
+import "./style.css";
+let { title } = Astro.props;
+import Header from "../components/Header.svelte";
+import Footer from "../components/Footer.svelte";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>Breed & Show Pro | {title}</title>
+  </head>
+  <body>
+    <Header client:load />
+    <main class="divider">
+      <slot />
+    </main>
+
+    <Footer client:load />
+  </body>
+</html>
