@@ -1,3 +1,112 @@
 ---
+import Layout from "../../../../shared/layouts/Layout.astro";
+const title = "Bred";
 
+import { BreederMockData } from "../../BreederMockData.js";
+
+const bredAnimals = BreederMockData.animals.filter(
+  (animal) => animal.status === "bred",
+);
+
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  const options: Intl.DateTimeFormatOptions = { month: "long", day: "numeric" };
+  return date.toLocaleDateString("en-US", options);
+}
+
+function getFarrowingDisplay(animal: any): string {
+  if (animal.expectedFarrowDate) {
+    return formatDate(animal.expectedFarrowDate);
+  } else {
+    return "unknown";
+  }
+}
+
+function getSireName(sireId: number): string {
+  const sire = BreederMockData.animals.find((animal) => animal.id === sireId);
+  return sire ? sire.name : "unknown";
+}
 ---
+
+<Layout title={title} client:load>
+  <a href="/herd/">Back to Herd</a>
+  {
+    bredAnimals.length === 0 ? (
+      <p class="message">No bred sows at this time.</p>
+    ) : (
+      <div class="animals-list">
+        {bredAnimals.map((animal) => (
+          <a href="#" class="animal-card">
+            <div class="animal-info">
+              <h2>
+                {animal.name}: {animal.earNotch}
+              </h2>
+              <p>Bred: {formatDate(animal.breedingDate)}</p>
+              <p>Est Farrow Date: {getFarrowingDisplay(animal)}</p>
+              <p>Sire: {getSireName(animal.bredTo)}</p>
+            </div>
+            <img class="right-arrow" src="/right-arrow.png" alt="Right Arrow" />
+          </a>
+        ))}
+      </div>
+    )
+  }
+</Layout>
+
+<style>
+  .animals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+
+  .animals-list a {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .animal-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    background-color: #f2af29ff;
+    padding: 10px 15px;
+    border-radius: 5px;
+  }
+
+  .animal-card:hover {
+    background-color: #f0b746cc;
+  }
+
+  .animal-info h2 {
+    margin: 0;
+    font-size: 1.2em;
+  }
+
+  .animal-info p {
+    margin: 0;
+    margin-top: -10px;
+    font-size: 0.8em;
+  }
+
+  .right-arrow {
+    width: 16px;
+    height: 16px;
+    margin-left: 10px;
+    justify-content: center;
+    display: inline-flex;
+    vertical-align: middle;
+  }
+
+  .message {
+    text-align: center;
+    font-size: 1.2em;
+    color: #555;
+    margin-top: 40px;
+  }
+</style>

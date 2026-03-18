@@ -1,3 +1,119 @@
 ---
+import Layout from "../../../../shared/layouts/Layout.astro";
+const title = "Past Litters";
 
+import { BreederMockData } from "../../BreederMockData.js";
+
+const pastLitters = BreederMockData.litters.filter((litter) => {
+  // Include if weaned
+  if (litter.weanedDate !== undefined) {
+    return true;
+  }
+
+  // Include if 30+ days past farrowing
+  const farrowDate = new Date(litter.farrowDate);
+  const today = new Date();
+  const daysSinceFarrowing = Math.floor(
+    (today.getTime() - farrowDate.getTime()) / (1000 * 60 * 60 * 24),
+  );
+
+  return daysSinceFarrowing >= 30;
+});
+
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  const options: Intl.DateTimeFormatOptions = { month: "long", day: "numeric" };
+  return date.toLocaleDateString("en-US", options);
+}
+
+function getSireName(sireId: number): string {
+  const sire = BreederMockData.animals.find((animal) => animal.id === sireId);
+  return sire ? sire.name : "unknown";
+}
+
+function getDamName(damId: number): string {
+  const dam = BreederMockData.animals.find((animal) => animal.id === damId);
+  return dam ? dam.name : "unknown";
+}
 ---
+
+<Layout title={title} client:load>
+  <a href="/herd/">Back to Herd</a>
+  {
+    pastLitters.length === 0 ? (
+      <p class="message">No past litters at this time.</p>
+    ) : (
+      <div class="litters-list">
+        {pastLitters.map((litter) => (
+          <a href="#" class="litter-card">
+            <div class="litter-info">
+              <p>Litter Number: {litter.id}</p>
+              <p>Farrowed: {formatDate(litter.farrowDate)}</p>
+              <p>Dam: {getDamName(litter.sowId)}</p>
+              <p>Sire: {getSireName(litter.sireId)}</p>
+            </div>
+            <img class="right-arrow" src="/right-arrow.png" alt="Right Arrow" />
+          </a>
+        ))}
+      </div>
+    )
+  }
+</Layout>
+
+<style>
+  .litters-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+
+  .litters-list a {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .litter-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    background-color: #f2af29ff;
+    padding: 10px 15px;
+    border-radius: 5px;
+  }
+
+  .litter-card:hover {
+    background-color: #f0b746cc;
+  }
+
+  .litter-info h2 {
+    margin: 0;
+    font-size: 1.2em;
+  }
+
+  .litter-info p {
+    margin: 0;
+    margin-top: -10px;
+    font-size: 0.8em;
+  }
+
+  .right-arrow {
+    width: 16px;
+    height: 16px;
+    margin-left: 10px;
+    justify-content: center;
+    display: inline-flex;
+    vertical-align: middle;
+  }
+
+  .message {
+    text-align: center;
+    font-size: 1.2em;
+    color: #555;
+    margin-top: 40px;
+  }
+</style>
