@@ -9,8 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
+    "@astrojs/svelte": "^8.0.0",
     "astro": "^6.0.2"
   }
 }
