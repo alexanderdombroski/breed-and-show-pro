@@ -1,16 +1,12 @@
 {
   "name": "shared",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
+  "description": "shared components and types for the monorepo",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
-    "astro": "^6.0.2"
+    "@astrojs/svelte": "^8.0.0",
+    "astro": "^6.0.2",
+    "svelte": "^5.53.10"
   }
 }

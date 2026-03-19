@@ -124,9 +124,15 @@ importers:
 
   packages/shared:
     dependencies:
+      '@astrojs/svelte':
+        specifier: ^8.0.0
+        version: 8.0.0(@types/node@25.5.0)(astro@6.0.2(@types/node@25.5.0)(rollup@4.59.0)(typescript@5.9.3)(yaml@2.8.2))(svelte@5.53.10)(typescript@5.9.3)(yaml@2.8.2)
       astro:
         specifier: ^6.0.2
         version: 6.0.2(@types/node@25.5.0)(rollup@4.59.0)(typescript@5.9.3)(yaml@2.8.2)
+      svelte:
+        specifier: ^5.53.10
+        version: 5.53.10
 
 packages:
 
