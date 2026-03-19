@@ -1,0 +1,131 @@
+---
+import Layout from "../../../../shared/layouts/Layout.astro";
+const title = "Farrowed";
+
+import { BreederMockData } from "../../BreederMockData.js";
+
+const farrowedAnimals = BreederMockData.animals.filter(
+  (animal) => animal.status === "farrowed",
+);
+
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  const options: Intl.DateTimeFormatOptions = { month: "long", day: "numeric" };
+  return date.toLocaleDateString("en-US", options);
+}
+
+function getFarrowingDisplay(animal: any): string {
+  const litter = BreederMockData.litters.find(
+    (l) => l.id === animal.litterNumber,
+  );
+  if (litter && litter.farrowDate) {
+    return formatDate(litter.farrowDate);
+  } else if (animal.lastFarrowDate) {
+    return formatDate(animal.lastFarrowDate);
+  }
+
+  return "unknown";
+}
+
+function getSireName(sireId: number | undefined): string {
+  if (!sireId) return "unknown";
+  const sire = BreederMockData.animals.find((animal) => animal.id === sireId);
+  return sire ? sire.name : "unknown";
+}
+
+function getSireNameFromAnimal(animal: any): string {
+  // First try to get sire from litter data
+  const litter = BreederMockData.litters.find(
+    (l) => l.id === animal.litterNumber,
+  );
+  if (litter && litter.sireId) {
+    return getSireName(litter.sireId);
+  }
+
+  // Fall back to animal's bredTo
+  return getSireName(animal.bredTo);
+}
+---
+
+<Layout title={title} client:load>
+  <a href="/herd/">Back to Herd</a>
+  {
+    farrowedAnimals.length === 0 ? (
+      <p class="message">No farrowed sows at this time.</p>
+    ) : (
+      <div class="animals-list">
+        {farrowedAnimals.map((animal) => (
+          <a href="#" class="animal-card">
+            <div class="animal-info">
+              <h2>
+                {animal.name}: {animal.earNotch}
+              </h2>
+              <p>Litter Number: {animal.litterNumber}</p>
+              <p>Farrowed: {getFarrowingDisplay(animal)}</p>
+              <p>Sire: {getSireNameFromAnimal(animal)}</p>
+            </div>
+            <img class="right-arrow" src="/right-arrow.png" alt="Right Arrow" />
+          </a>
+        ))}
+      </div>
+    )
+  }
+</Layout>
+
+<style>
+  .animals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+
+  .animals-list a {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .animal-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    background-color: #f2af29ff;
+    padding: 10px 15px;
+    border-radius: 5px;
+  }
+
+  .animal-card:hover {
+    background-color: #f0b746cc;
+  }
+
+  .animal-info h2 {
+    margin: 0;
+    font-size: 1.2em;
+  }
+
+  .animal-info p {
+    margin: 0;
+    margin-top: -10px;
+    font-size: 0.8em;
+  }
+
+  .right-arrow {
+    width: 16px;
+    height: 16px;
+    margin-left: 10px;
+    justify-content: center;
+    display: inline-flex;
+    vertical-align: middle;
+  }
+
+  .message {
+    text-align: center;
+    font-size: 1.2em;
+    color: #555;
+    margin-top: 40px;
+  }
+</style>
