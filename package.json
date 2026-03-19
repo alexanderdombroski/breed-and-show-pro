@@ -28,15 +28,15 @@
     "packages/shared"
   ],
   "dependencies": {
-    "@astrojs/svelte": "^8.0.0",
-    "astro": "^6.0.2",
+    "@astrojs/svelte": "^8.0.2",
+    "astro": "^6.0.6",
     "better-auth": "^1.5.5",
     "zod": "^4.3.6"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@typescript-eslint/eslint-plugin": "^8.57.0",
-    "@typescript-eslint/parser": "^8.57.0",
+    "@typescript-eslint/eslint-plugin": "^8.57.1",
+    "@typescript-eslint/parser": "^8.57.1",
     "concurrently": "^9.2.1",
     "cross-env": "^10.1.0",
     "eslint": "^10.0.3",
@@ -44,7 +44,7 @@
     "eslint-plugin-svelte": "^3.15.2",
     "globals": "^17.4.0",
     "husky": "^9.1.7",
-    "lint-staged": "^16.3.3",
+    "lint-staged": "^16.4.0",
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-svelte": "^3.5.1",
