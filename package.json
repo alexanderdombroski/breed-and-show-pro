@@ -28,20 +28,20 @@
     "packages/shared"
   ],
   "dependencies": {
-    "@astrojs/svelte": "^8.0.2",
-    "astro": "^6.0.6",
-    "better-auth": "^1.5.5",
+    "@astrojs/svelte": "^8.0.3",
+    "astro": "^6.0.8",
+    "better-auth": "^1.5.6",
     "zod": "^4.3.6"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@typescript-eslint/eslint-plugin": "^8.57.1",
-    "@typescript-eslint/parser": "^8.57.1",
+    "@typescript-eslint/eslint-plugin": "^8.57.2",
+    "@typescript-eslint/parser": "^8.57.2",
     "concurrently": "^9.2.1",
     "cross-env": "^10.1.0",
-    "eslint": "^10.0.3",
+    "eslint": "^10.1.0",
     "eslint-plugin-astro": "^1.6.0",
-    "eslint-plugin-svelte": "^3.15.2",
+    "eslint-plugin-svelte": "^3.16.0",
     "globals": "^17.4.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
