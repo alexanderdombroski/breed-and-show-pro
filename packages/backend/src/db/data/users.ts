@@ -1,4 +1,4 @@
-import { userSchema, type User } from "../../../../shared/types";
+import { userSchema, type User } from "../../../../shared/js/types.ts";
 
 const _users: User[] = [
   {
@@ -18,4 +18,4 @@ const _users: User[] = [
   },
 ];
 
-export const users = _users.map((user) => userSchema.safeParse(user));
+export const users = _users.map((user) => userSchema.parse(user));

@@ -1,6 +1,7 @@
 import express from "express";
 import { loadEnvFile } from "node:process";
 import path from "node:path";
+import { router } from "./src/routes/index.ts";
 
 if (process.env.NODE_ENV === "development") {
   loadEnvFile(path.join(import.meta.dirname, ".env"));
@@ -11,13 +12,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.get("/health", (req, res) => {
-  res.status(200).json({
-    status: "ok",
-    uptime: process.uptime(),
-    timestamp: new Date().toISOString(),
-  });
-});
+app.use(router);
 
 // Start server
 app.listen(PORT, () => {
