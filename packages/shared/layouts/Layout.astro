@@ -1,5 +1,6 @@
 ---
 import "./style.css";
+import { Font } from "astro:assets";
 let { title } = Astro.props;
 import Header from "../components/Header.svelte";
 import Footer from "../components/Footer.svelte";
@@ -13,6 +14,10 @@ import Footer from "../components/Footer.svelte";
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
+    <Font cssVariable="--font-titles" />
+    <Font cssVariable="--font-number" />
+    <Font cssVariable="--font-headline" />
+    <Font cssVariable="--font-body" />
     <title>Breed & Show Pro | {title}</title>
   </head>
   <body>
