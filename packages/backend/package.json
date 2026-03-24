@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "node --env-file=.env --watch server.ts",
+    "check-types": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
