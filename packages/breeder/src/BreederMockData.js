@@ -2,6 +2,7 @@ export const BreederMockData = {
   user: {
     id: 1,
     name: "Sarah Miller",
+    email: "sarahmiller@email.com",
     farmName: "Miller Show Pigs",
   },
 
@@ -110,12 +111,16 @@ export const BreederMockData = {
     {
       id: 1,
       title: "Check Ruby for heat",
-      dueDate: "2026-03-22",
+      description:
+        "Monitor Ruby for signs of heat and update her status accordingly.",
+      dueDate: null,
       completed: false,
     },
     {
       id: 2,
       title: "Prepare farrowing crate for Daisy",
+      description:
+        "Set up the farrowing crate with clean bedding and necessary supplies for Daisy's expected farrowing.",
       dueDate: "2026-06-01",
       completed: false,
     },
@@ -128,7 +133,7 @@ export const BreederMockData = {
     {
       id: 4,
       title: "Vaccinate Titan",
-      dueDate: "2026-03-05",
+      dueDate: null,
       completed: true,
     },
   ],
