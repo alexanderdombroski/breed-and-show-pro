@@ -8,6 +8,9 @@ import svelte from "@astrojs/svelte";
 export default defineConfig({
   integrations: [svelte()],
   outDir: path.resolve(import.meta.dirname, "..", "..", "dist", "exhibitor"),
+  devToolbar: {
+    enabled: false,
+  },
   fonts: [
     {
       name: "Fira Sans Extra Condensed",
