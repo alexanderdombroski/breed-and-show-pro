@@ -2,10 +2,14 @@
 <script lang="ts">
   import { authClient } from "./auth.svelte";
 
+  function login() {
+    authClient.signIn.social({
+      provider: "google",
+    });
+  }
 </script>
 
-
-<button class="google-btn">
+<button class="google-btn" onclick={login}>
   <img
     class="google-logo"
     src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
@@ -31,7 +35,7 @@
   }
 
   .google-btn:hover {
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   }
 
   .google-logo {
