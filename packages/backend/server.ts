@@ -12,9 +12,6 @@ app.use(corsHandler);
 
 if (isDev) {
   app.use(devLogger);
-  app.get("/", (req, res) => {
-    res.redirect("http://localhost:4321/"); // TODO find better redirect solution
-  });
 }
 
 app.all("/api/auth/*splat", toNodeHandler(auth));
