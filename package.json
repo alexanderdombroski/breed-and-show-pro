@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently --names \"0,B,E\" \"pnpm -F backend dev\" \"pnpm dev:breeder\" \"pnpm dev:exhibitor\"",
-    "dev:breeder": "wait-on http://localhost:3000/health && pnpm -F breeder dev",
-    "dev:exhibitor": "wait-on http://localhost:3000/health && pnpm -F exhibitor dev",
+    "dev:breeder": "wait-on http://localhost:3000/api/health && pnpm -F breeder dev",
+    "dev:exhibitor": "wait-on http://localhost:3000/api/health && pnpm -F exhibitor dev",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky"
   },
