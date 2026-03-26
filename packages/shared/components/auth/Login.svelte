@@ -1,15 +1,14 @@
-<!-- src/routes/login.svelte -->
 <script lang="ts">
-  import { authClient } from "./auth.svelte";
+  import { login } from "./auth.svelte";
 
-  function login() {
-    authClient.signIn.social({
-      provider: "google",
-    });
-  }
+  type Props = {
+    redirect?: string;
+  };
+
+  const { redirect }: Props = $props();
 </script>
 
-<button class="google-btn" onclick={login}>
+<button class="google-btn" onclick={() => login(redirect ?? "/")}>
   <img
     class="google-logo"
     src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
