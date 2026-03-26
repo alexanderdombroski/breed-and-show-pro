@@ -1,0 +1,238 @@
+body {
+  background-image: url(../public/wheat_background.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  margin: 0;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background: rgba(255, 255, 255, 0.25); /* Semi-transparent white background */
+  backdrop-filter: blur(12px); /* This creates the frosted glass blur */
+  -webkit-backdrop-filter: blur(12px); /* Needed for Safari support */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4); /* Subtle top/bottom edge lighting */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05); /* Soft shadow for depth */
+
+  /* Keeps the header at the top to see the effect while scrolling */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--primary-green);
+}
+
+.nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: var(--text-main);
+  font-size: 0.9rem;
+}
+
+.nav a.active {
+  border-bottom: 2px solid var(--primary-green);
+  padding-bottom: 5px;
+}
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.btn-primary {
+  background-color: var(--primary-green);
+  color: var(--pure-white);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(
+    to right,
+    var(--hero-gradient-start),
+    var(--hero-gradient-end)
+  );
+  height: 80vh; /* Adjust height as needed */
+  display: flex;
+  align-items: center;
+  padding: 0 50px;
+}
+
+.hero-content {
+  padding: 40px;
+  border-radius: 20px;
+  max-width: 500px;
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  color: #ddd;
+}
+
+.badge {
+  background-color: #ffd880; /* Yellow accent color */
+  color: #c98a00;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin: 20px 0;
+  color: var(--text-main);
+}
+
+.green-text {
+  color: var(--primary-green);
+}
+
+.btn-google {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--pure-white);
+  border: 1px solid #ddd;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 30px;
+  font-size: 0.9rem;
+}
+
+.btn-google:hover {
+  transition: ease-in-out 0.3s;
+  background-color: #f9f9f9;
+  border-color: #ccc;
+}
+
+/* Features Section */
+.features-section {
+  text-align: center;
+  padding: 80px 50px;
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  color: #ddd;
+}
+
+.features-section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.section-subtitle {
+  color: var(--text-light);
+  margin-bottom: 50px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+.card {
+  padding: 40px;
+  border-radius: 20px;
+  text-align: left;
+}
+
+.card-green {
+  background-color: var(--secondary-green);
+  color: var(--pure-white);
+}
+
+.card-tan {
+  background-color: var(--tan-card);
+}
+
+.card h3 {
+  margin-top: 20px;
+}
+
+.card-image img {
+  width: 100%;
+  border-radius: 20px;
+}
+
+/* Icon Placeholders (Use SVGs or custom CSS) */
+.icon-circle,
+.icon-square {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.icon-square {
+  border-radius: 8px;
+  background-color: #ffd880; /* Yellow/orange for analytics icon */
+}
+
+/* CTA Section */
+.cta-section {
+  text-align: center;
+  padding: 80px 50px;
+}
+
+.cta-section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.cta-buttons {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn-secondary {
+  background-color: #efeac8;
+  color: var(--primary-green);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 50px;
+  background: rgba(255, 255, 255, 0.25); /* Semi-transparent white background */
+  backdrop-filter: blur(12px); /* This creates the frosted glass blur */
+  -webkit-backdrop-filter: blur(12px); /* Needed for Safari support */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4); /* Subtle top/bottom edge lighting */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05); /* Soft shadow for depth */
+}
+
+.footer-links {
+  margin: 20px 0;
+}
+
+.footer-links a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: var(--text-light);
+  font-size: 0.8rem;
+}
+
+.copyright {
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
