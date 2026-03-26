@@ -1,0 +1,116 @@
+---
+import Layout from "../../../../shared/layouts/Layout.astro";
+import TaskModal from "../../components/TaskModal.svelte";
+import { BreederMockData } from "../../BreederMockData.js";
+const title = "Tasks";
+const tasks = BreederMockData.tasks;
+
+const isDatePast = (dateString: string) => {
+  const dueDate = new Date(dateString);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return dueDate < today;
+};
+---
+
+<Layout title={title} client:load>
+  <a href="/dashboard/">Back to Dashboard</a>
+
+  <TaskModal client:load />
+
+  {
+    tasks.length === 0 ? (
+      <p class="message">No tasks at this time.</p>
+    ) : (
+      <div class="tasks-list">
+        {tasks.map((task) => (
+          <a href="#" class="task-card">
+            <input class="checkbox" type="checkbox" />
+            <div class="task-info">
+              <h2>{task.title}</h2>
+              {task.description && (
+                <p class="description">{task.description}</p>
+              )}
+              {task.dueDate && (
+                <p
+                  class={`due-date ${isDatePast(task.dueDate) ? "past-date" : "future-date"}`}
+                >
+                  Due: {new Date(task.dueDate).toLocaleDateString()}
+                </p>
+              )}
+            </div>
+          </a>
+        ))}
+      </div>
+    )
+  }
+</Layout>
+
+<style>
+  .checkbox {
+    margin-right: 15px;
+    transform: scale(1.5);
+  }
+
+  .tasks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+    margin-top: 45px;
+  }
+
+  .tasks-list a {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .task-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    background-color: #f2af29ff;
+    padding: 10px 15px;
+    border-radius: 5px;
+  }
+
+  .task-card:hover {
+    background-color: #f0b746cc;
+  }
+
+  .task-info h2 {
+    margin: 0;
+    margin-bottom: -5px;
+    font-size: 1.2em;
+  }
+
+  .task-info p {
+    margin: 0;
+    font-size: 0.8em;
+  }
+
+  .description {
+    line-height: 1.2;
+  }
+
+  .due-date {
+    font-weight: bold;
+  }
+
+  .past-date {
+    color: rgb(170, 0, 0);
+  }
+
+  .future-date {
+    color: rgb(1, 83, 1);
+  }
+
+  .message {
+    text-align: center;
+    font-size: 1.2em;
+    color: #555;
+    margin-top: 40px;
+  }
+</style>
