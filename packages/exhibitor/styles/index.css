@@ -65,7 +65,7 @@ body {
     var(--hero-gradient-start),
     var(--hero-gradient-end)
   );
-  height: 80vh; /* Adjust height as needed */
+  min-height: 100vh; /* Adjust height as needed */
   display: flex;
   align-items: center;
   padding: 0 50px;
@@ -110,12 +110,14 @@ body {
   cursor: pointer;
   margin-top: 30px;
   font-size: 0.9rem;
+  color: white;
 }
 
 .btn-google:hover {
   transition: ease-in-out 0.3s;
   background-color: #f9f9f9;
   border-color: #ccc;
+  color: black;
 }
 
 /* Features Section */
@@ -200,6 +202,10 @@ body {
   gap: 20px;
 }
 
+.cta-buttons > button {
+  background-color: #f2af29;
+}
+
 .btn-secondary {
   background-color: #efeac8;
   color: var(--primary-green);
@@ -213,7 +219,7 @@ body {
 /* Footer */
 .footer {
   text-align: center;
-  padding: 50px;
+  padding: 40px;
   background: rgba(255, 255, 255, 0.25); /* Semi-transparent white background */
   backdrop-filter: blur(12px); /* This creates the frosted glass blur */
   -webkit-backdrop-filter: blur(12px); /* Needed for Safari support */
