@@ -1,9 +1,12 @@
-# pnpm-workspace.yaml
 packages:
-  - "packages/breeder"
-  - "packages/exhibitor"
-  - "packages/backend"
-  - "packages/shared"
+  - packages/breeder
+  - packages/exhibitor
+  - packages/backend
+  - packages/shared
+
 allowBuilds:
   esbuild: true
   sharp: true
+
+onlyBuiltDependencies:
+  - esbuild
