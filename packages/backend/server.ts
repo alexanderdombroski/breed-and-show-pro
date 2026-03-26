@@ -1,23 +1,27 @@
 import express from "express";
-import { loadEnvFile } from "node:process";
-import path from "node:path";
-
-if (process.env.NODE_ENV === "development") {
-  loadEnvFile(path.join(import.meta.dirname, ".env"));
-}
+import { router } from "./src/routes/index.ts";
+import { toNodeHandler } from "better-auth/node";
+import { auth } from "./src/service/auth.ts";
+import { devLogger, corsHandler } from "./src/middleware/index.ts";
+import { isDev } from "./src/utils/index.ts";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(corsHandler);
+
+if (isDev) {
+  app.use(devLogger);
+  app.get("/", (req, res) => {
+    res.redirect("http://localhost:4321/"); // TODO find better redirect solution
+  });
+}
+
+app.all("/api/auth/*splat", toNodeHandler(auth));
+
 app.use(express.json());
 
-app.get("/health", (req, res) => {
-  res.status(200).json({
-    status: "ok",
-    uptime: process.uptime(),
-    timestamp: new Date().toISOString(),
-  });
-});
+app.use("/api", router);
 
 // Start server
 app.listen(PORT, () => {

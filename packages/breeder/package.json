@@ -9,12 +9,16 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check-types": "tsc --noEmit && astro check && svelte-check"
   },
   "dependencies": {
-    "@astrojs/svelte": "^8.0.0",
-    "astro": "^6.0.2",
-    "svelte": "^5.53.10",
-    "typescript": "^5.9.3"
+    "@astrojs/svelte": "^8.0.3",
+    "astro": "^6.0.8",
+    "svelte": "^5.55.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.8",
+    "svelte-check": "^4.4.5"
   }
 }
