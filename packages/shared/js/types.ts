@@ -142,6 +142,7 @@ export const userSchema = z.object({
   _id: z.string(),
   name: z.string(),
   email: z.email(),
+  farmName: z.string(),
 });
 export type User = z.infer<typeof userSchema>;
 
