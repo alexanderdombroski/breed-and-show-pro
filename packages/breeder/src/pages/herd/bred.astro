@@ -22,7 +22,16 @@ function getFarrowingDisplay(animal: any): string {
   }
 }
 
-function getSireName(sireId: number): string {
+function getBreedingDisplay(animal: any): string {
+  if (animal.breedingDate) {
+    return formatDate(animal.breedingDate);
+  } else {
+    return "unknown";
+  }
+}
+
+function getSireName(sireId: number | undefined): string {
+  if (!sireId) return "unknown";
   const sire = BreederMockData.animals.find((animal) => animal.id === sireId);
   return sire ? sire.name : "unknown";
 }
@@ -41,7 +50,7 @@ function getSireName(sireId: number): string {
               <h2>
                 {animal.name}: {animal.earNotch}
               </h2>
-              <p>Bred: {formatDate(animal.breedingDate)}</p>
+              <p>Bred: {getBreedingDisplay(animal)}</p>
               <p>Est Farrow Date: {getFarrowingDisplay(animal)}</p>
               <p>Sire: {getSireName(animal.bredTo)}</p>
             </div>
