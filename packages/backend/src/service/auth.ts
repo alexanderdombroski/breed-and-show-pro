@@ -19,4 +19,9 @@ export const auth = betterAuth({
   account: {
     skipStateCookieCheck: isDev,
   },
+  trustedOrigins: [
+    "http://localhost:4321",
+    "http://localhost:4322",
+    "https://alexanderdombroski.github.io",
+  ],
 });
