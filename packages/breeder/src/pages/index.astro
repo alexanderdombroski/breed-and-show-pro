@@ -2,9 +2,8 @@
 import Dashboard from "../../../shared/layouts/Dashboard.svelte";
 import Layout from "../../../shared/layouts/Layout.astro";
 const title = "Home";
-let widgets = ["Heard info", "Upcoming Dates", "Tasks"];
 ---
 
 <Layout title={title}>
-  <Dashboard widgets={widgets} client:load />
+  <Dashboard client:load />
 </Layout>
