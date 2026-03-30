@@ -1,6 +1,7 @@
 
 <script lang="ts">
     import TasksWidget from "../../breeder/src/components/TasksWidget.svelte";
+    import HerdWidget from "../../breeder/src/components/HerdWidget.svelte";
 </script>
 
 <section>
@@ -9,7 +10,7 @@
     </div>
 
     <div class="container">
-        <TasksWidget />
+        <HerdWidget />
     </div>
 
     <div class="container">
