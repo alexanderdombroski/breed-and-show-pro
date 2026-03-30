@@ -3,42 +3,23 @@
 
   type Props = {
     redirect?: string;
+    loginText?: string;
+    className?: string;
+    
   };
 
-  const { redirect }: Props = $props();
+  const { redirect, loginText, className }: Props = $props();
 </script>
 
-<button class="google-btn" onclick={() => login(redirect ?? "/")}>
+<button class={`${className || "google-btn"}`} onclick={() => login(redirect ?? "/")}>
   <img
     class="google-logo"
     src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
     alt="Google logo"
   />
-  <span>Sign in with Google</span>
+  <span>{loginText || "Sign in with Google"}</span>
 </button>
 
 <style>
-  .google-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background-color: white;
-    color: #444;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 10px 16px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: box-shadow 0.2s ease;
-  }
-
-  .google-btn:hover {
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  }
-
-  .google-logo {
-    width: 18px;
-    height: 18px;
-  }
+  
 </style>
