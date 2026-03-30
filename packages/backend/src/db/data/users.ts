@@ -3,9 +3,9 @@ import { userSchema, type User } from "../../../../shared/types/schemas.ts";
 const _users: User[] = [
   {
     _id: "1",
-    name: "Sue Barker",
-    email: "sueb@gmail.com",
-    farmName: "Wild West Farm",
+    name: "Sarah Miller",
+    email: "sarahmiller@email.com",
+    farmName: "Miller Show Pigs",
   },
   {
     _id: "2",
@@ -18,6 +18,12 @@ const _users: User[] = [
     name: "Mitch Chopsworth",
     email: "mitchmitch67@gmail.com",
     farmName: "Grandpa's Pigs",
+  },
+  {
+    _id: "4",
+    name: "Sue Barker",
+    email: "sueb@gmail.com",
+    farmName: "Wild West Farm",
   },
 ];
 

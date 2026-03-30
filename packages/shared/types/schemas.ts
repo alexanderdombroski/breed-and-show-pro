@@ -37,7 +37,6 @@ export const pigSchema = z.object({
   sex: z.enum(["sow", "boar", "gilt", "barrow"]),
   status: z.enum(["open", "bred", "farrowed", "active"]),
   birthDate: z.date(),
-  childIds: z.array(z.string()),
   show: z.object({
     name: z.string().optional(),
     date: z.date().optional(),
