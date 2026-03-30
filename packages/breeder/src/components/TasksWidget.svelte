@@ -65,7 +65,7 @@
     position: sticky;
     top: 0;
     background-color: white;
-    z-index: 10;
+    z-index: 5;
     padding: 5px 0;
   }
 
