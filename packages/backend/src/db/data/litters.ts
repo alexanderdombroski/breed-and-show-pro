@@ -1,4 +1,4 @@
-import { type Litter, litterSchema } from "../../../../shared/types/schemas.ts";
+import { type Litter, LitterSchema } from "../../../../shared/types/schemas.ts";
 
 const _litters: Omit<Litter, "_id" | "userId" | "createdAt" | "updatedAt">[] = [
   {
@@ -20,7 +20,7 @@ const _litters: Omit<Litter, "_id" | "userId" | "createdAt" | "updatedAt">[] = [
 ];
 
 export const litters = _litters.map((pig, i) =>
-  litterSchema.parse({
+  LitterSchema.parse({
     ...pig,
     _id: String(i),
     userId: "1",

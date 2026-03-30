@@ -2,7 +2,7 @@ import { z } from "zod";
 
 // -------------------- PIGS COLLECTION --------------------
 
-export const pigSchema = z.object({
+export const PigSchema = z.object({
   _id: z.string(),
   userId: z.string(),
   name: z.string(),
@@ -19,10 +19,10 @@ export const pigSchema = z.object({
   createdAt: z.date(),
   updatedAt: z.date(),
 });
-export type Pig = z.infer<typeof pigSchema>;
+export type Pig = z.infer<typeof PigSchema>;
 
 // -------------------- LITTER COLLECTION --------------------
-export const litterSchema = z.object({
+export const LitterSchema = z.object({
   _id: z.string(),
   userId: z.string(),
   sowId: z.string(),
@@ -34,17 +34,17 @@ export const litterSchema = z.object({
   createdAt: z.date(),
   updatedAt: z.date(),
 });
-export type Litter = z.infer<typeof litterSchema>;
+export type Litter = z.infer<typeof LitterSchema>;
 
 // -------------------- USERS COLLECTION --------------------
 
-export const userSchema = z.object({
+export const UserSchema = z.object({
   _id: z.string(),
   name: z.string(),
   email: z.email(),
   farmName: z.string(),
 });
-export type User = z.infer<typeof userSchema>;
+export type User = z.infer<typeof UserSchema>;
 
 // -------------------- EVENTS COLLECTION --------------------
 

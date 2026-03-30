@@ -1,4 +1,4 @@
-import { type Pig, pigSchema } from "../../../../shared/types/schemas.ts";
+import { type Pig, PigSchema } from "../../../../shared/types/schemas.ts";
 
 /**
  * Structure:
@@ -220,7 +220,7 @@ const _pigs: Omit<Pig, "_id" | "userId" | "createdAt" | "updatedAt">[] = [
 ];
 
 export const pigs = _pigs.map((pig, i) =>
-  pigSchema.parse({
+  PigSchema.parse({
     ...pig,
     _id: String(i),
     userId: "1",
