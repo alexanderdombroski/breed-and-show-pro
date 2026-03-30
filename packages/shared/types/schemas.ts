@@ -47,26 +47,15 @@ export const pigSchema = z.object({
 });
 export type Pig = z.infer<typeof pigSchema>;
 
-// -------------------- HEARD STATS --------------------
-export const herdSummarySchema = z.object({
-  _id: z.string(),
-  total: z.number().int().nonnegative(),
-  bred: z.number().int().nonnegative(),
-  farrowed: z.number().int().nonnegative(),
-  open: z.number().int().nonnegative(),
-});
-export type HerdSummary = z.infer<typeof herdSummarySchema>;
-
 // -------------------- LITTER STATS --------------------
 export const litterSchema = z.object({
   _id: z.string(),
   userId: z.string(),
   sowId: z.string(),
   boarId: z.string().optional(),
-  totalBorn: z.number().int().nonnegative().optional(),
+  totalBorn: z.number().int().nonnegative(),
   bornAlive: z.number().int().nonnegative().optional(),
-  stillborn: z.number().int().nonnegative().default(0),
-  pigletsWeaned: z.number().int().nonnegative().optional(),
+  stillborn: z.number().int().nonnegative().optional(),
   pigletIds: z.array(z.string()).default([]),
   createdAt: z.date(),
   updatedAt: z.date(),

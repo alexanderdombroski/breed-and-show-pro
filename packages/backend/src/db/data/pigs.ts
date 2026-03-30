@@ -10,10 +10,9 @@ import { type Pig, pigSchema } from "../../../../shared/types/schemas.ts";
  *
  * Total: 20 pigs
  */
-const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
+const _pigs: Omit<Pig, "_id" | "userId" | "createdAt" | "updatedAt">[] = [
   // Foundation breeding stock
   {
-    userId: "1",
     earNotch: "1-1",
     name: "Ruby",
     breed: "Yorkshire",
@@ -24,7 +23,6 @@ const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
     isArchived: false,
   },
   {
-    userId: "1",
     earNotch: "1-2",
     name: "Daisy",
     breed: "Duroc",
@@ -35,7 +33,6 @@ const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
     isArchived: false,
   },
   {
-    userId: "1",
     earNotch: "1-3",
     name: "Titan",
     breed: "Duroc",
@@ -46,7 +43,6 @@ const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
     isArchived: false,
   },
   {
-    userId: "1",
     earNotch: "1-4",
     name: "Crusher",
     breed: "Hampshire",
@@ -58,7 +54,6 @@ const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
   },
   // Ruby's offspring
   {
-    userId: "1",
     earNotch: "2-1",
     name: "Rosie",
     breed: "Yorkshire",
@@ -69,7 +64,6 @@ const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
     isArchived: false,
   },
   {
-    userId: "1",
     earNotch: "2-2",
     name: "Bacon",
     breed: "Yorkshire",
@@ -80,7 +74,6 @@ const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
     isArchived: false,
   },
   {
-    userId: "1",
     earNotch: "2-3",
     name: "Pearl",
     breed: "Yorkshire",
@@ -92,7 +85,6 @@ const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
   },
   // Daisy's offspring
   {
-    userId: "1",
     earNotch: "3-1",
     name: "Maxine",
     breed: "Duroc",
@@ -103,7 +95,6 @@ const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
     isArchived: false,
   },
   {
-    userId: "1",
     earNotch: "3-2",
     name: "Patches",
     breed: "Duroc",
@@ -114,7 +105,6 @@ const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
     isArchived: false,
   },
   {
-    userId: "1",
     earNotch: "3-3",
     name: "Duke",
     breed: "Duroc",
@@ -126,7 +116,6 @@ const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
   },
   // Second generation from Rosie
   {
-    userId: "1",
     earNotch: "4-1",
     name: "Sunny",
     breed: "Yorkshire",
@@ -137,7 +126,6 @@ const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
     isArchived: false,
   },
   {
-    userId: "1",
     earNotch: "4-2",
     name: "Porkchop",
     breed: "Yorkshire",
@@ -149,7 +137,6 @@ const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
   },
   // Second generation from Maxine
   {
-    userId: "1",
     earNotch: "5-1",
     name: "Truffle",
     breed: "Duroc",
@@ -160,7 +147,6 @@ const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
     isArchived: false,
   },
   {
-    userId: "1",
     earNotch: "5-2",
     name: "Pepper",
     breed: "Duroc",
@@ -171,7 +157,6 @@ const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
     isArchived: false,
   },
   {
-    userId: "1",
     earNotch: "5-3",
     name: "Hamlet",
     breed: "Duroc",
@@ -183,7 +168,6 @@ const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
   },
   // Young piglets from recent breeding
   {
-    userId: "1",
     earNotch: "6-1",
     name: "Snorty",
     breed: "Yorkshire",
@@ -194,7 +178,6 @@ const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
     isArchived: false,
   },
   {
-    userId: "1",
     earNotch: "6-2",
     name: "Mudpie",
     breed: "Yorkshire",
@@ -205,7 +188,6 @@ const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
     isArchived: false,
   },
   {
-    userId: "1",
     earNotch: "7-1",
     name: "Oinker",
     breed: "Duroc",
@@ -216,7 +198,6 @@ const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
     isArchived: false,
   },
   {
-    userId: "1",
     earNotch: "7-2",
     name: "Peaches",
     breed: "Duroc",
@@ -227,7 +208,6 @@ const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
     isArchived: false,
   },
   {
-    userId: "1",
     earNotch: "7-3",
     name: "Hogzilla",
     breed: "Hampshire",
@@ -243,6 +223,7 @@ export const pigs = _pigs.map((pig, i) =>
   pigSchema.parse({
     ...pig,
     _id: String(i),
+    userId: "1",
     createdAt: new Date(),
     updatedAt: new Date(),
   }),
