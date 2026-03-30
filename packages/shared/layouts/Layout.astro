@@ -1,24 +1,17 @@
 ---
-import "./style.css";
-import { Font } from "astro:assets";
-let { title } = Astro.props;
-import Header from "../components/Header.svelte";
+import Header from "../components/Header.astro";
 import Footer from "../components/Footer.svelte";
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
+    <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
-    <Font cssVariable="--font-titles" />
-    <Font cssVariable="--font-number" />
-    <Font cssVariable="--font-headline" />
-    <Font cssVariable="--font-body" />
-    <title>Breed & Show Pro | {title}</title>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="stylesheet" href="../../styles/index.css" />
   </head>
   <body>
     <Header client:load />

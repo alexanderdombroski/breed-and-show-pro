@@ -13,8 +13,8 @@
     "check-types": "tsc --noEmit && astro check && svelte-check"
   },
   "dependencies": {
-    "@astrojs/svelte": "^8.0.3",
-    "astro": "^6.0.8",
+    "@astrojs/svelte": "^8.0.4",
+    "astro": "^6.1.2",
     "svelte": "^5.55.0"
   },
   "devDependencies": {

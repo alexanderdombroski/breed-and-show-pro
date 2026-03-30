@@ -1,101 +1,69 @@
 ---
-
+import Login from "../../../shared/components/auth/Login.svelte";
+import Layout from "../../../shared/layouts/Layout.astro";
 ---
 
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <link rel="stylesheet" href="../../styles/index.css" />
-  </head>
-  <body>
-    <header class="header">
-      <div class="logo">Breed and Show Pro</div>
-      <nav class="nav">
-        <a href="#" class="active">Dashboard</a>
-        <a href="#">My Animals</a>
-        <a href="#">Show Calendar</a>
-      </nav>
-      <div class="auth-buttons">
-        <a href="#" style="text-decoration: none; !important">Login</a>
-        <button
-          class="btn-primary"
-          style="background-color: #F2AF29; !important">Register</button
-        >
-      </div>
-    </header>
+  <Layout>
+    <body>
+      <section class="hero">
+        <div class="hero-content">
+          <span class="badge">BREED AND SHOW PRO</span>
+          <h1>Show Prep, <span class="green-text">Perfected.</span></h1>
+          <p>
+            The comprehensive tool for exhibitors, breeders, and 4-H/FFA youth
+            to track health, growth, and show preparation metrics. Manage your
+            livestock with Breed and Show Pro.
+          </p>
+          <Login loginText="Get Started with Google" client:load />
+        </div>
+      </section>
 
-    <section class="hero">
-      <div class="hero-content">
-        <span class="badge">BREED AND SHOW PRO</span>
-        <h1>Show Prep, <span class="green-text">Perfected.</span></h1>
-        <p>
-          The comprehensive tool for exhibitors, breeders, and 4-H/FFA youth to
-          track health, growth, and show preparation metrics. Manage your
-          livestock with Breed and Show Pro.
+      <section class="features-section">
+        <h2>Crafted for Champions</h2>
+        <p class="section-subtitle">
+          Professional-grade features designed for the next generation of
+          agricultural leaders.
         </p>
-        <button class="btn-google"> Get Started with Google </button>
-      </div>
-    </section>
 
-    <section class="features-section">
-      <h2>Crafted for Champions</h2>
-      <p class="section-subtitle">
-        Professional-grade features designed for the next generation of
-        agricultural leaders.
-      </p>
+        <div class="grid-container">
+          <div class="card card-green">
+            <div class="icon-circle"></div>
+            <h3>Comprehensive Animal Profiles</h3>
+            <p>
+              Keep every detail at your fingertips. Track high-resolution
+              photos, identification records, and complete health history in one
+              unified dashboard.
+            </p>
+          </div>
 
-      <div class="grid-container">
-        <div class="card card-green">
-          <div class="icon-circle"></div>
-          <h3>Comprehensive Animal Profiles</h3>
-          <p>
-            Keep every detail at your fingertips. Track high-resolution photos,
-            identification records, and complete health history in one unified
-            dashboard.
-          </p>
+          <div class="card-image">
+            <img src="../../public/cows.jpg" alt="Champion Cow" />
+          </div>
+
+          <div class="card card-tan">
+            <div class="icon-square"></div>
+            <h3>Show-Ready Analytics</h3>
+            <p>
+              Precision matters. Get automated weight projections and custom
+              prep timelines based on breed-specific growth curves.
+            </p>
+          </div>
         </div>
+      </section>
 
-        <div class="card-image">
-          <img src="../../public/cows.jpg" alt="Champion Cow" />
+      <section class="cta-section">
+        <h2>Ready to Elevate Your Show String?</h2>
+        <p>
+          Join the community of elite breeders and showmen using precision data
+          to win in the ring.
+        </p>
+        <div class="cta-buttons">
+          <button class="btn-primary">Get Started Free</button>
         </div>
-
-        <div class="card card-tan">
-          <div class="icon-square"></div>
-          <h3>Show-Ready Analytics</h3>
-          <p>
-            Precision matters. Get automated weight projections and custom prep
-            timelines based on breed-specific growth curves.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="cta-section">
-      <h2>Ready to Elevate Your Show String?</h2>
-      <p>
-        Join the community of elite breeders and showmen using precision data to
-        win in the ring.
-      </p>
-      <div class="cta-buttons">
-        <button class="btn-primary">Get Started Free</button>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <div class="logo">The Elevated Agrarian</div>
-      <div class="footer-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
-        <a href="#">Contact Support</a>
-        <a href="#">About Us</a>
-      </div>
-      <div class="copyright">© 2024</div>
-    </footer>
-  </body>
+      </section>
+    </body>
+  </Layout>
 </html>
 
 <style></style>
