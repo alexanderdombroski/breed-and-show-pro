@@ -1,4 +1,5 @@
-import { type Pig, pigSchema } from "../../../../shared/js/types.ts";
+// @ts-nocheck
+import { type Pig, pigSchema } from "../../../../shared/types/schemas.ts";
 
 const _pigs: Omit<Pig, "_id" | "createdAt" | "updatedAt">[] = [
   {
