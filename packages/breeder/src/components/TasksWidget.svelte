@@ -2,7 +2,7 @@
   import { BreederMockData } from "../BreederMockData.js";
   
   const tasks = BreederMockData.tasks;
-  const incompleteTasks = tasks.filter(t => !t.completed);
+  // const incompleteTasks = tasks.filter(t => !t.completed);
   
   // Use same date logic as task page
   const isDatePast = (dateString: string) => {
@@ -12,10 +12,10 @@
     return dueDate < today;
   };
   
-  const overdueTasks = incompleteTasks.filter(t => {
-    if (!t.dueDate) return false;
-    return isDatePast(t.dueDate);
-  });
+  // const overdueTasks = incompleteTasks.filter(t => {
+  //   if (!t.dueDate) return false;
+  //   return isDatePast(t.dueDate);
+  // });
 </script>
 
 <section class="widget-container">
@@ -126,7 +126,6 @@
     margin: 0;
     font-size: 0.8em;
     text-align: left;
-    color: #666;
   }
   
   .description {
