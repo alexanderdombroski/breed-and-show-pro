@@ -62,13 +62,13 @@ export const PigEventSchema = BaseEventSchema.extend({
   pigId: z.string(),
   _type: z.enum(["farrow", "heat", "breed", "vaccination"]),
 });
-type PigEvent = z.infer<typeof PigEventSchema>;
+export type PigEvent = z.infer<typeof PigEventSchema>;
 
 export const LitterEventSchema = BaseEventSchema.extend({
   litterId: z.string(),
   _type: z.enum(["weaning"]),
 });
-type LitterEvent = z.infer<typeof LitterEventSchema>;
+export type LitterEvent = z.infer<typeof LitterEventSchema>;
 
 export type Event = PigEvent | LitterEvent;
 
