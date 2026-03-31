@@ -1,5 +1,6 @@
 ---
 import Layout from "../../../../shared/layouts/Layout.astro";
+import AddSowForm from "../../components/AddSowForm.svelte";
 import "../../styles/breeder-pages.css";
 const title = "Open";
 
@@ -27,6 +28,11 @@ function getNextHeatDisplay(animal: any): string {
 <Layout title={title}>
   <body>
     <a href="/herd/">Back to Herd</a>
+
+    <div class="form-btns">
+      <AddSowForm client:load />
+    </div>
+
     {
       openAnimals.length === 0 ? (
         <p class="message">No open sows at this time.</p>
@@ -54,6 +60,16 @@ function getNextHeatDisplay(animal: any): string {
 </Layout>
 
 <style>
+  .form-btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    width: 90%;
+    margin: 20px auto 10px auto;
+  }
+
   .animals-list {
     display: flex;
     flex-direction: column;
@@ -96,6 +112,12 @@ function getNextHeatDisplay(animal: any): string {
   }
 
   @media (min-width: 1000px) {
+    .form-btns {
+      width: 80%;
+      max-width: 1000px;
+      margin: 20px auto 10px auto;
+    }
+
     .animals-list {
       display: grid;
       grid-template-columns: repeat(3, 1fr);

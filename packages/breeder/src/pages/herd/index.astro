@@ -2,6 +2,8 @@
 import { BreederMockData } from "../../BreederMockData.js";
 import Layout from "../../../../shared/layouts/Layout.astro";
 import "../../styles/breeder-pages.css";
+import AddSowForm from "../../components/AddSowForm.svelte";
+import AddSireForm from "../../components/AddSireForm.svelte";
 
 const title = "Herd";
 
@@ -32,6 +34,12 @@ function countPastLitters() {
 <Layout title={title}>
   <body>
     <a href="/">Back to Dashboard</a>
+
+    <div class="form-btns">
+      <AddSowForm client:load />
+      <AddSireForm client:load />
+    </div>
+
     <div class="herd-container">
       <a href="/herd/open" class="herd-button">
         <span>({countByStatus("open")}) Open</span>
@@ -71,6 +79,16 @@ function countPastLitters() {
     margin: 0 auto;
   }
 
+  .form-btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    width: 90%;
+    margin: 20px auto 10px auto;
+  }
+
   .herd-button {
     display: flex;
     justify-content: space-between;
@@ -99,6 +117,12 @@ function countPastLitters() {
       width: 80%;
       max-width: 1000px;
       margin: 20px auto;
+    }
+
+    .form-btns {
+      width: 80%;
+      max-width: 1000px;
+      margin: 20px auto 10px auto;
     }
 
     .herd-button {
