@@ -2,6 +2,7 @@
 <script lang="ts">
     import TasksWidget from "../../breeder/src/components/TasksWidget.svelte";
     import HerdWidget from "../../breeder/src/components/HerdWidget.svelte";
+    import UpcomingDatesWidget from "../../breeder/src/components/UpcomingDatesWidget.svelte";
 </script>
 
 <section>
@@ -14,7 +15,7 @@
     </div>
 
     <div class="container">
-        <TasksWidget />
+        <UpcomingDatesWidget />
     </div>
 
     <div class="container">
@@ -25,16 +26,12 @@
 <style>
     section {
         display: flex;
-        flex-direction: row;
         flex-wrap: wrap;
-        justify-content: space-evenly;
-        align-items: center;
-        align-content: center;
-        row-gap: 10px;
-    }
-    .container {
-        width: 300px;
-        height: 400px;
+        justify-content: center;
+        gap: 20px;
+        padding: 30px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
     }
 
 </style>

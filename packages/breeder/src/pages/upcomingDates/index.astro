@@ -1,0 +1,75 @@
+---
+import Layout from "../../../../shared/layouts/Layout.astro";
+import UpcomingDatesFilter from "../../components/UpcomingDatesFilter.svelte";
+import { BreederMockData } from "../../BreederMockData.js";
+
+const title = "Upcoming Dates";
+
+// Helper to check if date is in the future
+const isFutureDate = (dateString: string) => {
+  const date = new Date(dateString);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return date >= today;
+};
+
+// Collect all upcoming dates
+interface UpcomingDate {
+  date: string;
+  type: "heat" | "farrowing" | "task";
+  title: string;
+  description?: string;
+  animalName?: string;
+}
+
+const upcomingDates: UpcomingDate[] = [];
+
+// Add heat dates from animals
+BreederMockData.animals.forEach((animal) => {
+  if (animal.nextHeatDate && isFutureDate(animal.nextHeatDate)) {
+    upcomingDates.push({
+      date: animal.nextHeatDate,
+      type: "heat",
+      title: `${animal.name} - Heat Expected`,
+      animalName: animal.name,
+      description: `${animal.breed} sow (${animal.earNotch})`,
+    });
+  }
+});
+
+// Add farrowing dates from animals
+BreederMockData.animals.forEach((animal) => {
+  if (animal.expectedFarrowDate && isFutureDate(animal.expectedFarrowDate)) {
+    upcomingDates.push({
+      date: animal.expectedFarrowDate,
+      type: "farrowing",
+      title: `${animal.name} - Expected Farrowing`,
+      animalName: animal.name,
+      description: `${animal.breed} sow (${animal.earNotch})`,
+    });
+  }
+});
+
+// Add task due dates
+BreederMockData.tasks.forEach((task) => {
+  if (task.dueDate && !task.completed && isFutureDate(task.dueDate)) {
+    upcomingDates.push({
+      date: task.dueDate,
+      type: "task",
+      title: task.title,
+      description: task.description,
+    });
+  }
+});
+
+// Sort by date (earliest first)
+upcomingDates.sort(
+  (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+);
+---
+
+<Layout title={title} client:load>
+  <a href="/">Back to Dashboard</a>
+
+  <UpcomingDatesFilter upcomingDates={upcomingDates} client:load />
+</Layout>

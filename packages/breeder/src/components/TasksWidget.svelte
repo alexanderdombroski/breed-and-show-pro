@@ -23,18 +23,6 @@
     <a href="/task/" class="widget-link">
         <h3>Tasks</h3>
     </a>
-    <div class="stats">
-      {#if overdueTasks.length > 0}
-          <div class="stat-item overdue">
-          <span class="number">{overdueTasks.length}</span>
-          <span class="label">Overdue</span>
-          </div>
-      {/if}
-      <div class="stat-item">
-        <span class="number">{incompleteTasks.length}</span>
-        <span class="label">Pending</span>
-      </div>
-    </div>
   </div>
 
   {#if tasks.length > 0}
@@ -61,72 +49,42 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     position: sticky;
     top: 0;
-    background-color: white;
-    z-index: 5;
-    padding: 5px 0;
+    background-color: #f2af29ff;
+    z-index: 10;
+    padding: 10px 15px;
+    margin: -10px -15px 15px -15px;
+    border-radius: 8px 8px 0 0;
   }
 
   .widget-link {
     text-decoration: none;
-    color: inherit;
+    color: white;
   }
   
   .widget-link:hover {
-    color: orange;
+    opacity: 0.9;
   }
   
   .widget-container {
-    border: 1px solid orange;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
     padding: 10px 15px;
-    margin: 20px 0;
     height: 400px;
     width: 320px;
     overflow: auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
   
   h3 {
     margin: 0;
     font-size: 1.5rem;
+    color: white;
   }
   
-  .stats {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-  }
-  
-  .stat-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-  }
-  
-  .stat-item .number {
-    font-size: 1.5rem;
-    font-weight: bold;
-    line-height: 1;
-  }
-  
-  .stat-item .label {
-    font-size: 0.75rem;
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    line-height: 1;
-  }
-  
-  .stat-item.overdue .number {
-    color: #d32f2f;
-  }
-  
-  .stat-item.overdue .label {
-    color: #d32f2f;
-  }
-
   .checkbox {
     margin-right: 15px;
     transform: scale(1.5);
@@ -135,58 +93,64 @@
   .tasks-list {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    margin-bottom: 10px;
+    gap: 10px;
   }
 
   .task-card {
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: #f2af29ff;
-    padding: 10px 15px;
-    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+    border-left: 3px solid #f2af29ff;
+    background-color: #fafafa;
+    padding: 10px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s;
   }
 
   .task-card:hover {
-    background-color: #f0b746cc;
+    background-color: #fff3e0;
+    box-shadow: 0 2px 6px rgba(255, 165, 0, 0.2);
   }
 
   .task-info h2 {
-    margin: 0 0 5px 0;
+    margin: 0 0 4px 0;
     font-size: 1em;
     line-height: 1.2;
     text-align: left;
+    color: #333;
   }
 
   .task-info p {
     margin: 0;
     font-size: 0.8em;
     text-align: left;
+    color: #666;
   }
-
+  
   .description {
     line-height: 1.2;
+    color: #666;
   }
 
   .due-date {
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 0.75rem;
   }
 
   .past-date {
-    color: rgb(170, 0, 0);
+    color: #d32f2f;
   }
 
   .future-date {
-    color: rgb(1, 83, 1);
+    color: #2e7d32;
   }
 
   .message {
     text-align: center;
     font-size: 1.2em;
-    color: #555;
+    color: #888;
     margin-top: 40px;
   }
 

@@ -66,55 +66,47 @@ function countPastLitters() {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     position: sticky;
     top: 0;
-    background-color: white;
-    z-index: 5;
-    padding: 5px 0;
+    background-color: #f2af29ff;
+    z-index: 10;
+    padding: 10px 15px;
+    margin: -10px -15px 15px -15px;
+    border-radius: 8px 8px 0 0;
   }
 
   .widget-link {
     text-decoration: none;
-    color: inherit;
+    color: white;
   }
   
   .widget-link:hover {
-    color: orange;
+    opacity: 0.9;
   }
   
   .widget-container {
-    border: 1px solid orange;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
     padding: 10px 15px;
-    margin: 20px 0;
     height: 400px;
     width: 320px;
     overflow: auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
   
   h3 {
     margin: 0;
     font-size: 1.5rem;
-  }
-  
-   .message {
-    text-align: center;
-    font-size: 1.2em;
-    color: #555;
-    margin-top: 40px;
+    color: white;
   }
 
   .herd-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-  }
-
-  .herd-container a {
-    width: 90%;
-    margin: 0 auto;
+    gap: 12px;
+    margin-bottom: 10px;
   }
 
   .herd-button {
@@ -122,23 +114,24 @@ function countPastLitters() {
     justify-content: space-between;
     align-items: center;
     text-decoration: none;
-    font-size: 18px;
-    color: black;
-    background-color: #f2af29ff;
-    padding: 10px 15px;
-    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+    background-color: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-left: 3px solid #f2af29ff;
+    padding: 12px 15px;
+    border-radius: 4px;
+    transition: all 0.2s;
   }
 
   .herd-button:hover {
-    background-color: #f0b746cc;
+    background-color: #fff3e0;
+    box-shadow: 0 2px 6px rgba(255, 165, 0, 0.2);
   }
 
   .right-arrow {
     width: 16px;
     height: 16px;
     margin-left: 10px;
-    justify-content: center;
-    display: inline-flex;
-    vertical-align: middle;
   }
 </style>
