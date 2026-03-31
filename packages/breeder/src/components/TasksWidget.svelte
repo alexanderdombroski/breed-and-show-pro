@@ -64,7 +64,7 @@
     color: white;
   }
   
-  .widget-link:hover {
+  .widget-link:hover h3 {
     color: black;
   }
   
