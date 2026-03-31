@@ -1,5 +1,6 @@
 ---
 import Layout from "../../../../shared/layouts/Layout.astro";
+import "../../styles/breeder-pages.css";
 import TaskModal from "../../components/TaskModal.svelte";
 import { BreederMockData } from "../../BreederMockData.js";
 const title = "Tasks";
@@ -14,36 +15,38 @@ const isDatePast = (dateString: string) => {
 ---
 
 <Layout title={title} client:load>
-  <a href="/">Back to Dashboard</a>
+  <body>
+    <a href="/">Back to Dashboard</a>
 
-  <TaskModal client:load />
+    <TaskModal client:load />
 
-  {
-    tasks.length === 0 ? (
-      <p class="message">No tasks at this time.</p>
-    ) : (
-      <div class="tasks-list">
-        {tasks.map((task) => (
-          <div class="task-card">
-            <input class="checkbox" type="checkbox" />
-            <div class="task-info">
-              <h2>{task.title}</h2>
-              {task.description && (
-                <p class="description">{task.description}</p>
-              )}
-              {task.dueDate && (
-                <p
-                  class={`due-date ${isDatePast(task.dueDate) ? "past-date" : "future-date"}`}
-                >
-                  Due: {new Date(task.dueDate).toLocaleDateString()}
-                </p>
-              )}
+    {
+      tasks.length === 0 ? (
+        <p class="message">No tasks at this time.</p>
+      ) : (
+        <div class="tasks-list">
+          {tasks.map((task) => (
+            <div class="task-card">
+              <input class="checkbox" type="checkbox" />
+              <div class="task-info">
+                <h2>{task.title}</h2>
+                {task.description && (
+                  <p class="description">{task.description}</p>
+                )}
+                {task.dueDate && (
+                  <p
+                    class={`due-date ${isDatePast(task.dueDate) ? "past-date" : "future-date"}`}
+                  >
+                    Due: {new Date(task.dueDate).toLocaleDateString()}
+                  </p>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-    )
-  }
+          ))}
+        </div>
+      )
+    }
+  </body>
 </Layout>
 
 <style>
@@ -57,10 +60,11 @@ const isDatePast = (dateString: string) => {
     flex-direction: column;
     gap: 15px;
     margin-bottom: 20px;
-    margin-top: 30px;
+    margin-top: 40px;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+    width: 90%;
   }
 
   .task-card {
@@ -109,10 +113,14 @@ const isDatePast = (dateString: string) => {
     color: rgb(1, 83, 1);
   }
 
-  .message {
-    text-align: center;
-    font-size: 1.2em;
-    color: #555;
-    margin-top: 40px;
+  @media (min-width: 1000px) {
+    .tasks-list {
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+    .task-card {
+      width: 210px;
+    }
   }
 </style>

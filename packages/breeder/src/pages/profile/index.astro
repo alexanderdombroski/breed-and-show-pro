@@ -1,18 +1,21 @@
 ---
 import Layout from "../../../../shared/layouts/Layout.astro";
+import "../../styles/breeder-pages.css";
 import { BreederMockData } from "../../BreederMockData.js";
 const title = "Profile";
 const profile = BreederMockData.user;
 ---
 
 <Layout title={title} client:load>
-  <a href="/dashboard/">Back to Dashboard</a>
-  <div class="profile-card">
-    <h2>{profile.farmName}</h2>
-    <h3>{profile.name}</h3>
-    <p>Email: {profile.email}</p>
-    <button>Edit Profile</button>
-  </div>
+  <body>
+    <a href="/">Back to Dashboard</a>
+    <div class="profile-card">
+      <h2>{profile.farmName}</h2>
+      <h3>{profile.name}</h3>
+      <p>Email: {profile.email}</p>
+      <button>Edit Profile</button>
+    </div>
+  </body>
 </Layout>
 
 <style>

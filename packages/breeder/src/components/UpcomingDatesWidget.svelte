@@ -1,9 +1,10 @@
 <script lang="ts">
   import { BreederMockData } from "../BreederMockData.js";
+  import "../styles/breeder-pages.css";
 
   interface UpcomingDate {
     date: string;
-    type: 'heat' | 'farrowing' | 'task';
+    type: 'heat' | 'farrowing' | 'task' | 'confirm';
     title: string;
     description?: string;
     animalName?: string;
@@ -46,6 +47,26 @@
     }
   });
 
+  // Add confirmation dates (21 days after breeding)
+  BreederMockData.animals.forEach(animal => {
+    if (animal.status === 'bred' && animal.breedingDate) {
+      const breedingDate = new Date(animal.breedingDate);
+      const confirmDate = new Date(breedingDate);
+      confirmDate.setDate(confirmDate.getDate() + 21);
+      const confirmDateString = confirmDate.toISOString().split('T')[0];
+      
+      if (isFutureDate(confirmDateString)) {
+        upcomingDates.push({
+          date: confirmDateString,
+          type: 'confirm',
+          title: `${animal.name} - Confirm Breeding`,
+          animalName: animal.name,
+          description: `Check if breeding was successful (${animal.breed} ${animal.earNotch})`
+        });
+      }
+    }
+  });
+
   // Add task due dates
   BreederMockData.tasks.forEach(task => {
     if (task.dueDate && !task.completed && isFutureDate(task.dueDate)) {
@@ -61,7 +82,7 @@
   // Sort by date (earliest first)
   upcomingDates.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
-  type FilterType = 'all' | 'heat' | 'farrowing' | 'task';
+  type FilterType = 'all' | 'heat' | 'farrowing' | 'task' | 'confirm';
   let selectedFilter = $state<FilterType>('all');
   
   // Filter dates based on selected type
@@ -96,6 +117,7 @@
       case 'heat': return 'badge-heat';
       case 'farrowing': return 'badge-farrowing';
       case 'task': return 'badge-task';
+      case 'confirm': return 'badge-confirm';
       default: return '';
     }
   }
@@ -128,6 +150,12 @@
       Farrow
     </button>
     <button 
+      class:active={selectedFilter === 'confirm'} 
+      onclick={() => selectedFilter = 'confirm'}
+    >
+      Confirm
+    </button>
+    <button 
       class:active={selectedFilter === 'task'} 
       onclick={() => selectedFilter = 'task'}
     >
@@ -136,14 +164,14 @@
   </div>
 
   {#if filteredDates().length === 0}
-    <p class="message">No upcoming dates found.</p>
+    <p class="no-message">No upcoming dates found.</p>
   {:else}
     <div class="dates-list">
       {#each filteredDates() as upcomingDate}
         <div class="date-card">
           <div class="date-header">
             <span class={`type-badge ${getTypeBadgeClass(upcomingDate.type)}`}>
-              {upcomingDate.type === 'heat' ? 'HEAT' : upcomingDate.type === 'farrowing' ? 'FARROW' : 'TASK'}
+              {upcomingDate.type === 'heat' ? 'HEAT' : upcomingDate.type === 'farrowing' ? 'FARROW' : upcomingDate.type === 'confirm' ? 'CONFIRM' : 'TASK'}
             </span>
             <span class="days-until">
               {getDaysUntil(upcomingDate.date) === 0 
@@ -165,47 +193,7 @@
   {/if}
 </section>
 
-<style>
-  .title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    position: sticky;
-    top: 0;
-    background-color: #f2af29ff;
-    z-index: 10;
-    padding: 10px 15px;
-    margin: -10px -15px 15px -15px;
-    border-radius: 8px 8px 0 0;
-  }
-
-  .widget-link {
-    text-decoration: none;
-    color: white;
-  }
-  
-  .widget-link:hover h3{
-    color: black;
-  }
-  
-  .widget-container {
-    background-color: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 0px 10px 15px 10px;
-    height: 410px;
-    width: 400px;
-    overflow: auto;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  h3 {
-    margin: 0;
-    font-size: 1.5rem;
-    color: white;
-  }
-  
+<style>  
   .filter-buttons {
     display: flex;
     gap: 5px;
@@ -285,6 +273,11 @@
     color: #2e7d32;
   }
   
+  .badge-confirm {
+    background-color: #e3f2fd;
+    color: #1565c0;
+  }
+  
   .badge-task {
     background-color: #fff3e0;
     color: #ef6c00;
@@ -315,12 +308,5 @@
     font-size: 0.75rem;
     color: #666;
     line-height: 1.3;
-  }
-  
-  .message {
-    text-align: center;
-    font-size: 1em;
-    color: #888;
-    margin-top: 40px;
   }
 </style>

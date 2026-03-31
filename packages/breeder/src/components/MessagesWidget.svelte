@@ -1,4 +1,5 @@
 <script>
+    import "../styles/breeder-pages.css";
     let messages = [
         { 
             name: "John Doe", 
@@ -33,46 +34,6 @@
 </section>
 
 <style>
-  .title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    position: sticky;
-    top: 0;
-    background-color: #f2af29ff;
-    z-index: 10;
-    padding: 10px 15px;
-    margin: -10px -15px 15px -15px;
-    border-radius: 8px 8px 0 0;
-  }
-
-  .widget-link {
-    text-decoration: none;
-    color: white;
-  }
-  
-  .widget-link:hover h3 {
-    color: black;
-  }
-  
-  .widget-container {
-    background-color: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 0px 10px 15px 10px;
-    height: 410px;
-    width: 400px;
-    overflow: auto;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  h3 {
-    margin: 0;
-    font-size: 1.5rem;
-    color: white;
-  }
-
   .messages-container {
     display: flex;
     flex-direction: column;

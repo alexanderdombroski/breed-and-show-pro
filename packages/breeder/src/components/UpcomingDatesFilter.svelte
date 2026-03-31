@@ -1,7 +1,7 @@
 <script lang="ts">
   interface UpcomingDate {
     date: string;
-    type: 'heat' | 'farrowing' | 'task';
+    type: 'heat' | 'farrowing' | 'task' | 'confirm';
     title: string;
     description?: string;
     animalName?: string;
@@ -9,7 +9,7 @@
 
   let { upcomingDates }: { upcomingDates: UpcomingDate[] } = $props();
   
-  type FilterType = 'all' | 'heat' | 'farrowing' | 'task';
+  type FilterType = 'all' | 'heat' | 'farrowing' | 'task' | 'confirm';
   let selectedFilter = $state<FilterType>('all');
   
   // Filter dates based on selected type
@@ -46,6 +46,7 @@
       case 'heat': return 'badge-heat';
       case 'farrowing': return 'badge-farrowing';
       case 'task': return 'badge-task';
+      case 'confirm': return 'badge-confirm';
       default: return '';
     }
   }
@@ -69,6 +70,12 @@
     onclick={() => selectedFilter = 'farrowing'}
   >
     Farrowing
+  </button>
+  <button 
+    class:active={selectedFilter === 'confirm'} 
+    onclick={() => selectedFilter = 'confirm'}
+  >
+    Confirm Breeding
   </button>
   <button 
     class:active={selectedFilter === 'task'} 
@@ -185,6 +192,11 @@
   .badge-farrowing {
     background-color: #e8f5e9;
     color: #2e7d32;
+  }
+  
+  .badge-confirm {
+    background-color: #e3f2fd;
+    color: #1565c0;
   }
   
   .badge-task {

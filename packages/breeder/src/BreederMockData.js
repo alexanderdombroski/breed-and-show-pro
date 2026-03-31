@@ -58,6 +58,18 @@ export const BreederMockData = {
       bredTo: 4,
     },
     {
+      id: 8,
+      name: "Rosie",
+      earNotch: "4-3",
+      breed: "Hampshire",
+      sex: "sow",
+      status: "bred",
+      birthDate: "2023-02-20",
+      breedingDate: "2026-03-15",
+      expectedFarrowDate: "2026-07-07",
+      bredTo: 5,
+    },
+    {
       id: 4,
       name: "Titan",
       earNotch: "1-3",
