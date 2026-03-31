@@ -66,3 +66,61 @@ function getDamName(damId: number): string {
     }
   </body>
 </Layout>
+
+<style>
+  .litters-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 10px;
+    width: 90%;
+    margin: 20px auto;
+  }
+
+  .litter-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    font-size: 16px;
+    color: #333;
+    background-color: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-left: 3px solid #f2af29ff;
+    padding: 12px 15px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .litter-card:hover {
+    background-color: #fff3e0;
+    box-shadow: 0 2px 6px rgba(255, 165, 0, 0.2);
+  }
+
+  .litter-info p {
+    margin: 4px 0 0 0;
+    font-size: 0.9em;
+    color: #666;
+  }
+
+  .litter-info p:first-child {
+    font-weight: 600;
+    color: #333;
+    font-size: 1em;
+  }
+
+  @media (min-width: 1000px) {
+    .litters-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      width: 80%;
+      max-width: 1000px;
+      margin: 20px auto;
+    }
+
+    .litter-card {
+      height: 100px;
+    }
+  }
+</style>

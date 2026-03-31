@@ -91,9 +91,18 @@ function countPastLitters() {
     box-shadow: 0 2px 6px rgba(255, 165, 0, 0.2);
   }
 
-  .right-arrow {
-    width: 16px;
-    height: 16px;
-    margin-left: 10px;
+  @media (min-width: 1000px) {
+    .herd-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      width: 80%;
+      max-width: 1000px;
+      margin: 20px auto;
+    }
+
+    .herd-button {
+      height: 100px;
+    }
   }
 </style>
