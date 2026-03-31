@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { userSchema, type User } from "../../../../shared/types/schemas.ts";
-=======
-import { userSchema, type User } from "../../../../shared/js/types.ts";
->>>>>>> 4d9bf48 (mongodb and routes setup)
 
 const _users: User[] = [
   {
