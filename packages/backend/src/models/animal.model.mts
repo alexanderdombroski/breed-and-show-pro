@@ -1,5 +1,5 @@
 import mongodb from "../db/index.mts";
-import type { Pig, Litter } from "../../../shared/js/types.ts";
+import type { Pig, Litter } from "../../../shared/types/schemas.ts";
 
 const pigsCollection = () => mongodb.getDb().collection<Pig>("pigs");
 const littersCollection = () => mongodb.getDb().collection<Litter>("litters");

@@ -1,7 +1,7 @@
 import mongodb from "../db/index.mts";
-import type { Task } from "../../../shared/js/types.ts";
+import type { TaskNote } from "../../../shared/types/schemas.ts";
 
-const tasksCollection = () => mongodb.getDb().collection<Task>("tasks");
+const tasksCollection = () => mongodb.getDb().collection<TaskNote>("tasks");
 
 export async function getAllTasks() {
   return tasksCollection().find().toArray();
@@ -11,11 +11,11 @@ export async function getTaskById(id: string) {
   return tasksCollection().findOne({ _id: id });
 }
 
-export async function createTask(task: Task) {
+export async function createTask(task: TaskNote) {
   return tasksCollection().insertOne(task);
 }
 
-export async function updateTask(id: string, update: Partial<Task>) {
+export async function updateTask(id: string, update: Partial<TaskNote>) {
   return tasksCollection().updateOne({ _id: id }, { $set: update });
 }
 

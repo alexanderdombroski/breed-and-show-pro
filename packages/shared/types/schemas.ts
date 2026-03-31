@@ -1,43 +1,16 @@
 import { z } from "zod";
 
-// -------------------- DATE RECORDS --------------------
+// -------------------- PIGS COLLECTION --------------------
 
-// Used for future events. Events can be converted to notes
-export const BaseDateRecordSchema = z.object({
-  _id: z.string(),
-  date: z.date(),
-  isEstimated: z.boolean().default(false),
-  label: z.string().optional(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
-});
-
-export const PigDateRecordSchema = BaseDateRecordSchema.extend({
-  pigId: z.string(),
-  _type: z.enum(["farrow", "heat", "breed", "vaccination"]),
-});
-type PigDateRecord = z.infer<typeof PigDateRecordSchema>;
-
-export const LitterDateRecordSchema = BaseDateRecordSchema.extend({
-  litterId: z.string(),
-  _type: z.enum(["weaning"]),
-});
-type LitterDateRecord = z.infer<typeof LitterDateRecordSchema>;
-
-export type DateRecord = PigDateRecord | LitterDateRecord;
-
-// -------------------- PIGS --------------------
-
-export const pigSchema = z.object({
+export const PigSchema = z.object({
   _id: z.string(),
   userId: z.string(),
   name: z.string(),
   earNotch: z.string(),
   breed: z.string(),
-  sex: z.enum(["sow", "boar", "gilt", "barrow"]),
+  sex: z.enum(["sow", "boar", "gilt", "barrow", "sire"]),
   status: z.enum(["open", "bred", "farrowed", "active"]),
   birthDate: z.date(),
-  childIds: z.array(z.string()),
   show: z.object({
     name: z.string().optional(),
     date: z.date().optional(),
@@ -46,45 +19,60 @@ export const pigSchema = z.object({
   createdAt: z.date(),
   updatedAt: z.date(),
 });
-export type Pig = z.infer<typeof pigSchema>;
+export type Pig = z.infer<typeof PigSchema>;
 
-// -------------------- HEARD STATS --------------------
-export const herdSummarySchema = z.object({
-  _id: z.string(),
-  total: z.number().int().nonnegative(),
-  bred: z.number().int().nonnegative(),
-  farrowed: z.number().int().nonnegative(),
-  open: z.number().int().nonnegative(),
-});
-export type HerdSummary = z.infer<typeof herdSummarySchema>;
-
-// -------------------- LITTER STATS --------------------
-export const litterSchema = z.object({
+// -------------------- LITTER COLLECTION --------------------
+export const LitterSchema = z.object({
   _id: z.string(),
   userId: z.string(),
   sowId: z.string(),
-  boarId: z.string().optional(),
-  totalBorn: z.number().int().nonnegative().optional(),
+  sireId: z.string().optional(),
+  totalBorn: z.number().int().nonnegative(),
   bornAlive: z.number().int().nonnegative().optional(),
-  stillborn: z.number().int().nonnegative().default(0),
-  pigletsWeaned: z.number().int().nonnegative().optional(),
+  stillborn: z.number().int().nonnegative().optional(),
   pigletIds: z.array(z.string()).default([]),
   createdAt: z.date(),
   updatedAt: z.date(),
 });
-export type Litter = z.infer<typeof litterSchema>;
+export type Litter = z.infer<typeof LitterSchema>;
 
-// -------------------- USERS --------------------
+// -------------------- USERS COLLECTION --------------------
 
-export const userSchema = z.object({
+export const UserSchema = z.object({
   _id: z.string(),
   name: z.string(),
   email: z.email(),
   farmName: z.string(),
 });
-export type User = z.infer<typeof userSchema>;
+export type User = z.infer<typeof UserSchema>;
 
-// -------------------- NOTES --------------------
+// -------------------- EVENTS COLLECTION --------------------
+
+// Used for future events. Events can be converted to notes
+export const BaseEventSchema = z.object({
+  _id: z.string(),
+  date: z.date(),
+  isEstimated: z.boolean().default(false),
+  label: z.string().optional(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
+export const PigEventSchema = BaseEventSchema.extend({
+  pigId: z.string(),
+  _type: z.enum(["farrow", "heat", "breed", "vaccination"]),
+});
+export type PigEvent = z.infer<typeof PigEventSchema>;
+
+export const LitterEventSchema = BaseEventSchema.extend({
+  litterId: z.string(),
+  _type: z.enum(["weaning"]),
+});
+export type LitterEvent = z.infer<typeof LitterEventSchema>;
+
+export type Event = PigEvent | LitterEvent;
+
+// -------------------- NOTES COLLECTION --------------------
 
 export const NoteSchema = z.object({
   _id: z.string(),
