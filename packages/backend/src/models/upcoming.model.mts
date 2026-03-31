@@ -1,5 +1,5 @@
 import mongodb from "../db/index.mts";
-import type { UpcomingDate } from "../../../shared/js/types.ts";
+import type { UpcomingDate } from "../../../shared/types/schemas.ts";
 
 const upcomingCollection = () =>
   mongodb.getDb().collection<UpcomingDate>("upcomingDates");

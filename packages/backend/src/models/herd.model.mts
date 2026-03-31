@@ -1,5 +1,5 @@
 import mongodb from "../db/index.mts";
-import type { HerdSummary } from "../../../shared/js/types.ts";
+import type { HerdSummary } from "../../../shared/types/schemas.ts";
 
 const pigsCollection = () => mongodb.getDb().collection("pigs");
 
