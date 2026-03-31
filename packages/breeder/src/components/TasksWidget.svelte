@@ -65,16 +65,16 @@
   }
   
   .widget-link:hover {
-    opacity: 0.9;
+    color: black;
   }
   
   .widget-container {
     background-color: white;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-    padding: 10px 15px;
-    height: 400px;
-    width: 320px;
+    padding: 0px 10px 15px 10px;
+    height: 410px;
+    width: 400px;
     overflow: auto;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
