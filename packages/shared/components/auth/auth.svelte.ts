@@ -14,6 +14,19 @@ export async function login(redirectPath: string) {
   });
 }
 
+export async function loginAsTestUser(
+  email: string,
+  password: string,
+  redirect: string,
+) {
+  return await authClient.signIn.email({
+    email,
+    password,
+    rememberMe: false,
+    callbackURL: redirect,
+  });
+}
+
 export async function logout() {
   await authClient.signOut();
 }

@@ -1,15 +1,18 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
-import { getMongoClient } from "../db/index.mts";
+import { getDb } from "../db/index.mts";
 import { isDev } from "../utils/index.ts";
 
 const baseURL = process.env.BETTER_AUTH_URL;
-const db = getMongoClient().db();
+const db = await getDb();
 
 export const auth = betterAuth({
   appName: "Breed and Show Pro",
   database: mongodbAdapter(db),
   baseURL,
+  emailAndPassword: {
+    enabled: true,
+  },
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID!,

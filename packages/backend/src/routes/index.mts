@@ -1,5 +1,4 @@
 import { Router } from "express";
-import userRoutes from "./user.routes.mts";
 import pigRoutes from "./pig.routes.mts";
 import herdRoutes from "./herd.routes.mts";
 import litterRoutes from "./litter.routes.mts";
@@ -9,12 +8,7 @@ import upcomingDatesRoutes from "./upcomingDates.routes.mts";
 
 const router: Router = Router();
 
-router.get("/", (req, res) => {
-  res.json({ title: "API V1" });
-});
-
 router
-  .use("/users", userRoutes) // User Routes
   .use("/pigs", pigRoutes) // Pig Routes
   .use("/stats/herd-summary", herdRoutes) // Herd endpoints
   .use("/litters", litterRoutes) // Litter Routes

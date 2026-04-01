@@ -7,6 +7,7 @@ import {
   updateTask as updateTaskRecord,
   completeTask as markTaskComplete,
   deleteTask as removeTask,
+  // @ts-expect-error
 } from "../models/task.model.mts";
 
 export async function getTasks(
