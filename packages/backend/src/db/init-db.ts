@@ -22,7 +22,7 @@ loadEnvFile(path.join(process.cwd(), "packages", "backend", ".env"));
 const { withDb, withDbCollection, getMongoClient } =
   await import("./index.mts");
 
-const collections = ["events", "litters", "notes", "pigs", "users"];
+const collections = ["events", "litters", "notes", "pigs", "user"];
 await withDb(async (db) => {
   for (const collection of collections) {
     if (await db.listCollections({ name: collection }).hasNext()) {
@@ -30,14 +30,6 @@ await withDb(async (db) => {
     }
     await db.createCollection(collection);
   }
-});
-
-await withDbCollection<User>("users", async (collection) => {
-  await collection.createIndex({ email: 1 }, { unique: true });
-  await collection.createIndex({ name: 1 });
-
-  await collection.insertMany(users);
-  console.info(`Inserted ${users.length} users into database`);
 });
 
 await withDbCollection<Litter>("litters", async (collection) => {
@@ -75,5 +67,32 @@ await withDbCollection<GenericNote>("notes", async (collection) => {
   await collection.insertMany(notes);
   console.info(`Inserted ${notes.length} notes into database`);
 });
+
+// ---------- Test Users ----------
+
+const { auth } = await import("../service/auth.ts");
+
+for (const user of users) {
+  const { name, email, image } = user;
+  await auth.api.signUpEmail({
+    body: {
+      name,
+      email,
+      password: "password1234",
+      image,
+    },
+  });
+}
+
+await withDbCollection<User>("user", async (collection) => {
+  const testId = "1";
+  const testUser = await collection.findOne({ email: "sarahmiller@email.com" });
+  await collection.deleteOne({ _id: testUser!._id });
+  await collection.insertOne({ ...testUser!, _id: testId });
+});
+
+console.info(
+  `Registered ${users.length} test users and added into the database`,
+);
 
 await getMongoClient().close();
