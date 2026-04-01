@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getUpcomingDates } from "../services/upcoming.service.mts";
+import { getUpcomingDates } from "../controllers/upcoming.controller.mts";
 
 const router: Router = Router();
 

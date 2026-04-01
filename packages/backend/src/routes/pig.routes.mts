@@ -10,7 +10,7 @@ import {
   addWeaning,
   addHeatDate,
   archivePig,
-} from "../services/pig.service.mts";
+} from "../controllers/pig.controller.mts";
 
 const router: Router = Router();
 

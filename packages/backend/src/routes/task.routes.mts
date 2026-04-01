@@ -5,7 +5,7 @@ import {
   getTaskById,
   updateTask,
   deleteTask,
-} from "../services/task.service.mts";
+} from "../controllers/task.controller.mts";
 
 const router: Router = Router();
 
