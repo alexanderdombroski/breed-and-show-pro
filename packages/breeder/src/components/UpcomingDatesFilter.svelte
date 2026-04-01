@@ -1,7 +1,7 @@
 <script lang="ts">
   interface UpcomingDate {
     date: string;
-    type: 'heat' | 'farrowing' | 'task' | 'confirm';
+    type: "heat" | "farrowing" | "task" | "confirm";
     title: string;
     description?: string;
     animalName?: string;
@@ -9,23 +9,23 @@
 
   let { upcomingDates }: { upcomingDates: UpcomingDate[] } = $props();
   
-  type FilterType = 'all' | 'heat' | 'farrowing' | 'task' | 'confirm';
-  let selectedFilter = $state<FilterType>('all');
+  type FilterType = "all" | "heat" | "farrowing" | "task" | "confirm";
+  let selectedFilter = $state<FilterType>("all");
   
   // Filter dates based on selected type
   const filteredDates = $derived(() => {
-    if (selectedFilter === 'all') return upcomingDates;
+    if (selectedFilter === "all") return upcomingDates;
     return upcomingDates.filter(date => date.type === selectedFilter);
   });
   
   // Format date for display
   function formatDate(dateString: string): string {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      weekday: 'short', 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric' 
+    return date.toLocaleDateString("en-US", { 
+      weekday: "short", 
+      year: "numeric", 
+      month: "short", 
+      day: "numeric" 
     });
   }
   
@@ -43,43 +43,43 @@
   // Get type badge color
   function getTypeBadgeClass(type: string): string {
     switch(type) {
-      case 'heat': return 'badge-heat';
-      case 'farrowing': return 'badge-farrowing';
-      case 'task': return 'badge-task';
-      case 'confirm': return 'badge-confirm';
-      default: return '';
+      case "heat": return "badge-heat";
+      case "farrowing": return "badge-farrowing";
+      case "task": return "badge-task";
+      case "confirm": return "badge-confirm";
+      default: return "";
     }
   }
 </script>
 
 <div class="filter-buttons">
   <button 
-    class:active={selectedFilter === 'all'} 
-    onclick={() => selectedFilter = 'all'}
+    class:active={selectedFilter === "all"} 
+    onclick={() => selectedFilter = "all"}
   >
     All
   </button>
   <button 
-    class:active={selectedFilter === 'heat'} 
-    onclick={() => selectedFilter = 'heat'}
+    class:active={selectedFilter === "heat"} 
+    onclick={() => selectedFilter = "heat"}
   >
     Heat Dates
   </button>
   <button 
-    class:active={selectedFilter === 'farrowing'} 
-    onclick={() => selectedFilter = 'farrowing'}
+    class:active={selectedFilter === "farrowing"} 
+    onclick={() => selectedFilter = "farrowing"}
   >
     Farrowing
   </button>
   <button 
-    class:active={selectedFilter === 'confirm'} 
-    onclick={() => selectedFilter = 'confirm'}
+    class:active={selectedFilter === "confirm"} 
+    onclick={() => selectedFilter = "confirm"}
   >
     Confirm Breeding
   </button>
   <button 
-    class:active={selectedFilter === 'task'} 
-    onclick={() => selectedFilter = 'task'}
+    class:active={selectedFilter === "task"} 
+    onclick={() => selectedFilter = "task"}
   >
     Tasks
   </button>
@@ -97,9 +97,9 @@
           </span>
           <span class="days-until">
             {getDaysUntil(upcomingDate.date) === 0 
-              ? 'Today' 
+              ? "Today" 
               : getDaysUntil(upcomingDate.date) === 1 
-              ? 'Tomorrow'
+              ? "Tomorrow"
               : `In ${getDaysUntil(upcomingDate.date)} days`
             }
           </span>
