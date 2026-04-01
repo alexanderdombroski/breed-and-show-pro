@@ -5,10 +5,10 @@ services:
     plan: free
 
     buildCommand: pnpm install
-    startCommand: node packages/backend/server.ts
+    startCommand: pnpm run -F backend start
     branch: main
     autoDeployTrigger: commit
-    healthCheckPath: /health
+    healthCheckPath: /api/health
     envVars:
       - key: PORT
         value: 3000

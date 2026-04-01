@@ -10,6 +10,8 @@ import type {
   User,
   Event,
   GenericNote,
+  Account,
+  Session,
 } from "../../../shared/types/schemas.ts";
 import { users } from "./data/users.ts";
 import { litters } from "./data/litters.ts";
@@ -22,7 +24,14 @@ loadEnvFile(path.join(process.cwd(), "packages", "backend", ".env"));
 const { withDb, withDbCollection, getMongoClient } =
   await import("./index.mts");
 
-const collections = ["events", "litters", "notes", "pigs", "user"];
+const betterAuthCollections = ["user", "account", "session", "verification"];
+const collections = [
+  "events",
+  "litters",
+  "notes",
+  "pigs",
+  ...betterAuthCollections,
+];
 await withDb(async (db) => {
   for (const collection of collections) {
     if (await db.listCollections({ name: collection }).hasNext()) {
@@ -87,6 +96,29 @@ for (const user of users) {
 await withDbCollection<User>("user", async (collection) => {
   const testId = "1";
   const testUser = await collection.findOne({ email: "sarahmiller@email.com" });
+
+  await withDbCollection<Account>("account", async (accountCollection) => {
+    await accountCollection.updateOne(
+      { userId: testUser!._id },
+      {
+        $set: {
+          userId: testId,
+        },
+      },
+    );
+  });
+
+  await withDbCollection<Session>("session", async (accountCollection) => {
+    await accountCollection.updateOne(
+      { userId: testUser!._id },
+      {
+        $set: {
+          userId: testId,
+        },
+      },
+    );
+  });
+
   await collection.deleteOne({ _id: testUser!._id });
   await collection.insertOne({ ...testUser!, _id: testId });
 });

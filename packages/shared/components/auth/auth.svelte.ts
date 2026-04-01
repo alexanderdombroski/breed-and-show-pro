@@ -1,10 +1,20 @@
-import { createAuthClient } from "better-auth/client";
+import { createAuthClient } from "better-auth/svelte";
 
 const BASE_URL = import.meta.env.BASE_URL;
 
 export const authClient = createAuthClient({
   baseURL: import.meta.env.PUBLIC_SERVER_URL,
 });
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const { data, error } = await authClient.getSession();
+
+if (data) {
+  // User is logged in, 'data' contains the session and user info
+  console.info("Logged in as:", data.user.email);
+} else {
+  console.info("Not logged in");
+}
 
 /** @param redirectPath - ie /dashboard or /settings */
 export async function login(redirectPath: string) {
@@ -17,13 +27,16 @@ export async function login(redirectPath: string) {
 export async function loginAsTestUser(
   email: string,
   password: string,
-  redirect: string,
+  redirect?: string,
 ) {
   return await authClient.signIn.email({
     email,
     password,
-    rememberMe: false,
-    callbackURL: redirect,
+    rememberMe: true,
+    fetchOptions: {
+      redirect: "error",
+    },
+    callbackURL: redirect || "",
   });
 }
 

@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
+    "start": "node server.ts",
     "check-types": "tsc --noEmit",
     "dev": "node --env-file=.env --watch server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",

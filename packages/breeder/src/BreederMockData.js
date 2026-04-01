@@ -15,8 +15,9 @@ export const BreederMockData = {
       sex: "sow",
       status: "open",
       birthDate: "2023-04-12",
-      lastHeatDate: "2026-03-01",
-      nextHeatDate: "2026-03-25",
+      heatDates: ["2026-01-01", "2026-01-22", "2026-02-12", "2026-03-05"],
+      nextHeatDate: "2026-03-26",
+      notes: "Very active and healthy sow.",
     },
     {
       id: 2,
@@ -28,8 +29,9 @@ export const BreederMockData = {
       birthDate: "2023-01-05",
       breedingDate: "2026-02-20",
       expectedFarrowDate: "2026-06-14",
-      bredTo: 4,
-      nextHeatDate: "2026-03-13",
+      sireId: 4,
+      heatDates: ["2025-12-15", "2026-01-05", "2026-01-26", "2026-02-16"],
+      nextHeatDate: "2026-03-09",
     },
     {
       id: 3,
@@ -42,7 +44,8 @@ export const BreederMockData = {
       lastFarrowDate: "2026-01-10",
       nextHeatDate: "2026-02-01",
       litterNumber: 1,
-      bredTo: 5,
+      sireId: 5,
+      heatDates: ["2025-11-20", "2025-12-11", "2025-12-31", "2026-01-21"],
     },
     {
       id: 6,
@@ -55,7 +58,8 @@ export const BreederMockData = {
       lastFarrowDate: "2026-06-14",
       nextHeatDate: "2026-07-20",
       litterNumber: 2,
-      bredTo: 4,
+      sireId: 4,
+      heatDates: ["2026-04-15", "2026-05-06", "2026-05-27"],
     },
     {
       id: 8,
@@ -67,7 +71,8 @@ export const BreederMockData = {
       birthDate: "2023-02-20",
       breedingDate: "2026-03-15",
       expectedFarrowDate: "2026-07-07",
-      bredTo: 5,
+      sireId: 5,
+      heatDates: ["2026-01-10", "2026-01-31", "2026-02-21", "2026-03-14"],
     },
     {
       id: 4,
@@ -77,6 +82,7 @@ export const BreederMockData = {
       sex: "boar",
       status: "active",
       birthDate: "2022-07-20",
+      notes: "Excellent breeding boar with strong genetics.",
     },
     {
       id: 5,
@@ -86,6 +92,7 @@ export const BreederMockData = {
       sex: "boar",
       status: "active",
       birthDate: "2021-09-15",
+      notes: "Proven sire with multiple successful litters.",
     },
     {
       id: 7,
@@ -95,6 +102,7 @@ export const BreederMockData = {
       sex: "boar",
       status: "archived",
       birthDate: "2022-05-10",
+      notes: "Retired due to age.",
     },
   ],
 
@@ -107,6 +115,7 @@ export const BreederMockData = {
       bornAlive: 9,
       stillBorn: 1,
       weanedDate: "2026-02-29",
+      notes: "Healthy litter, all piglets thriving.",
     },
     {
       id: 2,
@@ -116,6 +125,7 @@ export const BreederMockData = {
       bornAlive: 10,
       stillBorn: 0,
       weanedDate: "2026-08-09",
+      notes: "Excellent litter size, no stillborns.",
     },
   ],
 

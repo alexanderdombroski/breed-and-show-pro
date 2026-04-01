@@ -1,5 +1,6 @@
 ---
 import Login from "./auth/Login.svelte";
+import LoginPopover from "./auth/LoginPopover.svelte";
 ---
 
 <header class="header">
@@ -23,6 +24,7 @@ import Login from "./auth/Login.svelte";
     </div>
   </nav>
   <div class="auth-buttons">
+    <LoginPopover client:only="svelte" />
     <Login className="btn-primary" loginText="Login with Google" client:load />
   </div>
 </header>

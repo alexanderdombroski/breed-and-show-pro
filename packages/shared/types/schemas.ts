@@ -51,8 +51,7 @@ export const UserSchema = z.object({
 export type User = z.infer<typeof UserSchema>;
 
 /** The rest should be fully managed By Better Auth */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type Account = {
+export type Account = {
   _id: string;
   accountId: string;
   providerId: string;
@@ -65,8 +64,7 @@ type Account = {
   updatedAt: Date;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type Session = {
+export type Session = {
   _id: string;
   token: string;
   ipAddress: string;
