@@ -23,6 +23,7 @@
     };
     
     // TODO: Send sireData to backend API
+    // eslint-disable-next-line no-console
     console.log("New sire:", sireData);
     
     // Close modal and reset form
