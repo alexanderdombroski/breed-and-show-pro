@@ -7,8 +7,7 @@
     if (newDate) {
       heatDates = [...heatDates, newDate];
       newDate = "";
-      // In a real app, you'd save this to the backend
-      // For now, we'll just update the local array
+      // saved to local array
     }
   }
 
