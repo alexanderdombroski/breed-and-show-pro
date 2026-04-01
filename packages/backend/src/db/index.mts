@@ -2,9 +2,13 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 import type { Collection, Document, Db } from "mongodb";
 
 const uri = process.env.MONGO_URI as string;
-const dbName = process.env.DATABASE_NAME as string;
+const dbName =
+  (process.env.DATABASE_NAME as string) ||
+  (process.env.MONGO_DATABASE as string);
 if (!(uri && dbName)) {
-  throw new Error("Database environment not fully configured!");
+  throw new Error(
+    "Database environment not fully configured! MONGO_URI and DATABASE_NAME/MONGO_DATABASE are required.",
+  );
 }
 
 export function getMongoClient() {
