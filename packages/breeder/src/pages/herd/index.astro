@@ -1,6 +1,9 @@
 ---
 import { BreederMockData } from "../../BreederMockData.js";
 import Layout from "../../../../shared/layouts/Layout.astro";
+import "../../styles/breeder-pages.css";
+import AddSowForm from "../../components/AddSowForm.svelte";
+import AddSireForm from "../../components/AddSireForm.svelte";
 
 const title = "Herd";
 
@@ -29,44 +32,49 @@ function countPastLitters() {
 ---
 
 <Layout title={title}>
-  <div class="herd-container">
-    <a href="/herd/open" class="herd-button">
-      <span>({countByStatus("open")}) Open</span>
-      <img src="/right-arrow.png" alt="right-arrow" class="right-arrow" />
-    </a>
-    <a href="/herd/bred" class="herd-button">
-      <span>({countByStatus("bred")}) Bred</span>
-      <img src="/right-arrow.png" alt="right-arrow" class="right-arrow" />
-    </a>
-    <a href="/herd/farrowed" class="herd-button">
-      <span>({countByStatus("farrowed")}) Farrow</span>
-      <img src="/right-arrow.png" alt="right-arrow" class="right-arrow" />
-    </a>
-    <a href="/herd/sires" class="herd-button">
-      <span>({countByStatus("active")}) Sires</span>
-      <img src="/right-arrow.png" alt="right-arrow" class="right-arrow" />
-    </a>
-    <a href="/herd/pastLitters" class="herd-button">
-      <span>({countPastLitters()}) Past Litters</span>
-      <img src="/right-arrow.png" alt="right-arrow" class="right-arrow" />
-    </a>
-    <a href="/herd/archived" class="herd-button">
-      <span>({countByStatus("archived")}) Archived</span>
-      <img src="/right-arrow.png" alt="right-arrow" class="right-arrow" />
-    </a>
-  </div>
+  <body>
+    <a class="back-link" href="/">Back to Dashboard</a>
+
+    <div class="form-btns">
+      <AddSowForm client:load />
+      <AddSireForm client:load />
+    </div>
+
+    <div class="herd-container">
+      <a href="/herd/open" class="herd-button">
+        <span>({countByStatus("open")}) Open</span>
+        <img src="/right-arrow.png" alt="right-arrow" class="right-arrow" />
+      </a>
+      <a href="/herd/bred" class="herd-button">
+        <span>({countByStatus("bred")}) Bred</span>
+        <img src="/right-arrow.png" alt="right-arrow" class="right-arrow" />
+      </a>
+      <a href="/herd/farrowed" class="herd-button">
+        <span>({countByStatus("farrowed")}) Farrow</span>
+        <img src="/right-arrow.png" alt="right-arrow" class="right-arrow" />
+      </a>
+      <a href="/herd/sires" class="herd-button">
+        <span>({countByStatus("active")}) Sires</span>
+        <img src="/right-arrow.png" alt="right-arrow" class="right-arrow" />
+      </a>
+      <a href="/herd/pastLitters" class="herd-button">
+        <span>({countPastLitters()}) Past Litters</span>
+        <img src="/right-arrow.png" alt="right-arrow" class="right-arrow" />
+      </a>
+      <a href="/herd/archived" class="herd-button">
+        <span>({countByStatus("archived")}) Archived</span>
+        <img src="/right-arrow.png" alt="right-arrow" class="right-arrow" />
+      </a>
+    </div>
+  </body>
 </Layout>
 
 <style>
   .herd-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-  }
-
-  .herd-container a {
+    gap: 12px;
+    margin-bottom: 10px;
     width: 90%;
     margin: 0 auto;
   }
@@ -76,23 +84,33 @@ function countPastLitters() {
     justify-content: space-between;
     align-items: center;
     text-decoration: none;
-    font-size: 18px;
-    color: black;
-    background-color: #f2af29ff;
-    padding: 10px 15px;
-    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+    background-color: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-left: 3px solid #f2af29ff;
+    padding: 12px 15px;
+    border-radius: 4px;
+    transition: all 0.2s;
   }
 
   .herd-button:hover {
-    background-color: #f0b746cc;
+    background-color: #fff3e0;
+    box-shadow: 0 2px 6px rgba(255, 165, 0, 0.2);
   }
 
-  .right-arrow {
-    width: 16px;
-    height: 16px;
-    margin-left: 10px;
-    justify-content: center;
-    display: inline-flex;
-    vertical-align: middle;
+  @media (min-width: 1000px) {
+    .herd-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      width: 80%;
+      max-width: 1000px;
+      margin: 20px auto;
+    }
+
+    .herd-button {
+      height: 100px;
+    }
   }
 </style>

@@ -52,7 +52,7 @@
   <nav class="user__menu" class:open={visible}>
     <a href="/index.html">Dashboard</a>
     <a href="/herd/">Herd</a>
-    <a href="/">Upcoming Dates</a>
+    <a href="/upcomingDates/">Upcoming Dates</a>
     <a href="/task/">Tasks</a>
     <a href="/">Breeding Calculator</a>
     <a href="/">Archived</a>

@@ -12,14 +12,19 @@
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const taskData = {
-      title: formData.get('title'),
-      description: formData.get('description'),
-      dueDate: formData.get('dueDate')
+    const sowData = {
+      name: formData.get('name'),
+      earNotch: formData.get('earNotch'),
+      breed: formData.get('breed'),
+      sex: 'sow',
+      status: 'open',
+      birthDate: formData.get('birthDate'),
+      lastHeatDate: formData.get('lastHeatDate') || undefined,
+      notes: formData.get('notes') || undefined
     };
     
-    // TODO: Send taskData to backend API
-    console.log('New task:', taskData);
+    // TODO: Send sowData to backend API
+    console.log('New sow:', sowData);
     
     // Close modal and reset form
     closeModal();
@@ -39,8 +44,8 @@
   }
 </script>
 
-<button class="create-task-btn" onclick={openModal}>
-  + Create New Task
+<button class="create-btn" onclick={openModal}>
+  + Add New Sow
 </button>
 
 {#if showModal}
@@ -53,39 +58,78 @@
   >
     <div class="modal-content">
       <div class="modal-header">
-        <h2>Create New Task</h2>
+        <h2>Add New Sow</h2>
         <button class="close-btn" onclick={closeModal}>&times;</button>
-    </div>
+      </div>
       
-      <form class="task-form" onsubmit={handleSubmit}>
+      <form class="pig-form" onsubmit={handleSubmit}>
         <div class="form-group">
-          <label for="title">Task Title *</label>
+          <label for="name">Name *</label>
           <input 
             type="text" 
-            id="title"
-            name="title"
-            placeholder="Enter task title" 
+            id="name"
+            name="name"
+            placeholder="Enter sow name" 
             required 
           />
         </div>
 
         <div class="form-group">
-          <label for="description">Description</label>
-          <textarea 
-            id="description"
-            name="description"
-            placeholder="Enter task description (optional)" 
-            rows="4"
-          ></textarea>
+          <label for="earNotch">Ear Notch *</label>
+          <input 
+            type="text" 
+            id="earNotch"
+            name="earNotch"
+            placeholder="e.g., 3-2" 
+            required 
+          />
         </div>
 
         <div class="form-group">
-          <label for="dueDate">Due Date (optional)</label>
+          <label for="breed">Breed *</label>
+          <select 
+            id="breed"
+            name="breed"
+            required
+          >
+            <option value="">Select breed</option>
+            <option value="Yorkshire">Yorkshire</option>
+            <option value="Duroc">Duroc</option>
+            <option value="Hampshire">Hampshire</option>
+            <option value="Berkshire">Berkshire</option>
+            <option value="Landrace">Landrace</option>
+            <option value="Crossbred">Crossbred</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="birthDate">Birth Date *</label>
           <input 
             type="date" 
-            id="dueDate"
-            name="dueDate"
+            id="birthDate"
+            name="birthDate"
+            required
           />
+        </div>
+
+        <div class="form-group">
+          <label for="lastHeatDate">Last Heat Date (optional)</label>
+          <input 
+            type="date" 
+            id="lastHeatDate"
+            name="lastHeatDate"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Notes</label>
+          <textarea 
+            id="notes"
+            name="notes"
+            placeholder="Enter any additional notes (optional)" 
+            rows="4"
+          ></textarea>
         </div>
 
         <p class="required-message">* items are required</p>
@@ -95,7 +139,7 @@
             Cancel
           </button>
           <button type="submit" class="submit-btn">
-            Add Task
+            Add Sow
           </button>
         </div>
       </form>
@@ -104,7 +148,7 @@
 {/if}
 
 <style>
-  .create-task-btn {
+  .create-btn {
     background-color: #f2af29ff;
     color: black;
     padding: 12px 24px;
@@ -114,9 +158,10 @@
     cursor: pointer;
     font-weight: 500;
     transition: background-color 0.2s;
+    white-space: nowrap;
   }
 
-  .create-task-btn:hover {
+  .create-btn:hover {
     background-color: #d99a1f;
   }
 
@@ -192,15 +237,13 @@
     align-items: center;
     justify-content: center;
     line-height: 1;
-    margin-left: auto;
-    margin-right: 1px;
   }
 
   .close-btn:hover {
     color: #333;
   }
 
-  .task-form {
+  .pig-form {
     padding: 24px;
   }
 
@@ -210,28 +253,21 @@
 
   .form-group label {
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     font-weight: 500;
     color: #333;
-    font-size: 0.95em;
   }
 
   .form-group input,
+  .form-group select,
   .form-group textarea {
     width: 100%;
-    padding: 10px 12px;
+    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-family: inherit;
     font-size: 1em;
     box-sizing: border-box;
-    transition: border-color 0.2s;
-  }
-
-  .form-group input:focus,
-  .form-group textarea:focus {
-    outline: none;
-    border-color: #f2af29ff;
+    font-family: inherit;
   }
 
   .form-group textarea {
@@ -239,43 +275,49 @@
     min-height: 80px;
   }
 
-  .form-actions {
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
-    margin-top: 24px;
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #f2af29ff;
+    box-shadow: 0 0 0 2px rgba(242, 175, 41, 0.2);
   }
 
   .required-message {
     font-size: 0.9em;
     color: #666;
-    margin-top: -12px;
-    margin-bottom: 12px;
+    margin-bottom: 20px;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
   }
 
   .cancel-btn,
   .submit-btn {
-    padding: 10px 20px;
+    padding: 10px 24px;
     border: none;
     border-radius: 4px;
     font-size: 1em;
     cursor: pointer;
-    transition: all 0.2s;
     font-weight: 500;
+    transition: background-color 0.2s;
   }
 
   .cancel-btn {
-    background-color: #e0e0e0;
+    background-color: #f0f0f0;
     color: #333;
   }
 
   .cancel-btn:hover {
-    background-color: #d0d0d0;
+    background-color: #e0e0e0;
   }
 
   .submit-btn {
     background-color: #f2af29ff;
-    color: white;
+    color: black;
   }
 
   .submit-btn:hover {

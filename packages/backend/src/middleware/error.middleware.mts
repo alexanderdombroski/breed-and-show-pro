@@ -42,12 +42,10 @@ export const globalErrorHandler = (
     return;
   }
 
-  res
-    .status(500)
-    .json({
-      error: {
-        message:
-          getErrorMessage(err) || "An Error occurred. Please try again later.",
-      },
-    });
+  res.status(500).json({
+    error: {
+      message:
+        getErrorMessage(err) || "An Error occurred. Please try again later.",
+    },
+  });
 };

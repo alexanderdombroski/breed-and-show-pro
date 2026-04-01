@@ -2,7 +2,7 @@
   import { BreederMockData } from "../BreederMockData.js";
   
   const tasks = BreederMockData.tasks;
-  const incompleteTasks = tasks.filter(t => !t.completed);
+  // const incompleteTasks = tasks.filter(t => !t.completed);
   
   // Use same date logic as task page
   const isDatePast = (dateString: string) => {
@@ -12,10 +12,10 @@
     return dueDate < today;
   };
   
-  const overdueTasks = incompleteTasks.filter(t => {
-    if (!t.dueDate) return false;
-    return isDatePast(t.dueDate);
-  });
+  // const overdueTasks = incompleteTasks.filter(t => {
+  //   if (!t.dueDate) return false;
+  //   return isDatePast(t.dueDate);
+  // });
 </script>
 
 <section class="widget-container">
@@ -23,18 +23,6 @@
     <a href="/task/" class="widget-link">
         <h3>Tasks</h3>
     </a>
-    <div class="stats">
-      {#if overdueTasks.length > 0}
-          <div class="stat-item overdue">
-          <span class="number">{overdueTasks.length}</span>
-          <span class="label">Overdue</span>
-          </div>
-      {/if}
-      <div class="stat-item">
-        <span class="number">{incompleteTasks.length}</span>
-        <span class="label">Pending</span>
-      </div>
-    </div>
   </div>
 
   {#if tasks.length > 0}
@@ -53,80 +41,13 @@
             </div>
         {/each}
     </div>
-  {/if}
+    {:else}
+    <p class="no-message">No tasks at this time.</p>
+    {/if}
+  
 </section>
 
-<style>
-  .title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    position: sticky;
-    top: 0;
-    background-color: white;
-    z-index: 5;
-    padding: 5px 0;
-  }
-
-  .widget-link {
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  .widget-link:hover {
-    color: orange;
-  }
-  
-  .widget-container {
-    border: 1px solid orange;
-    padding: 10px 15px;
-    margin: 20px 0;
-    height: 400px;
-    width: 320px;
-    overflow: auto;
-  }
-  
-  h3 {
-    margin: 0;
-    font-size: 1.5rem;
-  }
-  
-  .stats {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-  }
-  
-  .stat-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-  }
-  
-  .stat-item .number {
-    font-size: 1.5rem;
-    font-weight: bold;
-    line-height: 1;
-  }
-  
-  .stat-item .label {
-    font-size: 0.75rem;
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    line-height: 1;
-  }
-  
-  .stat-item.overdue .number {
-    color: #d32f2f;
-  }
-  
-  .stat-item.overdue .label {
-    color: #d32f2f;
-  }
-
+<style>  
   .checkbox {
     margin-right: 15px;
     transform: scale(1.5);
@@ -135,30 +56,33 @@
   .tasks-list {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    margin-bottom: 10px;
+    gap: 10px;
   }
 
   .task-card {
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: #f2af29ff;
-    padding: 10px 15px;
-    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+    border-left: 3px solid #f2af29ff;
+    background-color: #fafafa;
+    padding: 10px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s;
   }
 
   .task-card:hover {
-    background-color: #f0b746cc;
+    background-color: #fff3e0;
+    box-shadow: 0 2px 6px rgba(255, 165, 0, 0.2);
   }
 
   .task-info h2 {
-    margin: 0 0 5px 0;
+    margin: 0 0 4px 0;
     font-size: 1em;
     line-height: 1.2;
     text-align: left;
+    color: #333;
   }
 
   .task-info p {
@@ -166,28 +90,22 @@
     font-size: 0.8em;
     text-align: left;
   }
-
+  
   .description {
     line-height: 1.2;
+    color: #666;
   }
 
   .due-date {
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 0.75rem;
   }
 
   .past-date {
-    color: rgb(170, 0, 0);
+    color: #d32f2f;
   }
 
   .future-date {
-    color: rgb(1, 83, 1);
+    color: #2e7d32;
   }
-
-  .message {
-    text-align: center;
-    font-size: 1.2em;
-    color: #555;
-    margin-top: 40px;
-  }
-
 </style>

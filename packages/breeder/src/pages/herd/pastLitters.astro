@@ -1,5 +1,6 @@
 ---
 import Layout from "../../../../shared/layouts/Layout.astro";
+import "../../styles/breeder-pages.css";
 const title = "Past Litters";
 
 import { BreederMockData } from "../../BreederMockData.js";
@@ -38,82 +39,88 @@ function getDamName(damId: number): string {
 ---
 
 <Layout title={title}>
-  <a href="/herd/">Back to Herd</a>
-  {
-    pastLitters.length === 0 ? (
-      <p class="message">No past litters at this time.</p>
-    ) : (
-      <div class="litters-list">
-        {pastLitters.map((litter) => (
-          <a href="#" class="litter-card">
-            <div class="litter-info">
-              <p>Litter Number: {litter.id}</p>
-              <p>Farrowed: {formatDate(litter.farrowDate)}</p>
-              <p>Dam: {getDamName(litter.sowId)}</p>
-              <p>Sire: {getSireName(litter.sireId)}</p>
-            </div>
-            <img class="right-arrow" src="/right-arrow.png" alt="Right Arrow" />
-          </a>
-        ))}
-      </div>
-    )
-  }
+  <body>
+    <a class="back-link" href="/herd/">Back to Herd</a>
+    {
+      pastLitters.length === 0 ? (
+        <p class="message">No past litters at this time.</p>
+      ) : (
+        <div class="litters-list">
+          {pastLitters.map((litter) => (
+            <a href="#" class="litter-card">
+              <div class="litter-info">
+                <p>Litter Number: {litter.id}</p>
+                <p>Farrowed: {formatDate(litter.farrowDate)}</p>
+                <p>Dam: {getDamName(litter.sowId)}</p>
+                <p>Sire: {getSireName(litter.sireId)}</p>
+              </div>
+              <img
+                class="right-arrow"
+                src="/right-arrow.png"
+                alt="Right Arrow"
+              />
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </body>
 </Layout>
 
 <style>
   .litters-list {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-  }
-
-  .litters-list a {
+    gap: 12px;
+    margin-bottom: 10px;
     width: 90%;
-    margin: 0 auto;
+    margin: 20px auto;
   }
 
   .litter-card {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     text-decoration: none;
-    color: black;
-    background-color: #f2af29ff;
-    padding: 10px 15px;
-    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+    background-color: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-left: 3px solid #f2af29ff;
+    padding: 12px 15px;
+    border-radius: 4px;
+    transition: all 0.2s;
   }
 
   .litter-card:hover {
-    background-color: #f0b746cc;
-  }
-
-  .litter-info h2 {
-    margin: 0;
-    font-size: 1.2em;
+    background-color: #fff3e0;
+    box-shadow: 0 2px 6px rgba(255, 165, 0, 0.2);
   }
 
   .litter-info p {
-    margin: 0;
-    margin-top: -10px;
-    font-size: 0.8em;
+    margin: 4px 0 0 0;
+    font-size: 0.9em;
+    color: #666;
   }
 
-  .right-arrow {
-    width: 16px;
-    height: 16px;
-    margin-left: 10px;
-    justify-content: center;
-    display: inline-flex;
-    vertical-align: middle;
+  .litter-info p:first-child {
+    font-weight: 600;
+    color: #333;
+    font-size: 1em;
   }
 
-  .message {
-    text-align: center;
-    font-size: 1.2em;
-    color: #555;
-    margin-top: 40px;
+  @media (min-width: 1000px) {
+    .litters-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      width: 80%;
+      max-width: 1000px;
+      margin: 20px auto;
+    }
+
+    .litter-card {
+      height: 100px;
+    }
   }
 </style>

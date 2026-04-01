@@ -1,5 +1,6 @@
 ---
 import Layout from "../../../../shared/layouts/Layout.astro";
+import "../../styles/breeder-pages.css";
 import TaskModal from "../../components/TaskModal.svelte";
 import { BreederMockData } from "../../BreederMockData.js";
 const title = "Tasks";
@@ -14,39 +15,49 @@ const isDatePast = (dateString: string) => {
 ---
 
 <Layout title={title} client:load>
-  <a href="/dashboard/">Back to Dashboard</a>
+  <body>
+    <a class="back-link" href="/">Back to Dashboard</a>
 
-  <TaskModal client:load />
+    <div class="form-btns">
+      <TaskModal client:load />
+    </div>
 
-  {
-    tasks.length === 0 ? (
-      <p class="message">No tasks at this time.</p>
-    ) : (
-      <div class="tasks-list">
-        {tasks.map((task) => (
-          <a href="#" class="task-card">
-            <input class="checkbox" type="checkbox" />
-            <div class="task-info">
-              <h2>{task.title}</h2>
-              {task.description && (
-                <p class="description">{task.description}</p>
-              )}
-              {task.dueDate && (
-                <p
-                  class={`due-date ${isDatePast(task.dueDate) ? "past-date" : "future-date"}`}
-                >
-                  Due: {new Date(task.dueDate).toLocaleDateString()}
-                </p>
-              )}
+    {
+      tasks.length === 0 ? (
+        <p class="message">No tasks at this time.</p>
+      ) : (
+        <div class="tasks-list">
+          {tasks.map((task) => (
+            <div class="task-card">
+              <input class="checkbox" type="checkbox" />
+              <div class="task-info">
+                <h2>{task.title}</h2>
+                {task.description && (
+                  <p class="description">{task.description}</p>
+                )}
+                {task.dueDate && (
+                  <p
+                    class={`due-date ${isDatePast(task.dueDate) ? "past-date" : "future-date"}`}
+                  >
+                    Due: {new Date(task.dueDate).toLocaleDateString()}
+                  </p>
+                )}
+              </div>
             </div>
-          </a>
-        ))}
-      </div>
-    )
-  }
+          ))}
+        </div>
+      )
+    }
+  </body>
 </Layout>
 
 <style>
+  /* Override form-btns to match tasks-list width */
+  .form-btns {
+    width: 90%;
+    max-width: 800px;
+  }
+
   .checkbox {
     margin-right: 15px;
     transform: scale(1.5);
@@ -55,48 +66,51 @@ const isDatePast = (dateString: string) => {
   .tasks-list {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
     margin-bottom: 20px;
-    margin-top: 45px;
-  }
-
-  .tasks-list a {
+    margin-top: 40px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
     width: 90%;
-    margin: 0 auto;
   }
 
   .task-card {
     display: flex;
     flex-direction: row;
     align-items: center;
-    text-decoration: none;
-    color: black;
-    background-color: #f2af29ff;
-    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-left: 4px solid #f2af29ff;
+    background-color: white;
+    padding: 15px 20px;
     border-radius: 5px;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
   }
 
   .task-card:hover {
-    background-color: #f0b746cc;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
   .task-info h2 {
-    margin: 0;
-    margin-bottom: -5px;
+    margin: 0 0 8px 0;
     font-size: 1.2em;
+    color: #333;
   }
 
   .task-info p {
-    margin: 0;
-    font-size: 0.8em;
+    margin: 0 0 4px 0;
+    font-size: 0.9em;
   }
 
   .description {
-    line-height: 1.2;
+    line-height: 1.4;
+    color: #666;
   }
 
   .due-date {
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 0.85rem;
   }
 
   .past-date {
@@ -105,12 +119,5 @@ const isDatePast = (dateString: string) => {
 
   .future-date {
     color: rgb(1, 83, 1);
-  }
-
-  .message {
-    text-align: center;
-    font-size: 1.2em;
-    color: #555;
-    margin-top: 40px;
   }
 </style>

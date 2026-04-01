@@ -5,5 +5,17 @@ const title = "Home";
 ---
 
 <Layout title={title}>
-  <Dashboard client:load />
+  <body>
+    <Dashboard client:load />
+  </body>
 </Layout>
+
+<style>
+  body {
+    background-image: url(/grass-background-blur.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    margin: 0;
+  }
+</style>
