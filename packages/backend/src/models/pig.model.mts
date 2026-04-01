@@ -14,7 +14,7 @@ export async function getPigById(id: string) {
 }
 
 export async function createPig(pig: Pig) {
-  return withDbCollection<Pig>("pigs", (collection) =>
+  await withDbCollection<Pig>("pigs", (collection) =>
     collection.insertOne(pig),
   );
 }
