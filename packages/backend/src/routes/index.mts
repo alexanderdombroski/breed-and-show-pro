@@ -9,10 +9,6 @@ import upcomingDatesRoutes from "./upcomingDates.routes.mts";
 
 const router: Router = Router();
 
-router.get("/", (req, res) => {
-  res.json({ title: "API V1" });
-});
-
 router
   .use("/users", userRoutes) // User Routes
   .use("/pigs", pigRoutes) // Pig Routes
