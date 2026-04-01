@@ -13,18 +13,19 @@
     event.preventDefault();
     const formData = new FormData(event.target);
     const sowData = {
-      name: formData.get('name'),
-      earNotch: formData.get('earNotch'),
-      breed: formData.get('breed'),
-      sex: 'sow',
-      status: 'open',
-      birthDate: formData.get('birthDate'),
-      lastHeatDate: formData.get('lastHeatDate') || undefined,
-      notes: formData.get('notes') || undefined
+      name: formData.get("name"),
+      earNotch: formData.get("earNotch"),
+      breed: formData.get("breed"),
+      sex: "sow",
+      status: "open",
+      birthDate: formData.get("birthDate"),
+      lastHeatDate: formData.get("lastHeatDate") || undefined,
+      notes: formData.get("notes") || undefined
     };
     
     // TODO: Send sowData to backend API
-    console.log('New sow:', sowData);
+    // eslint-disable-next-line no-console
+    console.log("New sow:", sowData);
     
     // Close modal and reset form
     closeModal();
@@ -38,7 +39,7 @@
   }
 
   function handleBackdropKeydown(event) {
-    if (event.key === 'Escape') {
+    if (event.key === "Escape") {
       closeModal();
     }
   }
