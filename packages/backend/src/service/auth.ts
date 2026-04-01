@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
-import { getMongoClient } from "../db/index.ts";
+import { getMongoClient } from "../db/index.mts";
 import { isDev } from "../utils/index.ts";
 
 const baseURL = process.env.BETTER_AUTH_URL;

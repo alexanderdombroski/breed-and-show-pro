@@ -18,7 +18,7 @@ export function getMongoClient() {
   return _client;
 }
 
-let _client: MongoClient = getMongoClient();
+let _client: MongoClient;
 let _connection: Promise<MongoClient> = getMongoClient().connect();
 
 export async function getDb() {
