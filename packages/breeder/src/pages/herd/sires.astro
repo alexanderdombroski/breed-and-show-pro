@@ -1,5 +1,6 @@
 ---
 import Layout from "../../../../shared/layouts/Layout.astro";
+import AddSireForm from "../../components/AddSireForm.svelte";
 import "../../styles/breeder-pages.css";
 const title = "Sires";
 
@@ -13,6 +14,11 @@ const activeSires = BreederMockData.animals.filter(
 <Layout title={title}>
   <body>
     <a class="back-link" href="/herd/">Back to Herd</a>
+
+    <div class="form-btns">
+      <AddSireForm client:load />
+    </div>
+
     {
       activeSires.length === 0 ? (
         <p class="message">No active sires at this time.</p>
