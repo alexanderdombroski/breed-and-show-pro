@@ -1,34 +1,62 @@
 <script>
   let showModal = $state(false);
+  let isSubmitting = $state(false);
+  let errorMessage = $state("");
 
   function openModal() {
     showModal = true;
+    errorMessage = "";
   }
 
   function closeModal() {
     showModal = false;
+    errorMessage = "";
   }
 
-  function handleSubmit(event) {
+  const API_BASE = import.meta.env.PUBLIC_API_URL ?? "http://localhost:3000";
+
+  async function handleSubmit(event) {
     event.preventDefault();
+    isSubmitting = true;
+    errorMessage = "";
+
     const formData = new FormData(event.target);
     const sireData = {
-      name: formData.get("name"),
-      earNotch: formData.get("earNotch"),
-      breed: formData.get("breed"),
+      name: String(formData.get("name") || ""),
+      earNotch: String(formData.get("earNotch") || ""),
+      breed: String(formData.get("breed") || ""),
       sex: "boar",
       status: "active",
-      birthDate: formData.get("birthDate"),
-      notes: formData.get("notes") || undefined
+      birthDate: String(formData.get("birthDate") || ""),
+      notes: String(formData.get("notes") || ""),
     };
-    
-    // TODO: Send sireData to backend API
-    // eslint-disable-next-line no-console
-    console.log("New sire:", sireData);
-    
-    // Close modal and reset form
-    closeModal();
-    event.target.reset();
+
+    try {
+      const response = await fetch(`${API_BASE}/api/pigs`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(sireData),
+      });
+
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`Pig create failed: ${response.status} ${response.statusText} ${errText}`);
+      }
+
+      const createdPig = await response.json();
+      console.info("Sire created:", createdPig);
+
+      closeModal();
+      const formElement = event.target;
+      if (formElement && typeof formElement.reset === "function") {
+        formElement.reset();
+      }
+    } catch (error) {
+      console.error("Error creating sow:", error);
+      errorMessage = error instanceof Error ? error.message : "Failed to create sire";
+    } finally {
+      isSubmitting = false;
+    }
   }
 
   function handleBackdropClick(event) {
@@ -125,12 +153,16 @@
 
         <p class="required-message">* items are required</p>
 
+        {#if errorMessage}
+          <div class="error-message">{errorMessage}</div>
+        {/if}
+
         <div class="form-actions">
-          <button type="button" class="cancel-btn" onclick={closeModal}>
+          <button type="button" class="cancel-btn" onclick={closeModal} disabled={isSubmitting}>
             Cancel
           </button>
-          <button type="submit" class="submit-btn">
-            Add Sire
+          <button type="submit" class="submit-btn" disabled={isSubmitting}>
+            {isSubmitting ? "Adding Sire..." : "Add Sire"}
           </button>
         </div>
       </form>
