@@ -1,0 +1,136 @@
+---
+import Layout from "../../../../../shared/layouts/Layout.astro";
+import "../../../styles/breeder-pages.css";
+import { BreederMockData } from "../../../BreederMockData.js";
+
+const title = "Litter Info";
+
+export async function getStaticPaths() {
+  return BreederMockData.litters.map((l) => ({
+    params: { id: l.id.toString() },
+  }));
+}
+
+const { id } = Astro.params;
+
+const litter = BreederMockData.litters.find((l) => l.id === Number(id));
+
+function getAnimal(animalId: number) {
+  return BreederMockData.animals.find((a) => a.id === animalId);
+}
+
+function formatDate(dateString: string): string {
+  if (!dateString) return "N/A";
+  return new Date(dateString).toLocaleDateString("en-US");
+}
+
+const dam = litter?.sowId ? getAnimal(litter.sowId) : null;
+const sire = litter?.sireId ? getAnimal(litter.sireId) : null;
+---
+
+--- // ... existing code ... ---
+
+<Layout title={title}>
+  <body>
+    <a class="back-link" href="/herd/">Back to Herd</a>
+
+    {
+      !litter ? (
+        <p class="message">Litter not found.</p>
+      ) : (
+        <div class="animal-detail">
+          <div class="animal-info">
+            <h1>Litter #{litter.id}</h1>
+
+            <div class="info-section">
+              <h3>Parents</h3>
+              <p>
+                <strong>Dam:</strong>
+                <a href={`/herd/sow/${dam?.id}`} class="animal-link">
+                  {dam?.name || "Unknown"}{" "}
+                  {dam?.earNotch ? `(${dam.earNotch})` : ""}
+                </a>
+              </p>
+              <p>
+                <strong>Sire:</strong>
+                <a href={`/herd/sire/${sire?.id}`} class="animal-link">
+                  {sire?.name || "Unknown"}{" "}
+                  {sire?.earNotch ? `(${sire.earNotch})` : ""}
+                </a>
+              </p>
+            </div>
+
+            <div class="info-section">
+              <h3>Litter Details</h3>
+              <p>
+                <strong>Farrowing Date:</strong> {formatDate(litter.farrowDate)}
+              </p>
+              <p>
+                <strong>Number Born:</strong>{" "}
+                {litter.bornAlive + (litter.stillBorn || 0)}
+              </p>
+              <p>
+                <strong>Number Survived:</strong> {litter.bornAlive}
+              </p>
+              <p>
+                <strong>Weaning Date:</strong> {formatDate(litter.weanedDate)}
+              </p>
+            </div>
+
+            {litter.notes && (
+              <div class="info-section">
+                <h3>Notes</h3>
+                <p>{litter.notes}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )
+    }
+  </body>
+</Layout>
+
+<style>
+  .animal-detail {
+    max-width: 800px;
+    margin: 20px auto;
+    width: 90%;
+  }
+
+  .animal-info h1 {
+    margin: 0 0 20px 0;
+    color: #333;
+    font-size: 2em;
+  }
+
+  .info-section {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-left: 4px solid #f2af29ff;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .info-section h3 {
+    margin: 0 0 10px 0;
+    color: #f2af29ff;
+    font-size: 1.2em;
+  }
+
+  .info-section p {
+    margin: 5px 0;
+    line-height: 1.4;
+  }
+
+  .animal-link {
+    color: #f2af29ff;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .animal-link:hover {
+    text-decoration: underline;
+  }
+</style>
