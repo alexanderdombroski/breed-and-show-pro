@@ -91,15 +91,8 @@ upcomingDates.sort(
 
 <Layout title={title} client:load>
   <body>
-    <a href="/">Back to Dashboard</a>
+    <a class="back-link" href="/">Back to Dashboard</a>
 
     <UpcomingDatesFilter upcomingDates={upcomingDates} client:load />
   </body>
 </Layout>
-
-<style>
-  body {
-    width: 90%;
-    margin: 0 auto;
-  }
-</style>
