@@ -42,9 +42,49 @@ export const UserSchema = z.object({
   _id: z.string(),
   name: z.string(),
   email: z.email(),
+  emailVerified: z.boolean(),
   farmName: z.string(),
+  image: z.string().optional(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
 });
 export type User = z.infer<typeof UserSchema>;
+
+/** The rest should be fully managed By Better Auth */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type Account = {
+  _id: string;
+  accountId: string;
+  providerId: string;
+  userId: string;
+  accessToken: string;
+  idToken: string;
+  accessTokenExpiresAt: Date;
+  scope: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type Session = {
+  _id: string;
+  token: string;
+  ipAddress: string;
+  userAgent: string;
+  expiresAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type verification = {
+  _id: string;
+  identifier: string;
+  value: string;
+  expiresAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 // -------------------- EVENTS COLLECTION --------------------
 
