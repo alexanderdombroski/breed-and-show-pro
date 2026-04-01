@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { calculateBreeding } from "../services/breeding.service.mts";
+import { calculateBreeding } from "../controllers/breeding.controller.mts";
 
 const router: Router = Router();
 

@@ -95,12 +95,9 @@ export async function deletePig(
   }
 }
 
-const updatePigEvent = async (
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  id: string,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  update: Record<string, unknown>,
-) => {};
+const updatePigEvent = async (id: string, update: Record<string, unknown>) => {
+  return await updatePigRecord(id, update);
+};
 
 export async function addBreeding(
   req: Request,
