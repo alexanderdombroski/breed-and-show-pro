@@ -6,7 +6,6 @@ import {
   createPig as insertPig,
   updatePig as updatePigRecord,
   deletePig as removePig,
-  patchPig,
 } from "../models/pigs.model.mts";
 
 export async function getPigs(req: Request, res: Response, next: NextFunction) {
@@ -96,9 +95,12 @@ export async function deletePig(
   }
 }
 
-const updatePigEvent = async (id: string, update: Record<string, unknown>) => {
-  return patchPig(id, update);
-};
+const updatePigEvent = async (
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  id: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  update: Record<string, unknown>,
+) => {};
 
 export async function addBreeding(
   req: Request,
