@@ -19,10 +19,11 @@ import { events } from "./data/events.ts";
 
 loadEnvFile(path.join(process.cwd(), "packages", "backend", ".env"));
 
-const { withDb, withDbCollection } = await import("./index.mts");
+const { withDb, withDbCollection, getMongoClient } =
+  await import("./index.mts");
 
 const collections = ["events", "litters", "notes", "pigs", "users"];
-withDb(async (db) => {
+await withDb(async (db) => {
   for (const collection of collections) {
     if (await db.listCollections({ name: collection }).hasNext()) {
       await db.dropCollection(collection);
@@ -31,41 +32,48 @@ withDb(async (db) => {
   }
 });
 
-withDbCollection<User>("users", async (collection) => {
+await withDbCollection<User>("users", async (collection) => {
   await collection.createIndex({ email: 1 }, { unique: true });
   await collection.createIndex({ name: 1 });
 
-  collection.insertMany(users);
+  await collection.insertMany(users);
+  console.info(`Inserted ${users.length} users into database`);
 });
 
-withDbCollection<Litter>("litters", async (collection) => {
+await withDbCollection<Litter>("litters", async (collection) => {
   await collection.createIndex({ userId: 1 });
   await collection.createIndex({ sowId: 1 });
   await collection.createIndex({ sireId: 1 });
 
-  collection.insertMany(litters);
+  await collection.insertMany(litters);
+  console.info(`Inserted ${litters.length} litters into database`);
 });
 
-withDbCollection<Pig>("pigs", async (collection) => {
+await withDbCollection<Pig>("pigs", async (collection) => {
   await collection.createIndex({ userId: 1 });
   await collection.createIndex({ status: 1 });
   await collection.createIndex({ isArchived: 1 });
   await collection.createIndex({ userId: 1, status: 1 });
 
-  collection.insertMany(pigs);
+  await collection.insertMany(pigs);
+  console.info(`Inserted ${pigs.length} pigs into database`);
 });
 
-withDbCollection<Event>("events", async (collection) => {
+await withDbCollection<Event>("events", async (collection) => {
   await collection.createIndex({ pigId: 1 });
   await collection.createIndex({ litterId: 1 });
   await collection.createIndex({ date: 1 });
 
-  collection.insertMany(events);
+  await collection.insertMany(events);
+  console.info(`Inserted ${events.length} events into database`);
 });
 
-withDbCollection<GenericNote>("notes", async (collection) => {
+await withDbCollection<GenericNote>("notes", async (collection) => {
   await collection.createIndex({ pigId: 1 });
   await collection.createIndex({ eventDate: 1 });
 
-  collection.insertMany(notes);
+  await collection.insertMany(notes);
+  console.info(`Inserted ${notes.length} notes into database`);
 });
+
+await getMongoClient().close();
