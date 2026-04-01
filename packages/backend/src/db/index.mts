@@ -1,4 +1,5 @@
-import { MongoClient, ServerApiVersion, type Document } from "mongodb";
+import { MongoClient, ServerApiVersion } from "mongodb";
+import type { Collection, Document, Db } from "mongodb";
 
 const uri = process.env.MONGO_URI as string;
 const dbName = process.env.DATABASE_NAME as string;
@@ -24,10 +25,26 @@ let _connection: Promise<MongoClient> = getMongoClient().connect();
  * Higher-order function to handle MongoDB connection and errors.
  * @param callback Function that performs the actual DB operation
  */
-export async function withDb<D extends Document, T>(
+export async function withDb<T>(callback: (db: Db) => Promise<T>): Promise<T> {
+  try {
+    await _connection;
+    const db = _client.db(dbName);
+
+    return await callback(db);
+  } catch (error) {
+    console.error(`Database operation failed: ${error}`);
+    throw error;
+  }
+}
+
+/**
+ * Higher-order function to handle MongoDB connection and errors.
+ * @param callback Function that performs the actual DB operation
+ */
+export async function withDbCollection<D extends Document, R = unknown>(
   collectionName: string,
-  callback: (collection: any) => Promise<T>,
-): Promise<T> {
+  callback: (collection: Collection<D>) => Promise<R>,
+): Promise<R> {
   try {
     await _connection;
     const db = _client.db(dbName);
@@ -35,7 +52,7 @@ export async function withDb<D extends Document, T>(
 
     return await callback(collection);
   } catch (error) {
-    console.error(`Database operation failed: ${error}`);
+    console.error(`Database collection operation failed: ${error}`);
     throw error;
   }
 }
