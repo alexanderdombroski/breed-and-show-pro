@@ -1,0 +1,97 @@
+---
+import Layout from "../../../../../shared/layouts/Layout.astro";
+import "../../../styles/breeder-pages.css";
+import { BreederMockData } from "../../../BreederMockData.js";
+
+const title = "Sire Info";
+
+export async function getStaticPaths() {
+  return BreederMockData.animals
+    .filter((a) => a.sex === "boar")
+    .map((a) => ({ params: { id: a.id.toString() } }));
+}
+
+const { id } = Astro.params;
+
+const pig = BreederMockData.animals.find((a) => a.id === Number(id));
+---
+
+<Layout title={title}>
+  <body>
+    <a class="back-link" href="/herd/">Back to Herd</a>
+
+    {
+      !pig || pig.sex !== "boar" ? (
+        <p class="message">This is not a sire.</p>
+      ) : (
+        <div class="animal-detail">
+          <div class="animal-info">
+            <h1>{pig.name}</h1>
+
+            <div class="info-section">
+              <h3>Basic Information</h3>
+              <p>
+                <strong>Ear Notch:</strong> {pig.earNotch}
+              </p>
+              <p>
+                <strong>Breed:</strong> {pig.breed}
+              </p>
+              <p>
+                <strong>Date of Birth:</strong>{" "}
+                {new Date(pig.birthDate).toLocaleDateString()}
+              </p>
+              <p>
+                <strong>Sex:</strong> Male (Boar)
+              </p>
+              <p>
+                <strong>Status:</strong> {pig.status}
+              </p>
+            </div>
+
+            {pig.notes && (
+              <div class="info-section">
+                <h3>Notes</h3>
+                <p>{pig.notes}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )
+    }
+  </body>
+</Layout>
+
+<style>
+  .animal-detail {
+    max-width: 800px;
+    margin: 20px auto;
+    width: 90%;
+  }
+
+  .animal-info h1 {
+    margin: 0 0 20px 0;
+    color: #333;
+    font-size: 2em;
+  }
+
+  .info-section {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-left: 4px solid #f2af29ff;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .info-section h3 {
+    margin: 0 0 10px 0;
+    color: #f2af29ff;
+    font-size: 1.2em;
+  }
+
+  .info-section p {
+    margin: 5px 0;
+    line-height: 1.4;
+  }
+</style>

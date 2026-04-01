@@ -47,7 +47,7 @@ function getDamName(damId: number): string {
       ) : (
         <div class="litters-list">
           {pastLitters.map((litter) => (
-            <a href="#" class="litter-card">
+            <a href={`/herd/litter/${litter.id}`} class="litter-card">
               <div class="litter-info">
                 <p>Litter Number: {litter.id}</p>
                 <p>Farrowed: {formatDate(litter.farrowDate)}</p>
