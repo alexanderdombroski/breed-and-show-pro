@@ -7,7 +7,7 @@ import {
   updatePig as updatePigRecord,
   deletePig as removePig,
   patchPig,
-} from "../models/animal.model.mts";
+} from "../models/pigs.model.mts";
 
 export async function getPigs(req: Request, res: Response, next: NextFunction) {
   try {

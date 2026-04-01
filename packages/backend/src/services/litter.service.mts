@@ -6,7 +6,7 @@ import {
   createLitter as insertLitter,
   updateLitter as updateLitterRecord,
   deleteLitter as removeLitter,
-} from "../models/litter.model.mts";
+} from "../models/litters.model.mts";
 
 export async function getLitters(
   req: Request,
