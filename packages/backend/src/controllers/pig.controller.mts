@@ -1,16 +1,16 @@
 import type { Request, Response, NextFunction } from "express";
 import { randomUUID } from "crypto";
 import {
-  getAllPigs,
+  listPigs,
   getPigById as fetchPigById,
   createPig as insertPig,
   updatePig as updatePigRecord,
   deletePig as removePig,
-} from "../models/pigs.model.mts";
+} from "../service/pigs.ts";
 
 export async function getPigs(req: Request, res: Response, next: NextFunction) {
   try {
-    const data = await getAllPigs();
+    const data = await listPigs();
     res.json(data);
   } catch (error) {
     next(error);
