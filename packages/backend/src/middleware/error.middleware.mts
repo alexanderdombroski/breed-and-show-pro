@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import CustomError from "../errors/CustomError.mts";
+import EntityNotFoundError from "../errors/EntityNotFoundError.mts";
 
 const getErrorMessage = (err: unknown): string => {
   if (err instanceof Error) {
@@ -48,4 +49,18 @@ export const globalErrorHandler = (
         getErrorMessage(err) || "An Error occurred. Please try again later.",
     },
   });
+};
+
+export const error404Handler = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  next(
+    new EntityNotFoundError({
+      message: `Can't find ${req.originalUrl} on this server!`,
+      code: "ERR_NF",
+      statusCode: 404,
+    }),
+  );
 };

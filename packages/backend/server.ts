@@ -6,8 +6,10 @@ import { devLogger, corsHandler } from "./src/middleware/index.ts";
 import { isDev } from "./src/utils/index.ts";
 import { getMongoClient } from "./src/db/index.mts";
 import { limiter } from "./src/middleware/rateLimit.ts";
-import EntityNotFoundError from "./src/errors/EntityNotFoundError.mts";
-import { globalErrorHandler } from "./src/middleware/error.middleware.mts";
+import {
+  error404Handler,
+  globalErrorHandler,
+} from "./src/middleware/error.middleware.mts";
 import helmet from "helmet";
 
 const app = express();
@@ -28,20 +30,11 @@ app.use(express.json());
 
 app.use("/api", router);
 
-// --- 3. ERROR HANDLING ---
-app.use((req, res, next) => {
-  next(
-    new EntityNotFoundError({
-      message: `Can't find ${req.originalUrl} on this server!`,
-      code: "ERR_NF",
-      statusCode: 404,
-    }),
-  );
-});
-// Global Error Handler
+// --- ERROR HANDLING ---
+app.use(error404Handler);
 app.use(globalErrorHandler);
 
-// Start server
+// --- SERVER START AND STOP ---
 const server = app.listen(PORT, () => {
   console.info(`Server running on http://localhost:${PORT}`);
 });
