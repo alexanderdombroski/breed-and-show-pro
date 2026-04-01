@@ -4,6 +4,7 @@ import { toNodeHandler } from "better-auth/node";
 import { auth } from "./src/service/auth.ts";
 import { devLogger, corsHandler } from "./src/middleware/index.ts";
 import { isDev } from "./src/utils/index.ts";
+import { getMongoClient } from "./src/db/index.mts";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,6 +22,33 @@ app.use(express.json());
 app.use("/api", router);
 
 // Start server
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.info(`Server running on http://localhost:${PORT}`);
 });
+
+/** Handle Server Shutdown */
+const shutdown = async (signal: string) => {
+  console.info(`Received ${signal}. Shutting down...`);
+
+  server.close(async (err) => {
+    if (err) {
+      console.error("Error closing server:", err);
+      process.exit(1);
+    }
+
+    try {
+      await getMongoClient().close();
+
+      console.info("Shutdown complete");
+      process.exit(0);
+    } catch (e) {
+      console.error("Error during cleanup:", e);
+      process.exit(1);
+    }
+  });
+};
+
+if (!isDev) {
+  process.on("SIGINT", shutdown);
+  process.on("SIGTERM", shutdown);
+}

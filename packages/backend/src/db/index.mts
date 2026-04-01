@@ -1,43 +1,41 @@
-import { MongoClient, ServerApiVersion } from "mongodb";
-const uri = process.env.MONGO_URI || "";
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-});
+import { MongoClient, ServerApiVersion, type Document } from "mongodb";
 
-let _db: MongoClient | null = null;
+const uri = process.env.MONGO_URI as string;
+const dbName = process.env.DATABASE_NAME as string;
+if (!(uri && dbName)) {
+  throw new Error("Database environment not fully configured!");
+}
 
-const initDb = async (callback: Function) => {
-  if (_db) {
-    return callback(null, _db);
-  }
+export function getMongoClient() {
+  _client ??= new MongoClient(uri, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    },
+  });
+  return _client;
+}
+
+let _client: MongoClient = getMongoClient();
+let _connection: Promise<MongoClient> = getMongoClient().connect();
+
+/**
+ * Higher-order function to handle MongoDB connection and errors.
+ * @param callback Function that performs the actual DB operation
+ */
+export async function withDb<D extends Document, T>(
+  collectionName: string,
+  callback: (collection: any) => Promise<T>,
+): Promise<T> {
   try {
-    await client.connect();
-    _db = client;
-    callback(null, _db);
-  } catch (err) {
-    callback(err);
-  }
-};
+    await _connection;
+    const db = _client.db(dbName);
+    const collection = db.collection<D>(collectionName);
 
-const getDb = () => {
-  if (!_db) {
-    throw Error("Db not initialized");
+    return await callback(collection);
+  } catch (error) {
+    console.error(`Database operation failed: ${error}`);
+    throw error;
   }
-  return _db.db(process.env.MONGO_DATABASE);
-};
-
-const closeDb = async () => {
-  if (_db) {
-    try {
-      await _db.close();
-    } finally {
-      _db = null;
-    }
-  }
-};
-
-export default { initDb, getDb, closeDb };
+}
