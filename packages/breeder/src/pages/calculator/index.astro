@@ -1,0 +1,13 @@
+---
+import Layout from "../../../../shared/layouts/Layout.astro";
+import Form from "../../components/Form.svelte";
+---
+
+<Layout>
+  <section class="container" style="display: flex; flex-wrap: wrap; ">
+    <Form client:load label="breeding-date" title="Breeding Date" />
+    <Form client:load label="confirm-bred-date" title="Confirm Bred Date" />
+    <Form client:load label="farrowing-due-date" title="Farrowing Due Date" />
+    <Form client:load label="six-months-old" title="6 Months Old" />
+  </section>
+</Layout>
