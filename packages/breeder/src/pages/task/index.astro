@@ -18,10 +18,24 @@ async function fetchTasks() {
   });
   const tasks = await response.json();
   const allTasks = tasks.filter((task: any) => task._type === "task");
+
+  // Sort tasks by due date (earliest first, no date at end)
+  allTasks.sort((a: any, b: any) => {
+    // If neither has a due date, maintain order
+    if (!a.dueDate && !b.dueDate) return 0;
+    // Tasks without due dates go to the end
+    if (!a.dueDate) return 1;
+    if (!b.dueDate) return -1;
+    // Sort by due date (earliest first)
+    return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+  });
+
   return allTasks;
 }
 
 const tasks = await fetchTasks();
+const incompleteTasks = tasks.filter((task: any) => !task.isCompleted);
+const completedTasks = tasks.filter((task: any) => task.isCompleted);
 ---
 
 <Layout title={title}>
@@ -30,37 +44,90 @@ const tasks = await fetchTasks();
 
     <div class="form-btns">
       <TaskModal client:load />
+      {
+        completedTasks.length > 0 && (
+          <button class="toggle-completed-btn" id="toggleCompletedBtn">
+            Show Completed Tasks
+          </button>
+        )
+      }
     </div>
 
     {
-      tasks.length === 0 ? (
+      incompleteTasks.length === 0 && completedTasks.length === 0 ? (
         <p class="message">No tasks at this time.</p>
       ) : (
-        <div class="tasks-list">
-          {tasks.map((task: any) => (
-            <div class="task-card" data-completed={task.isCompleted}>
-              <input
-                class="checkbox"
-                type="checkbox"
-                checked={task.isCompleted}
-                data-task-id={task._id}
-              />
-              <div class="task-info">
-                <h2>{task.title}</h2>
-                {(task.description || task.notes) && (
-                  <p class="description">{task.description || task.notes}</p>
-                )}
-                {task.dueDate && (
-                  <p
-                    class={`due-date ${isDatePast(task.dueDate) ? "past-date" : "future-date"}`}
-                  >
-                    Due: {new Date(task.dueDate).toLocaleDateString()}
-                  </p>
-                )}
+        <>
+          <div class="tasks-list" id="incompleteTasksList">
+            {incompleteTasks.map((task: any) => (
+              <div class="task-card" data-completed={task.isCompleted}>
+                <input
+                  class="checkbox"
+                  type="checkbox"
+                  checked={task.isCompleted}
+                  data-task-id={task._id}
+                />
+                <div class="task-info">
+                  <h2>{task.title}</h2>
+                  {(task.description || task.notes) && (
+                    <p class="description">{task.description || task.notes}</p>
+                  )}
+                  {task.dueDate && (
+                    <p
+                      class={`due-date ${isDatePast(task.dueDate) ? "past-date" : "future-date"}`}
+                    >
+                      Due: {new Date(task.dueDate).toLocaleDateString()}
+                    </p>
+                  )}
+                </div>
+                <button
+                  class="delete-btn"
+                  data-task-id={task._id}
+                  title="Delete task"
+                >
+                  ✕
+                </button>
               </div>
+            ))}
+          </div>
+
+          {completedTasks.length > 0 && (
+            <div class="tasks-list hidden" id="completedTasksList">
+              {completedTasks.map((task: any) => (
+                <div class="task-card" data-completed={task.isCompleted}>
+                  <input
+                    class="checkbox"
+                    type="checkbox"
+                    checked={task.isCompleted}
+                    data-task-id={task._id}
+                  />
+                  <div class="task-info">
+                    <h2>{task.title}</h2>
+                    {(task.description || task.notes) && (
+                      <p class="description">
+                        {task.description || task.notes}
+                      </p>
+                    )}
+                    {task.dueDate && (
+                      <p
+                        class={`due-date ${isDatePast(task.dueDate) ? "past-date" : "future-date"}`}
+                      >
+                        Due: {new Date(task.dueDate).toLocaleDateString()}
+                      </p>
+                    )}
+                  </div>
+                  <button
+                    class="delete-btn"
+                    data-task-id={task._id}
+                    title="Delete task"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          )}
+        </>
       )
     }
 
@@ -69,7 +136,59 @@ const tasks = await fetchTasks();
 
       document.addEventListener("DOMContentLoaded", () => {
         const checkboxes = document.querySelectorAll(".checkbox");
+        const toggleBtn = document.getElementById("toggleCompletedBtn");
+        const completedTasksList =
+          document.getElementById("completedTasksList");
+        let showingCompleted = false;
 
+        // Toggle completed tasks visibility
+        if (toggleBtn && completedTasksList) {
+          toggleBtn.addEventListener("click", () => {
+            showingCompleted = !showingCompleted;
+            if (showingCompleted) {
+              completedTasksList.classList.remove("hidden");
+              toggleBtn.textContent = "Hide Completed Tasks";
+            } else {
+              completedTasksList.classList.add("hidden");
+              toggleBtn.textContent = "Show Completed Tasks";
+            }
+          });
+        }
+
+        // Handle delete buttons
+        const deleteButtons = document.querySelectorAll(".delete-btn");
+        deleteButtons.forEach((button) => {
+          button.addEventListener("click", async (e) => {
+            const target = e.target as HTMLButtonElement;
+            const taskId = target.dataset.taskId;
+            const taskCard = target.closest(".task-card");
+
+            if (!confirm("Are you sure you want to delete this task?")) {
+              return;
+            }
+
+            try {
+              const response = await fetch(`${BASE_URL}/tasks/${taskId}`, {
+                method: "DELETE",
+              });
+
+              if (response.ok) {
+                // Remove task card from DOM
+                if (taskCard) {
+                  taskCard.remove();
+                }
+              } else {
+                console.error("Failed to delete task");
+                alert("Failed to delete task. Please try again.");
+              }
+            } catch (error) {
+              console.error("Error deleting task:", error);
+              alert("Error deleting task. Please try again.");
+            }
+          });
+        });
+
+        // Handle checkbox changes
         checkboxes.forEach((checkbox) => {
           checkbox.addEventListener("change", async (e) => {
             const target = e.target as HTMLInputElement;
@@ -96,6 +215,23 @@ const tasks = await fetchTasks();
                     "data-completed",
                     isCompleted.toString(),
                   );
+                  // Move task to appropriate list
+                  if (isCompleted) {
+                    // Move to completed list
+                    const completedList =
+                      document.getElementById("completedTasksList");
+                    if (completedList) {
+                      completedList.appendChild(taskCard);
+                    }
+                  } else {
+                    // Move to incomplete list
+                    const incompleteList = document.getElementById(
+                      "incompleteTasksList",
+                    );
+                    if (incompleteList) {
+                      incompleteList.appendChild(taskCard);
+                    }
+                  }
                 }
               } else {
                 console.error("Failed to update task");
@@ -126,12 +262,56 @@ const tasks = await fetchTasks();
   .form-btns {
     width: 90%;
     max-width: 800px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .toggle-completed-btn {
+    background-color: #666;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+  }
+
+  .toggle-completed-btn:hover {
+    background-color: #555;
+  }
+
+  .tasks-list.hidden {
+    display: none !important;
   }
 
   .checkbox {
     margin-right: 15px;
     transform: scale(1.5);
     cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .delete-btn {
+    background: none;
+    color: #333;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    padding: 5px 10px;
+  }
+
+  .delete-btn:hover {
+    color: #000;
+    transform: scale(1.2);
   }
 
   .tasks-list {
