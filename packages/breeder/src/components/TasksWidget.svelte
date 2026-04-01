@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { BreederMockData } from "../BreederMockData.js";
-  
-  const tasks = BreederMockData.tasks;
+  // import { BreederMockData } from "../BreederMockData.js";
+  // const tasks = BreederMockData.tasks;
   // const incompleteTasks = tasks.filter(t => !t.completed);
+
+  const BASE_URL = import.meta.env.PUBLIC_SERVER_URL;
   
   // Use same date logic as task page
   const isDatePast = (dateString: string) => {
@@ -12,10 +13,38 @@
     return dueDate < today;
   };
   
-  // const overdueTasks = incompleteTasks.filter(t => {
-  //   if (!t.dueDate) return false;
-  //   return isDatePast(t.dueDate);
-  // });
+  async function fetchTasks() {
+    const response = await fetch(`${BASE_URL}/tasks`, {
+      method: "GET",
+    });
+    const tasks = await response.json();
+    const allTasks = tasks.filter((task: any) => task._type === "task" && !task.isCompleted);
+    return allTasks;
+  }
+  
+  async function toggleTaskCompletion(taskId: string, isCompleted: boolean) {
+    try {
+      const response = await fetch(`${BASE_URL}/tasks/${taskId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          isCompleted: isCompleted,
+          completedAt: isCompleted ? new Date().toISOString() : null
+        })
+      });
+      
+      if (response.ok) {
+        // Refresh the task list
+        window.location.reload();
+      } else {
+        console.error('Failed to update task');
+      }
+    } catch (error) {
+      console.error('Error updating task:', error);
+    }
+  }
 </script>
 
 <section class="widget-container">
@@ -24,12 +53,17 @@
         <h3>Tasks</h3>
     </a>
   </div>
-
-  {#if tasks.length > 0}
+  {#await fetchTasks() then allTasks}
+  {#if allTasks.length > 0}
     <div class="tasks-list">
-        {#each tasks as task}
+        {#each allTasks as task (task._id)}
             <div class="task-card">
-                <input class="checkbox" type="checkbox" />
+                <input 
+                  class="checkbox" 
+                  type="checkbox" 
+                  checked={task.isCompleted}
+                  onchange={() => toggleTaskCompletion(task._id, !task.isCompleted)}
+                />
                 <div class="task-info">
                     <h2>{task.title}</h2>
                     {#if task.dueDate}
@@ -44,13 +78,14 @@
     {:else}
     <p class="no-message">No tasks at this time.</p>
     {/if}
-  
+  {/await}
 </section>
 
 <style>  
   .checkbox {
     margin-right: 15px;
     transform: scale(1.5);
+    cursor: pointer;
   }
 
   .tasks-list {

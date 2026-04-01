@@ -1,4 +1,6 @@
 <script>
+  // import { BreederMockData } from "../BreederMockData";
+  // const tasks = BreederMockData.tasks;
   const baseURL = import.meta.env.PUBLIC_SERVER_URL;
 
   let showModal = $state(false);
@@ -15,7 +17,7 @@
     event.preventDefault();
     const formData = new FormData(event.target);
     const taskData = {
-      // _type: ('task'),
+      _type: 'task',
       title: formData.get('title'),
       description: formData.get('description'),
       dueDate: formData.get('dueDate')
@@ -33,13 +35,11 @@
 
     if (response.ok) {
       console.log('Task successfully created:', data);
+      // Reload page to show new task
+      window.location.reload();
     } else {
       console.error('Failed to create task:', data);
     }
-
-    
-    // TODO: Send taskData to backend API
-    console.log('New task:', taskData);
     
     // Close modal and reset form
     closeModal();

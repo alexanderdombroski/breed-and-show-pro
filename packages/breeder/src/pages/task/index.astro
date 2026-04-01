@@ -3,8 +3,6 @@ import Layout from "../../../../shared/layouts/Layout.astro";
 import "../../styles/breeder-pages.css";
 import TaskModal from "../../components/TaskModal.svelte";
 const title = "Tasks";
-// import { BreederMockData } from "../../BreederMockData.js";
-// const tasks = BreederMockData.tasks;
 
 const isDatePast = (dateString: string) => {
   const dueDate = new Date(dateString);
@@ -19,9 +17,11 @@ async function fetchTasks() {
     method: "GET",
   });
   const tasks = await response.json();
-  const allTasks = tasks._type === "task";
+  const allTasks = tasks.filter((task: any) => task._type === "task");
   return allTasks;
 }
+
+const tasks = await fetchTasks();
 ---
 
 <Layout title={title} client:load>
@@ -33,43 +33,95 @@ async function fetchTasks() {
     </div>
 
     {
-      await fetchTasks().then((allTasks) =>
-        allTasks.length === 0 ? (
-          <p class="message">No tasks at this time.</p>
-        ) : (
-          <div class="tasks-list">
-            {allTasks.map(
-              (task: {
-                title: string;
-                description?: string;
-                dueDate?: string;
-              }) => (
-                <div class="task-card">
-                  <input class="checkbox" type="checkbox" />
-                  <div class="task-info">
-                    <h2>{task.title}</h2>
-                    {task.description && (
-                      <p class="description">{task.description}</p>
-                    )}
-                    {task.dueDate && (
-                      <p
-                        class={`due-date ${isDatePast(task.dueDate) ? "past-date" : "future-date"}`}
-                      >
-                        Due: {new Date(task.dueDate).toLocaleDateString()}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              ),
-            )}
-          </div>
-        ),
+      tasks.length === 0 ? (
+        <p class="message">No tasks at this time.</p>
+      ) : (
+        <div class="tasks-list">
+          {tasks.map((task: any) => (
+            <div class="task-card" data-completed={task.isCompleted}>
+              <input
+                class="checkbox"
+                type="checkbox"
+                checked={task.isCompleted}
+                data-task-id={task._id}
+              />
+              <div class="task-info">
+                <h2>{task.title}</h2>
+                {(task.description || task.notes) && (
+                  <p class="description">{task.description || task.notes}</p>
+                )}
+                {task.dueDate && (
+                  <p
+                    class={`due-date ${isDatePast(task.dueDate) ? "past-date" : "future-date"}`}
+                  >
+                    Due: {new Date(task.dueDate).toLocaleDateString()}
+                  </p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       )
     }
+
+    <script>
+      const BASE_URL = import.meta.env.PUBLIC_SERVER_URL;
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const checkboxes = document.querySelectorAll(".checkbox");
+
+        checkboxes.forEach((checkbox) => {
+          checkbox.addEventListener("change", async (e) => {
+            const target = e.target as HTMLInputElement;
+            const taskId = target.dataset.taskId;
+            const isCompleted = target.checked;
+            const taskCard = target.closest(".task-card");
+
+            try {
+              const response = await fetch(`${BASE_URL}/tasks/${taskId}`, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  isCompleted: isCompleted,
+                  completedAt: isCompleted ? new Date().toISOString() : null,
+                }),
+              });
+
+              if (response.ok) {
+                // Update visual state
+                if (taskCard) {
+                  taskCard.setAttribute(
+                    "data-completed",
+                    isCompleted.toString(),
+                  );
+                }
+              } else {
+                console.error("Failed to update task");
+                // Revert checkbox if update failed
+                target.checked = !isCompleted;
+              }
+            } catch (error) {
+              console.error("Error updating task:", error);
+              // Revert checkbox if update failed
+              target.checked = !isCompleted;
+            }
+          });
+        });
+      });
+    </script>
   </body>
 </Layout>
 
 <style>
+  .message {
+    text-align: center;
+    color: #666;
+    margin: 40px 0;
+    font-size: 1.1em;
+  }
+
   /* Override form-btns to match tasks-list width */
   .form-btns {
     width: 90%;
@@ -79,6 +131,7 @@ async function fetchTasks() {
   .checkbox {
     margin-right: 15px;
     transform: scale(1.5);
+    cursor: pointer;
   }
 
   .tasks-list {
@@ -107,7 +160,18 @@ async function fetchTasks() {
   }
 
   .task-card:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .task-card[data-completed="true"] {
+    opacity: 0.7;
+    background-color: #f9f9f9;
+  }
+
+  .task-card[data-completed="true"] .task-info h2,
+  .task-card[data-completed="true"] .task-info p {
+    text-decoration: line-through;
+    color: #888;
   }
 
   .task-info h2 {
