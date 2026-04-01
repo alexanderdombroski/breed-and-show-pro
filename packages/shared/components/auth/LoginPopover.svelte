@@ -1,5 +1,29 @@
 <script lang="ts">
   import { Popover } from "bits-ui";
+  import { loginAsTestUser } from "./auth.svelte";
+
+  let email = $state("");
+  let password = $state("");
+
+  function updateEmail(e: Event) {
+    email = (e.target as HTMLInputElement).value;
+  }
+
+  function updatePassword(e: Event) {
+    password = (e.target as HTMLInputElement).value;
+  }
+
+  async function handleLogin() {
+    try {
+      const {data, error} = await loginAsTestUser(email, password);
+      if (error) {
+        return console.error("Failed to login:", error);
+      }
+      console.info(`Login successful for ${data.user.name}`);
+    } catch (err) {
+      console.error("Login failed:", err);
+    }
+  }
 </script>
 
 <Popover.Root>
@@ -7,14 +31,15 @@
 
   <Popover.Portal>
     <Popover.Content class="login-popover" sideOffset={8}>
-      <form>
+      <form onsubmit={(e) => e.preventDefault()}>
         <div class="form-group">
-          <label for="username">Username</label>
+          <label for="username">Email</label>
           <input
-            type="text"
+            type="email"
             id="username"
-            placeholder="Enter username"
+            placeholder="Enter email"
             required
+            oninput={updateEmail}
           />
         </div>
 
@@ -25,10 +50,11 @@
             id="password"
             placeholder="Enter password"
             required
+            oninput={updatePassword}
           />
         </div>
 
-        <button type="submit">Login</button>
+        <button onclick={handleLogin}>Login</button>
       </form>
     </Popover.Content>
   </Popover.Portal>

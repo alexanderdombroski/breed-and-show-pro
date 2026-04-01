@@ -12,6 +12,21 @@ export const auth = betterAuth({
   baseURL,
   emailAndPassword: {
     enabled: true,
+    requireEmailVerification: false,
+    autoSignIn: true,
+  },
+  advanced: {
+    cookiePrefix: "breed-show-pro",
+    cookies: {
+      session_token: {
+        attributes: {
+          sameSite: "None",
+          httpOnly: true,
+          secure: true, // For some reason this is necessary and also works on localhost
+          partitioned: false,
+        },
+      },
+    },
   },
   socialProviders: {
     google: {
@@ -26,5 +41,6 @@ export const auth = betterAuth({
     "http://localhost:4321",
     "http://localhost:4322",
     "https://alexanderdombroski.github.io",
+    "https://alexanderdombroski.com",
   ],
 });
