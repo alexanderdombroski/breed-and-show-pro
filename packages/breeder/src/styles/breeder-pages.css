@@ -87,8 +87,23 @@ h3 {
   margin-top: 40px;
 }
 
+/* Form buttons container */
+.form-btns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  width: 90%;
+  margin: 20px auto 12px auto;
+}
+
 @media (min-width: 1000px) {
   .widget-container {
     width: 410px;
+  }
+
+  .form-btns {
+    width: 80%;
+    max-width: 1000px;
+    margin: 20px auto 12px auto;
   }
 }

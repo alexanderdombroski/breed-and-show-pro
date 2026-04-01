@@ -18,7 +18,9 @@ const isDatePast = (dateString: string) => {
   <body>
     <a class="back-link" href="/">Back to Dashboard</a>
 
-    <TaskModal client:load />
+    <div class="form-btns">
+      <TaskModal client:load />
+    </div>
 
     {
       tasks.length === 0 ? (
@@ -50,6 +52,12 @@ const isDatePast = (dateString: string) => {
 </Layout>
 
 <style>
+  /* Override form-btns to match tasks-list width */
+  .form-btns {
+    width: 90%;
+    max-width: 800px;
+  }
+
   .checkbox {
     margin-right: 15px;
     transform: scale(1.5);

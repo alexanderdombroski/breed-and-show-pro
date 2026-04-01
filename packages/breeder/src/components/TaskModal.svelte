@@ -113,9 +113,6 @@
     font-size: 1em;
     cursor: pointer;
     font-weight: 500;
-    display: block;
-    margin: 7px auto;
-    float: right;
     transition: background-color 0.2s;
   }
 
