@@ -12,13 +12,13 @@ export async function getPigById(id: string) {
 }
 
 export async function createPig(pig: Pig) {
-  await (await pigCollection()).insertOne(pig);
+  return (await pigCollection()).insertOne(pig);
 }
 
 export async function updatePig(id: string, update: Partial<Pig>) {
-  await (await pigCollection()).updateOne({ _id: id }, { $set: update });
+  return (await pigCollection()).updateOne({ _id: id }, { $set: update });
 }
 
 export async function deletePig(id: string) {
-  await (await pigCollection()).deleteOne({ _id: id });
+  return (await pigCollection()).deleteOne({ _id: id });
 }
