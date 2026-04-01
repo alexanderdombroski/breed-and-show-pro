@@ -27,17 +27,9 @@
       breed: String(formData.get("breed") || ""),
       sex: "boar",
       status: "active",
-      birthDate: formData.get("birthDate"),
-      notes: formData.get("notes") || undefined
+      birthDate: String(formData.get("birthDate") || ""),
+      notes: String(formData.get("notes") || ""),
     };
-    
-    // TODO: Send sireData to backend API
-    // eslint-disable-next-line no-console
-    console.log("New sire:", sireData);
-    
-    // Close modal and reset form
-    closeModal();
-    event.target.reset();
 
     try {
       const response = await fetch(`${API_BASE}/api/pigs`, {
