@@ -1,14 +1,12 @@
 import type { Request, Response, NextFunction } from "express";
 import { randomUUID } from "crypto";
 import {
-  getAllTasks,
-  getTaskById as fetchTaskById,
-  createTask as insertTask,
-  updateTask as updateTaskRecord,
-  completeTask as markTaskComplete,
-  deleteTask as removeTask,
-  // @ts-expect-error
-} from "../models/task.model.mts";
+  getAllNotes,
+  getNoteById as fetchTaskById,
+  createNote as insertTask,
+  updateNote as updateTaskRecord,
+  deleteNote as removeTask,
+} from "../models/notes.model.mts";
 
 export async function getTasks(
   req: Request,
@@ -16,7 +14,7 @@ export async function getTasks(
   next: NextFunction,
 ) {
   try {
-    const data = await getAllTasks();
+    const data = await getAllNotes();
     res.json(data);
   } catch (error) {
     next(error);
@@ -81,23 +79,6 @@ export async function updateTask(
       return res.status(404).json({ message: "Task not found" });
     }
     res.json({ message: "Task updated" });
-  } catch (error) {
-    next(error);
-  }
-}
-
-export async function completeTask(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
-  try {
-    const id = String(req.params.id);
-    const result = await markTaskComplete(id);
-    if (!result.matchedCount) {
-      return res.status(404).json({ message: "Task not found" });
-    }
-    res.json({ message: "Task completed" });
   } catch (error) {
     next(error);
   }

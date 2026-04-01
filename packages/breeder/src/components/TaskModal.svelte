@@ -1,4 +1,6 @@
 <script>
+  const baseURL = import.meta.env.PUBLIC_SERVER_URL;
+
   let showModal = $state(false);
 
   function openModal() {
@@ -9,14 +11,32 @@
     showModal = false;
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const taskData = {
+      // _type: ('task'),
       title: formData.get('title'),
       description: formData.get('description'),
       dueDate: formData.get('dueDate')
     };
+
+    const response = await fetch(`${baseURL}/tasks`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(taskData)
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log('Task successfully created:', data);
+    } else {
+      console.error('Failed to create task:', data);
+    }
+
     
     // TODO: Send taskData to backend API
     console.log('New task:', taskData);

@@ -1,5 +1,6 @@
 import express, { type Router } from "express";
 import { router as usersRouter } from "./users.ts";
+import tasksRouter from "./task.routes.mts";
 
 const router: Router = express.Router();
 
@@ -8,6 +9,7 @@ router.get("/", (req, res) => {
 });
 
 router.use("/users", usersRouter);
+router.use("/tasks", tasksRouter);
 
 router.get("/health", (req, res) => {
   res.status(200).json({

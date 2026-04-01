@@ -2,9 +2,9 @@
 import Layout from "../../../../shared/layouts/Layout.astro";
 import "../../styles/breeder-pages.css";
 import TaskModal from "../../components/TaskModal.svelte";
-import { BreederMockData } from "../../BreederMockData.js";
 const title = "Tasks";
-const tasks = BreederMockData.tasks;
+// import { BreederMockData } from "../../BreederMockData.js";
+// const tasks = BreederMockData.tasks;
 
 const isDatePast = (dateString: string) => {
   const dueDate = new Date(dateString);
@@ -12,6 +12,16 @@ const isDatePast = (dateString: string) => {
   today.setHours(0, 0, 0, 0);
   return dueDate < today;
 };
+
+async function fetchTasks() {
+  const BASE_URL = import.meta.env.PUBLIC_SERVER_URL;
+  const response = await fetch(`${BASE_URL}/tasks`, {
+    method: "GET",
+  });
+  const tasks = await response.json();
+  const allTasks = tasks._type === "task";
+  return allTasks;
+}
 ---
 
 <Layout title={title} client:load>
@@ -23,29 +33,37 @@ const isDatePast = (dateString: string) => {
     </div>
 
     {
-      tasks.length === 0 ? (
-        <p class="message">No tasks at this time.</p>
-      ) : (
-        <div class="tasks-list">
-          {tasks.map((task) => (
-            <div class="task-card">
-              <input class="checkbox" type="checkbox" />
-              <div class="task-info">
-                <h2>{task.title}</h2>
-                {task.description && (
-                  <p class="description">{task.description}</p>
-                )}
-                {task.dueDate && (
-                  <p
-                    class={`due-date ${isDatePast(task.dueDate) ? "past-date" : "future-date"}`}
-                  >
-                    Due: {new Date(task.dueDate).toLocaleDateString()}
-                  </p>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
+      await fetchTasks().then((allTasks) =>
+        allTasks.length === 0 ? (
+          <p class="message">No tasks at this time.</p>
+        ) : (
+          <div class="tasks-list">
+            {allTasks.map(
+              (task: {
+                title: string;
+                description?: string;
+                dueDate?: string;
+              }) => (
+                <div class="task-card">
+                  <input class="checkbox" type="checkbox" />
+                  <div class="task-info">
+                    <h2>{task.title}</h2>
+                    {task.description && (
+                      <p class="description">{task.description}</p>
+                    )}
+                    {task.dueDate && (
+                      <p
+                        class={`due-date ${isDatePast(task.dueDate) ? "past-date" : "future-date"}`}
+                      >
+                        Due: {new Date(task.dueDate).toLocaleDateString()}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ),
+            )}
+          </div>
+        ),
       )
     }
   </body>
