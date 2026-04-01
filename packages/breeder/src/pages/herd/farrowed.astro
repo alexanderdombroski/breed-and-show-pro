@@ -57,7 +57,7 @@ function getSireNameFromAnimal(animal: any): string {
       ) : (
         <div class="animals-list">
           {farrowedAnimals.map((animal) => (
-            <a href="#" class="animal-card">
+            <a href={`/herd/sow/${animal.id}`} class="animal-card">
               <div class="animal-info">
                 <h2>
                   {animal.name}: {animal.earNotch}

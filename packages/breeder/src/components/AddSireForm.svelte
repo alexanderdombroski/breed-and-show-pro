@@ -13,17 +13,17 @@
     event.preventDefault();
     const formData = new FormData(event.target);
     const sireData = {
-      name: formData.get('name'),
-      earNotch: formData.get('earNotch'),
-      breed: formData.get('breed'),
-      sex: 'boar',
-      status: 'active',
-      birthDate: formData.get('birthDate'),
-      notes: formData.get('notes') || undefined
+      name: formData.get("name"),
+      earNotch: formData.get("earNotch"),
+      breed: formData.get("breed"),
+      sex: "boar",
+      status: "active",
+      birthDate: formData.get("birthDate"),
+      notes: formData.get("notes") || undefined
     };
     
     // TODO: Send sireData to backend API
-    console.log('New sire:', sireData);
+    console.log("New sire:", sireData);
     
     // Close modal and reset form
     closeModal();
@@ -37,7 +37,7 @@
   }
 
   function handleBackdropKeydown(event) {
-    if (event.key === 'Escape') {
+    if (event.key === "Escape") {
       closeModal();
     }
   }
