@@ -21,15 +21,18 @@ export function getMongoClient() {
 let _client: MongoClient = getMongoClient();
 let _connection: Promise<MongoClient> = getMongoClient().connect();
 
+export async function getDb() {
+  await _connection;
+  return _client.db(dbName);
+}
+
 /**
  * Higher-order function to handle MongoDB connection and errors.
  * @param callback Function that performs the actual DB operation
  */
 export async function withDb<T>(callback: (db: Db) => Promise<T>): Promise<T> {
   try {
-    await _connection;
-    const db = _client.db(dbName);
-
+    const db = await getDb();
     return await callback(db);
   } catch (error) {
     console.error(`Database operation failed: ${error}`);
@@ -46,8 +49,7 @@ export async function withDbCollection<D extends Document, R = unknown>(
   callback: (collection: Collection<D>) => Promise<R>,
 ): Promise<R> {
   try {
-    await _connection;
-    const db = _client.db(dbName);
+    const db = await getDb();
     const collection = db.collection<D>(collectionName);
 
     return await callback(collection);
