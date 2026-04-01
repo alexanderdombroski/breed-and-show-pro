@@ -57,10 +57,10 @@ body {
   gap: 20px;
 }
 
-.btn-primary {
+.btn-primary,
+.btn-secondary {
   display: flex;
   align-items: center;
-  background-color: #f2af29;
   color: var(--pure-white);
   border: none;
   border-radius: 20px;
@@ -70,6 +70,11 @@ body {
   font-weight: 500;
   cursor: pointer;
   transition: box-shadow 0.2s ease;
+}
+
+.btn-primary {
+  background-color: #f2af29;
+  border: none;
 }
 
 .btn-primary > span {
