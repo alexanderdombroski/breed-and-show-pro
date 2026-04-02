@@ -4,6 +4,7 @@ import "../../styles/breeder-pages.css";
 
 const title = "Farrowed";
 const baseUrl = import.meta.env.BASE_URL;
+const breederBaseUrl = "/breed-and-show-pro/breeder";
 
 // Fetch farrowed sows from API
 const API_BASE = "http://localhost:3000";
@@ -27,7 +28,7 @@ try {
 ---
 
 <Layout title={title}>
-  <a class="back-link" href={`${baseUrl}/herd/`}>Back to Herd</a>
+  <a class="back-link" href={`${breederBaseUrl}/herd/`}>Back to Herd</a>
   {
     farrowedAnimals.length === 0 ? (
       <p class="message">No farrowed sows at this time.</p>

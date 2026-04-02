@@ -6,6 +6,7 @@ import AddSireForm from "../../components/AddSireForm.svelte";
 
 const title = "Herd";
 const baseUrl = import.meta.env.BASE_URL;
+const breederBaseUrl = "/breed-and-show-pro/breeder";
 
 // Fetch from API instead of using mock data
 const API_BASE = "http://localhost:3000";
@@ -49,7 +50,7 @@ function countArchived() {
 ---
 
 <Layout title={title}>
-  <a class="back-link" href={`${baseUrl}/`}>Back to Dashboard</a>
+  <a class="back-link" href={`${breederBaseUrl}/`}>Back to Dashboard</a>
 
   <div class="form-btns">
     <AddSowForm client:load />

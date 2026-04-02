@@ -4,6 +4,7 @@ import "../../styles/breeder-pages.css";
 
 const title = "Archived";
 const baseUrl = import.meta.env.BASE_URL;
+const breederBaseUrl = "/breed-and-show-pro/breeder";
 
 // Fetch archived pigs from API
 const API_BASE = "http://localhost:3000";
@@ -32,7 +33,7 @@ function getDetailUrl(animal: any): string {
 ---
 
 <Layout title={title}>
-  <a class="back-link" href={`${baseUrl}/herd/`}>Back to Herd</a>
+  <a class="back-link" href={`${breederBaseUrl}/herd/`}>Back to Herd</a>
   {
     archivedAnimals.length === 0 ? (
       <p class="message">No archived animals at this time.</p>
