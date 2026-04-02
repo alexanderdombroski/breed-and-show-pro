@@ -1,28 +1,9 @@
 ---
 import Layout from "../../../../shared/layouts/Layout.astro";
 import AddSowForm from "../../components/AddSowForm.svelte";
+import OpenSowList from "../../components/OpenSowList.svelte";
 import "../../styles/breeder-pages.css";
 const title = "Open";
-
-import { BreederMockData } from "../../BreederMockData.js";
-
-const openAnimals = BreederMockData.animals.filter(
-  (animal) => animal.status === "open",
-);
-
-function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  const options: Intl.DateTimeFormatOptions = { month: "long", day: "numeric" };
-  return date.toLocaleDateString("en-US", options);
-}
-
-function getNextHeatDisplay(animal: any): string {
-  if (animal.nextHeatDate) {
-    return formatDate(animal.nextHeatDate);
-  } else {
-    return "unknown";
-  }
-}
 ---
 
 <Layout title={title}>
@@ -33,86 +14,6 @@ function getNextHeatDisplay(animal: any): string {
       <AddSowForm client:load />
     </div>
 
-    {
-      openAnimals.length === 0 ? (
-        <p class="message">No open sows at this time.</p>
-      ) : (
-        <div class="animals-list">
-          {openAnimals.map((animal) => (
-            <a href={`/herd/sow/${animal.id}`} class="animal-card">
-              <div class="animal-info">
-                <h2>
-                  {animal.name}: {animal.earNotch}
-                </h2>
-                <p>Next Heat: {getNextHeatDisplay(animal)}</p>
-              </div>
-              <img
-                class="right-arrow"
-                src="/right-arrow.png"
-                alt="Right Arrow"
-              />
-            </a>
-          ))}
-        </div>
-      )
-    }
+    <OpenSowList client:load />
   </body>
 </Layout>
-
-<style>
-  .animals-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 10px;
-    width: 90%;
-    margin: 20px auto;
-  }
-
-  .animal-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-decoration: none;
-    font-size: 16px;
-    color: #333;
-    background-color: #fafafa;
-    border: 1px solid #e0e0e0;
-    border-left: 3px solid #f2af29ff;
-    padding: 12px 15px;
-    border-radius: 4px;
-    transition: all 0.2s;
-  }
-
-  .animal-card:hover {
-    background-color: #fff3e0;
-    box-shadow: 0 2px 6px rgba(255, 165, 0, 0.2);
-  }
-
-  .animal-info h2 {
-    margin: 0;
-    font-size: 1.1em;
-    font-weight: 600;
-  }
-
-  .animal-info p {
-    margin: 4px 0 0 0;
-    font-size: 0.9em;
-    color: #666;
-  }
-
-  @media (min-width: 1000px) {
-    .animals-list {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      width: 80%;
-      max-width: 1000px;
-      margin: 20px auto;
-    }
-
-    .animal-card {
-      height: 100px;
-    }
-  }
-</style>

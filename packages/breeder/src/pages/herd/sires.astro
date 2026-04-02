@@ -1,14 +1,9 @@
 ---
 import Layout from "../../../../shared/layouts/Layout.astro";
 import AddSireForm from "../../components/AddSireForm.svelte";
+import SireList from "../../components/SireList.svelte";
 import "../../styles/breeder-pages.css";
 const title = "Sires";
-
-import { BreederMockData } from "../../BreederMockData.js";
-
-const activeSires = BreederMockData.animals.filter(
-  (animal) => animal.status === "active" && animal.sex === "boar",
-);
 ---
 
 <Layout title={title}>
@@ -19,28 +14,7 @@ const activeSires = BreederMockData.animals.filter(
       <AddSireForm client:load />
     </div>
 
-    {
-      activeSires.length === 0 ? (
-        <p class="message">No active sires at this time.</p>
-      ) : (
-        <div class="animals-list">
-          {activeSires.map((animal) => (
-            <a href={`/herd/sire/${animal.id}`} class="animal-card">
-              <div class="animal-info">
-                <h2>
-                  {animal.name}: {animal.earNotch}
-                </h2>
-              </div>
-              <img
-                class="right-arrow"
-                src="/right-arrow.png"
-                alt="Right Arrow"
-              />
-            </a>
-          ))}
-        </div>
-      )
-    }
+    <SireList client:load />
   </body>
 </Layout>
 
