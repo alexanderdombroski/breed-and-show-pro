@@ -5,48 +5,114 @@ let confirmBredDate = $state("");
 let farrowingDate = $state("");
 let sixMonthDate = $state("");
 
-function addDaysToBreedingDate(breedingDate: string, days = 30): string {
-    if (!breedingDate) return "";
+function addDays(valueDate: string, days: number): string {
+    if (!valueDate) return "";
 
-    const [year, month, day] = breedingDate.split("-").map(Number);
+    const [year, month, day] = valueDate.split("-").map(Number);
     const date = new Date(year, month - 1, day);
     date.setDate(date.getDate() + days);
     return date.toISOString().slice(0, 10);
 }
 
+function formatDisplayDate(valueDate: string): string {
+    if (!valueDate) return "";
+    const [year, month, day] = valueDate.split("-").map(Number);
+    const date = new Date(year, month - 1, day);
+    return new Intl.DateTimeFormat("en-US", {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        year: "numeric"
+    }).format(date);
+}
+
 $effect(() => {
-    confirmBredDate = addDaysToBreedingDate(breedingDate, 30);
+    if (!breedingDate) {
+        confirmBredDate = "";
+        farrowingDate = "";
+        sixMonthDate = "";
+        return;
+    }
+    confirmBredDate = addDays(breedingDate, 30);
+    farrowingDate = addDays(breedingDate, 144);
+    sixMonthDate = addDays(breedingDate, 327);
+});
+
+$effect(() => {
+    if (!farrowingDate) {
+        breedingDate = "";
+        confirmBredDate = "";
+        sixMonthDate = "";
+        return;
+    }
+    breedingDate = addDays(farrowingDate, -144);
+    confirmBredDate = addDays(breedingDate, 30);
+    sixMonthDate = addDays(breedingDate, 327);
+});
+
+$effect(() => {
+    if (!sixMonthDate) {
+        breedingDate = "";
+        farrowingDate = "";
+        return;
+    }
+    breedingDate = addDays(sixMonthDate, -327);
+    confirmBredDate = addDays(breedingDate, 30);
+    farrowingDate = addDays(breedingDate, 144);
+});
+
+$effect(() => {
+    if (!confirmBredDate) {
+        breedingDate = "";
+        farrowingDate = "";
+        sixMonthDate = "";
+        return;
+    }
+    breedingDate = addDays(confirmBredDate, -30);
+    farrowingDate = addDays(breedingDate, 144);
+    sixMonthDate = addDays(breedingDate, 327);
 });
 
 </script>
+<section>
+    <div class="container">
+        <Card bind:value={breedingDate} label="breeding-date" title="Breeding Date"/>
+        <div class="dateDisplay">{formatDisplayDate(breedingDate)}</div>
+    </div>
 
-<section class="container">
-    <Card bind:value={breedingDate} label="breeding-date" title="Breeding Date"/>
-    <div>Value: {breedingDate}</div>
-</section>
+    <div class="container">
+        <Card bind:value={confirmBredDate} label="confirm-bred-date" title="Confirm Bred Date"/>
+        <div class="dateDisplay">{formatDisplayDate(confirmBredDate)}</div> 
+    </div>
 
-<section class="container">
-    <Card bind:value={confirmBredDate} label="confirm-bred-date" title="Confirm Bred Date"/>
-    <div>Value: {confirmBredDate}</div> 
-</section>
+    <div class="container">
+        <Card bind:value={farrowingDate} label="farrowing-due-date" title="Farrowing Due Date"/>
+        <div class="dateDisplay">{formatDisplayDate(farrowingDate)}</div>
+    </div>
 
-<section class="container">
-    <Card bind:value={farrowingDate} label="farrowing-due-date" title="Farrowing Due Date"/>
-    <div>Value: {farrowingDate}</div>
-</section>
-
-<section class="container">
-    <Card bind:value={sixMonthDate} label="six-months-old" title="6 Months Old"/>
-    <div>Value: {sixMonthDate}</div>
+    <div class="container">
+        <Card bind:value={sixMonthDate} label="six-months-old" title="6 Months Old"/>
+        <div class="dateDisplay">{formatDisplayDate(sixMonthDate)}</div>
+    </div>
 </section>
 
 <style>
-    .container {
-        background: rgb(248, 245, 228);
-        border-radius: 8px;
-        margin: 20px 10px;
-        padding: 1em 0.75em;
-        border-left: 8px solid #f9ee9b;
-        min-width: 300px;
-    }
+section{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.container {
+    background: rgb(248, 245, 228);
+    border-radius: 8px;
+    margin: 20px 10px;
+    padding: 1em 0.75em;
+    border-left: 8px solid #f9ee9b;
+    min-width: 300px;
+}
+.dateDisplay {
+    margin-top: 0.5em;
+    font-size: 1.5em;
+    color: #555;
+}
 </style>
