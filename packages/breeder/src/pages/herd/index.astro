@@ -1,5 +1,4 @@
 ---
-import { BreederMockData } from "../../BreederMockData.js";
 import Layout from "../../../../shared/layouts/Layout.astro";
 import "../../styles/breeder-pages.css";
 import AddSowForm from "../../components/AddSowForm.svelte";
@@ -8,134 +7,148 @@ import AddSireForm from "../../components/AddSireForm.svelte";
 const title = "Herd";
 const baseUrl = import.meta.env.BASE_URL;
 
-function countByStatus(status: string) {
-  return BreederMockData.animals.filter((pig) => pig.status === status).length;
+// Fetch from API instead of using mock data
+const API_BASE = "http://localhost:3000";
+let pigs: any[] = [];
+try {
+  const res = await fetch(`${API_BASE}/api/pigs`, {
+    headers: { "Content-Type": "application/json" },
+  });
+  if (res.ok) {
+    pigs = await res.json();
+  }
+} catch (err) {
+  console.error("Failed to fetch pigs:", err);
 }
 
-function countPastLitters() {
-  const today = new Date();
+function countOpen() {
+  return pigs.filter((pig: any) => pig.status === "open" && pig.sex === "sow")
+    .length;
+}
 
-  return BreederMockData.litters.filter((litter) => {
-    // If it has a weaned date → count it
-    if (litter.weanedDate) return true;
+function countBred() {
+  return pigs.filter((pig: any) => pig.status === "bred" && pig.sex === "sow")
+    .length;
+}
 
-    // Otherwise, check if 30 days past farrow date
-    if (litter.farrowDate) {
-      const farrowDate = new Date(litter.farrowDate);
-      // Add 30 days to the farrow date
-      farrowDate.setDate(farrowDate.getDate() + 30);
-      return farrowDate <= today;
-    }
+function countFarrowed() {
+  return pigs.filter(
+    (pig: any) => pig.status === "farrowed" && pig.sex === "sow",
+  ).length;
+}
 
-    return false;
-  }).length;
+function countSires() {
+  return pigs.filter(
+    (pig: any) => pig.status === "active" && pig.sex === "boar",
+  ).length;
+}
+
+function countArchived() {
+  return pigs.filter((pig: any) => pig.isArchived === true).length;
 }
 ---
 
 <Layout title={title}>
-  <body>
-    <a class="back-link" href="/">Back to Dashboard</a>
+  <a class="back-link" href={`${baseUrl}/`}>Back to Dashboard</a>
 
-    <div class="form-btns">
-      <AddSowForm client:load />
-      <AddSireForm client:load />
-    </div>
+  <div class="form-btns">
+    <AddSowForm client:load />
+    <AddSireForm client:load />
+  </div>
 
-    <div class="herd-container">
-      <a href={`${baseUrl}/herd/open`} class="herd-button">
-        <span>({countByStatus("open")}) Open</span>
-        <img
-          src={`${baseUrl}/right-arrow.png`}
-          alt="right-arrow"
-          class="right-arrow"
-        />
-      </a>
-      <a href={`${baseUrl}/herd/bred`} class="herd-button">
-        <span>({countByStatus("bred")}) Bred</span>
-        <img
-          src={`${baseUrl}/right-arrow.png`}
-          alt="right-arrow"
-          class="right-arrow"
-        />
-      </a>
-      <a href={`${baseUrl}/herd/farrowed`} class="herd-button">
-        <span>({countByStatus("farrowed")}) Farrow</span>
-        <img
-          src={`${baseUrl}/right-arrow.png`}
-          alt="right-arrow"
-          class="right-arrow"
-        />
-      </a>
-      <a href={`${baseUrl}/herd/sires`} class="herd-button">
-        <span>({countByStatus("active")}) Sires</span>
-        <img
-          src={`${baseUrl}/right-arrow.png`}
-          alt="right-arrow"
-          class="right-arrow"
-        />
-      </a>
-      <a href={`${baseUrl}/herd/pastLitters`} class="herd-button">
-        <span>({countPastLitters()}) Past Litters</span>
-        <img
-          src={`${baseUrl}/right-arrow.png`}
-          alt="right-arrow"
-          class="right-arrow"
-        />
-      </a>
-      <a href={`${baseUrl}/herd/archived`} class="herd-button">
-        <span>({countByStatus("archived")}) Archived</span>
-        <img
-          src={`${baseUrl}/right-arrow.png`}
-          alt="right-arrow"
-          class="right-arrow"
-        />
-      </a>
-    </div>
-  </body>
-</Layout>
-
-<style>
-  .herd-container {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 10px;
-    width: 90%;
-    margin: 0 auto;
-  }
-
-  .herd-button {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-decoration: none;
-    font-size: 16px;
-    color: #333;
-    background-color: #fafafa;
-    border: 1px solid #e0e0e0;
-    border-left: 3px solid #f2af29ff;
-    padding: 12px 15px;
-    border-radius: 4px;
-    transition: all 0.2s;
-  }
-
-  .herd-button:hover {
-    background-color: #fff3e0;
-    box-shadow: 0 2px 6px rgba(255, 165, 0, 0.2);
-  }
-
-  @media (min-width: 1000px) {
+  <div class="herd-container">
+    <a href={`${baseUrl}/herd/open`} class="herd-button">
+      <span>({countOpen()}) Open</span>
+      <img
+        src={`${baseUrl}/right-arrow.png`}
+        alt="right-arrow"
+        class="right-arrow"
+      />
+    </a>
+    <a href={`${baseUrl}/herd/bred`} class="herd-button">
+      <span>({countBred()}) Bred</span>
+      <img
+        src={`${baseUrl}/right-arrow.png`}
+        alt="right-arrow"
+        class="right-arrow"
+      />
+    </a>
+    <a href={`${baseUrl}/herd/farrowed`} class="herd-button">
+      <span>({countFarrowed()}) Farrow</span>
+      <img
+        src={`${baseUrl}/right-arrow.png`}
+        alt="right-arrow"
+        class="right-arrow"
+      />
+    </a>
+    <a href={`${baseUrl}/herd/sires`} class="herd-button">
+      <span>({countSires()}) Sires</span>
+      <img
+        src={`${baseUrl}/right-arrow.png`}
+        alt="right-arrow"
+        class="right-arrow"
+      />
+    </a>
+    <a href={`${baseUrl}/herd/pastLitters`} class="herd-button">
+      <span>Past Litters</span>
+      <img
+        src={`${baseUrl}/right-arrow.png`}
+        alt="right-arrow"
+        class="right-arrow"
+      />
+    </a>
+    <a href={`${baseUrl}/herd/archived`} class="herd-button">
+      <span>({countArchived()}) Archived</span>
+      <img
+        src={`${baseUrl}/right-arrow.png`}
+        alt="right-arrow"
+        class="right-arrow"
+      />
+    </a>
+  </div>
+  <style>
     .herd-container {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      width: 80%;
-      max-width: 1000px;
-      margin: 20px auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 10px;
+      width: 90%;
+      margin: 0 auto;
     }
 
     .herd-button {
-      height: 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-decoration: none;
+      font-size: 16px;
+      color: #333;
+      background-color: #fafafa;
+      border: 1px solid #e0e0e0;
+      border-left: 3px solid #f2af29ff;
+      padding: 12px 15px;
+      border-radius: 4px;
+      transition: all 0.2s;
     }
-  }
-</style>
+
+    .herd-button:hover {
+      background-color: #fff3e0;
+      box-shadow: 0 2px 6px rgba(255, 165, 0, 0.2);
+    }
+
+    @media (min-width: 1000px) {
+      .herd-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        width: 80%;
+        max-width: 1000px;
+        margin: 20px auto;
+      }
+
+      .herd-button {
+        height: 100px;
+      }
+    }
+  </style>
+</Layout>
