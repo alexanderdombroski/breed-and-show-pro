@@ -1,0 +1,138 @@
+---
+const response = await fetch("http://localhost:3000/pigs");
+const data = await response.json();
+const pigs = Array.isArray(data) ? data : data.pigs || [];
+---
+
+<div class="pig-container">
+  <h2>All Pigs</h2>
+  <p class="count-badge">{pigs.length} Pigs total</p>
+
+  {
+    pigs.length > 0 ? (
+      <div class="pig-grid">
+        {pigs.map((pig: any) => (
+          <a href={`/pigs/${pig._id}`} class="pig-card" key-value={pig._id}>
+            <div class="card-content">
+              <h3 class="pig-name">{pig.name}</h3>
+              <div class="divider" />
+              <p class="pig-breed">{pig.breed}</p>
+
+              {pig.show && (
+                <div class="show-info">
+                  <span class="show-label">Upcoming Show:</span>
+                  <p class="show-name">{pig.show.name}</p>
+                  <p class="show-date">
+                    {new Date(pig.show.date).toLocaleDateString()}
+                  </p>
+                </div>
+              )}
+            </div>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <div class="empty-state">
+        <p>No pigs assigned to you.</p>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .pig-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    font-family: system-ui, sans-serif;
+  }
+
+  .count-badge {
+    color: #666;
+    margin-bottom: 2rem;
+  }
+
+  /* The Grid Setup */
+  .pig-grid {
+    display: grid;
+    /* This creates as many 280px columns as will fit, then grows them */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* The "Island" Card */
+  .pig-card {
+    background: white;
+    text-decoration: none; /* Removes underline from link */
+    color: inherit;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Hover Effects */
+  .pig-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    border-color: #3b82f6; /* Subtle blue highlight */
+  }
+
+  .pig-name {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #1a1a1a;
+  }
+
+  .divider {
+    height: 2px;
+    background: #f0f0f0;
+    margin: 0.75rem 0;
+  }
+
+  .pig-breed {
+    color: #4b5563;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  /* Show Info Section */
+  .show-info {
+    margin-top: auto; /* Pushes show info to the bottom */
+    background: #f9fafb;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+  }
+
+  .show-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #9ca3af;
+  }
+
+  .show-name {
+    margin: 0.25rem 0 0 0;
+    font-weight: bold;
+    color: #374151;
+  }
+
+  .show-date {
+    margin: 0;
+    color: #6b7280;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem;
+    background: #f3f4f6;
+    border-radius: 12px;
+    color: #6b7280;
+  }
+</style>

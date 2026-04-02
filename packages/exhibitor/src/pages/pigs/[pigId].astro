@@ -1,0 +1,32 @@
+---
+const { pigId } = Astro.params as { pigId: string };
+const response = await fetch(`http://localhost:3000/pigs/${pigId}`);
+const pig = await response.json();
+import Layout from "../../../../shared/layouts/Layout.svelte.astro";
+---
+
+<Layout>
+  <div class="pig-detail">
+    <h2>{pig.name}</h2>
+    <p><strong>Breed:</strong> {pig.breed}</p>
+    <p><strong>Breeding Status:</strong> {pig.status}</p>
+    <p><strong>Sex:</strong> {pig.sex}</p>
+  </div>
+</Layout>
+
+<style>
+  .pig-detail {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    font-family: system-ui, sans-serif;
+  }
+
+  .pig-detail h2 {
+    margin-bottom: 1rem;
+  }
+
+  .pig-detail p {
+    margin: 0.5rem 0;
+  }
+</style>
