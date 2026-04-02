@@ -1,6 +1,7 @@
 ---
 import Layout from "../../../../shared/layouts/Layout.astro";
 import AddSireForm from "../../components/AddSireForm.svelte";
+import SireList from "../../components/SireList.svelte";
 import "../../styles/breeder-pages.css";
 const title = "Sires";
 const baseUrl = import.meta.env.BASE_URL;
@@ -20,6 +21,7 @@ const activeSires = BreederMockData.animals.filter(
       <AddSireForm client:load />
     </div>
 
+    <SireList client:load />
     {
       activeSires.length === 0 ? (
         <p class="message">No active sires at this time.</p>

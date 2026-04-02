@@ -7,7 +7,7 @@ import {
   deletePig,
   addBreeding,
   addFarrowing,
-  addWeaning,
+  // addWeaning,
   addHeatDate,
   archivePig,
 } from "../controllers/pig.controller.mts";
@@ -22,7 +22,7 @@ router.delete("/:id", deletePig);
 
 router.post("/:id/breeding", addBreeding);
 router.post("/:id/farrowing", addFarrowing);
-router.post("/:id/weaning", addWeaning);
+// router.post("/:id/weaning", addWeaning);
 router.post("/:id/heat-date", addHeatDate);
 router.patch("/:id/archive", archivePig);
 

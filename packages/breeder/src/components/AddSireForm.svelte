@@ -51,6 +51,9 @@
       if (formElement && typeof formElement.reset === "function") {
         formElement.reset();
       }
+
+      // Refresh the page to update the dashboard
+      window.location.reload();
     } catch (error) {
       console.error("Error creating sow:", error);
       errorMessage = error instanceof Error ? error.message : "Failed to create sire";

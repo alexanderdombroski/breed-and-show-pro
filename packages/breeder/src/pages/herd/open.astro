@@ -1,6 +1,7 @@
 ---
 import Layout from "../../../../shared/layouts/Layout.astro";
 import AddSowForm from "../../components/AddSowForm.svelte";
+import OpenSowList from "../../components/OpenSowList.svelte";
 import "../../styles/breeder-pages.css";
 const title = "Open";
 const baseUrl = import.meta.env.BASE_URL;
@@ -57,63 +58,6 @@ function getNextHeatDisplay(animal: any): string {
         </div>
       )
     }
+    <OpenSowList client:load />
   </body>
 </Layout>
-
-<style>
-  .animals-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 10px;
-    width: 90%;
-    margin: 20px auto;
-  }
-
-  .animal-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-decoration: none;
-    font-size: 16px;
-    color: #333;
-    background-color: #fafafa;
-    border: 1px solid #e0e0e0;
-    border-left: 3px solid #f2af29ff;
-    padding: 12px 15px;
-    border-radius: 4px;
-    transition: all 0.2s;
-  }
-
-  .animal-card:hover {
-    background-color: #fff3e0;
-    box-shadow: 0 2px 6px rgba(255, 165, 0, 0.2);
-  }
-
-  .animal-info h2 {
-    margin: 0;
-    font-size: 1.1em;
-    font-weight: 600;
-  }
-
-  .animal-info p {
-    margin: 4px 0 0 0;
-    font-size: 0.9em;
-    color: #666;
-  }
-
-  @media (min-width: 1000px) {
-    .animals-list {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      width: 80%;
-      max-width: 1000px;
-      margin: 20px auto;
-    }
-
-    .animal-card {
-      height: 100px;
-    }
-  }
-</style>
