@@ -6,6 +6,7 @@ import AddSowForm from "../../components/AddSowForm.svelte";
 import AddSireForm from "../../components/AddSireForm.svelte";
 
 const title = "Herd";
+const baseUrl = import.meta.env.BASE_URL;
 
 function countByStatus(status: string) {
   return BreederMockData.animals.filter((pig) => pig.status === status).length;
@@ -43,27 +44,51 @@ function countPastLitters() {
     <div class="herd-container">
       <a href="/herd/open" class="herd-button">
         <span>({countByStatus("open")}) Open</span>
-        <img src="/right-arrow.png" alt="right-arrow" class="right-arrow" />
+        <img
+          src={`${baseUrl}/right-arrow.png`}
+          alt="right-arrow"
+          class="right-arrow"
+        />
       </a>
       <a href="/herd/bred" class="herd-button">
         <span>({countByStatus("bred")}) Bred</span>
-        <img src="/right-arrow.png" alt="right-arrow" class="right-arrow" />
+        <img
+          src={`${baseUrl}/right-arrow.png`}
+          alt="right-arrow"
+          class="right-arrow"
+        />
       </a>
       <a href="/herd/farrowed" class="herd-button">
         <span>({countByStatus("farrowed")}) Farrow</span>
-        <img src="/right-arrow.png" alt="right-arrow" class="right-arrow" />
+        <img
+          src={`${baseUrl}/right-arrow.png`}
+          alt="right-arrow"
+          class="right-arrow"
+        />
       </a>
       <a href="/herd/sires" class="herd-button">
         <span>({countByStatus("active")}) Sires</span>
-        <img src="/right-arrow.png" alt="right-arrow" class="right-arrow" />
+        <img
+          src={`${baseUrl}/right-arrow.png`}
+          alt="right-arrow"
+          class="right-arrow"
+        />
       </a>
       <a href="/herd/pastLitters" class="herd-button">
         <span>({countPastLitters()}) Past Litters</span>
-        <img src="/right-arrow.png" alt="right-arrow" class="right-arrow" />
+        <img
+          src={`${baseUrl}/right-arrow.png`}
+          alt="right-arrow"
+          class="right-arrow"
+        />
       </a>
       <a href="/herd/archived" class="herd-button">
         <span>({countByStatus("archived")}) Archived</span>
-        <img src="/right-arrow.png" alt="right-arrow" class="right-arrow" />
+        <img
+          src={`${baseUrl}/right-arrow.png`}
+          alt="right-arrow"
+          class="right-arrow"
+        />
       </a>
     </div>
   </body>

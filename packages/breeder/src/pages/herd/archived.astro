@@ -2,6 +2,7 @@
 import Layout from "../../../../shared/layouts/Layout.astro";
 import "../../styles/breeder-pages.css";
 const title = "Archived";
+const baseUrl = import.meta.env.BASE_URL;
 
 import { BreederMockData } from "../../BreederMockData.js";
 
@@ -35,7 +36,7 @@ const archivedAnimals = BreederMockData.animals.filter(
               </div>
               <img
                 class="right-arrow"
-                src="/right-arrow.png"
+                src={`${baseUrl}/right-arrow.png`}
                 alt="Right Arrow"
               />
             </a>
