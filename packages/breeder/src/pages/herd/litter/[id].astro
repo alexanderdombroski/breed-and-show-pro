@@ -45,20 +45,17 @@ const sire = litter?.sireId ? getAnimal(litter.sireId) : null;
               <h3>Parents</h3>
               <p>
                 <strong>Dam:</strong>
-                <a href={`${baseUrl}/herd/sow/${dam?.id}`} class="animal-link">
-                  {dam?.name || "Unknown"}{" "}
-                  {dam?.earNotch ? `(${dam.earNotch})` : ""}
-                </a>
+                <span>
+                  {dam?.name || "Unknown"}
+                  {dam?.earNotch ? ` (${dam.earNotch})` : ""}
+                </span>
               </p>
               <p>
                 <strong>Sire:</strong>
-                <a
-                  href={`${baseUrl}/herd/sire/${sire?.id}`}
-                  class="animal-link"
-                >
-                  {sire?.name || "Unknown"}{" "}
-                  {sire?.earNotch ? `(${sire.earNotch})` : ""}
-                </a>
+                <span>
+                  {sire?.name || "Unknown"}
+                  {sire?.earNotch ? ` (${sire.earNotch})` : ""}
+                </span>
               </p>
             </div>
 
