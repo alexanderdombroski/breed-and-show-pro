@@ -1,16 +1,16 @@
 import type { Request, Response, NextFunction } from "express";
 import { randomUUID } from "crypto";
 import {
-  getAllPigs,
+  listPigs,
   getPigById as fetchPigById,
   createPig as insertPig,
   updatePig as updatePigRecord,
   deletePig as removePig,
-} from "../models/pigs.model.mts";
+} from "../service/pigs.ts";
 
 export async function getPigs(req: Request, res: Response, next: NextFunction) {
   try {
-    const data = await getAllPigs();
+    const data = await listPigs();
     res.json(data);
   } catch (error) {
     next(error);
@@ -95,12 +95,9 @@ export async function deletePig(
   }
 }
 
-const updatePigEvent = async (
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  id: string,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  update: Record<string, unknown>,
-) => {};
+const updatePigEvent = async (id: string, update: Record<string, unknown>) => {
+  return await updatePigRecord(id, update);
+};
 
 export async function addBreeding(
   req: Request,

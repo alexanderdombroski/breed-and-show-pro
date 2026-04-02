@@ -4,7 +4,7 @@ import {
   getBredHerdSummary,
   getFarrowedHerdSummary,
   getOpenHerdSummary,
-} from "../services/herd.service.mts";
+} from "../controllers/herd.controller.mts";
 
 const router: Router = Router();
 

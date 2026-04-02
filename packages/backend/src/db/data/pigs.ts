@@ -217,6 +217,38 @@ const _pigs: Omit<Pig, "_id" | "userId" | "createdAt" | "updatedAt">[] = [
     show: {},
     isArchived: false,
   },
+  // Archived pigs (retired from breeding)
+  {
+    earNotch: "8-1",
+    name: "Legacy",
+    breed: "Yorkshire",
+    sex: "sow",
+    status: "active",
+    birthDate: new Date("2019-03-15"),
+    show: {},
+    isArchived: true,
+  },
+  // Farrowed sows (recently gave birth)
+  {
+    earNotch: "8-2",
+    name: "Sunshine",
+    breed: "Duroc",
+    sex: "sow",
+    status: "farrowed",
+    birthDate: new Date("2022-06-20"),
+    show: {},
+    isArchived: false,
+  },
+  {
+    earNotch: "8-3",
+    name: "Bella",
+    breed: "Berkshire",
+    sex: "sow",
+    status: "farrowed",
+    birthDate: new Date("2022-05-10"),
+    show: {},
+    isArchived: false,
+  },
 ];
 
 export const pigs = _pigs.map((pig, i) =>

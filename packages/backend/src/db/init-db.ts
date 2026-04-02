@@ -19,7 +19,7 @@ import { pigs } from "./data/pigs.ts";
 import { notes } from "./data/notes.ts";
 import { events } from "./data/events.ts";
 
-loadEnvFile(path.join(process.cwd(), "packages", "backend", ".env"));
+loadEnvFile(path.join(process.cwd(), ".env"));
 
 const { withDb, withDbCollection, getMongoClient } =
   await import("./index.mts");

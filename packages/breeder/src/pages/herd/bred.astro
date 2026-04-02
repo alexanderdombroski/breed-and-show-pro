@@ -1,14 +1,28 @@
 ---
 import Layout from "../../../../shared/layouts/Layout.astro";
 import "../../styles/breeder-pages.css";
+
 const title = "Bred";
 const baseUrl = import.meta.env.BASE_URL;
 
-import { BreederMockData } from "../../BreederMockData.js";
-
-const bredAnimals = BreederMockData.animals.filter(
-  (animal) => animal.status === "bred",
-);
+// Fetch bred sows from API
+const API_BASE = "http://localhost:3000";
+let bredAnimals = [];
+try {
+  const res = await fetch(`${API_BASE}/api/pigs`, {
+    headers: { "Content-Type": "application/json" },
+  });
+  if (res.ok) {
+    const pigs = await res.json();
+    bredAnimals = pigs.filter(
+      (pig: any) => pig.status === "bred" && pig.sex === "sow",
+    );
+  } else {
+    console.error("API error:", res.status, res.statusText);
+  }
+} catch (err) {
+  console.error("Failed to fetch bred sows:", err);
+}
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
@@ -19,55 +33,44 @@ function formatDate(dateString: string): string {
 function getFarrowingDisplay(animal: any): string {
   if (animal.expectedFarrowDate) {
     return formatDate(animal.expectedFarrowDate);
-  } else {
-    return "unknown";
   }
+  return "unknown";
 }
 
 function getBreedingDisplay(animal: any): string {
   if (animal.breedingDate) {
     return formatDate(animal.breedingDate);
-  } else {
-    return "unknown";
   }
-}
-
-function getSireName(sireId: number | undefined): string {
-  if (!sireId) return "unknown";
-  const sire = BreederMockData.animals.find((animal) => animal.id === sireId);
-  return sire ? sire.name : "unknown";
+  return "unknown";
 }
 ---
 
 <Layout title={title}>
-  <body>
-    <a class="back-link" href="/herd/">Back to Herd</a>
-    {
-      bredAnimals.length === 0 ? (
-        <p class="message">No bred sows at this time.</p>
-      ) : (
-        <div class="animals-list">
-          {bredAnimals.map((animal) => (
-            <a href={`/herd/sow/${animal.id}`} class="animal-card">
-              <div class="animal-info">
-                <h2>
-                  {animal.name}: {animal.earNotch}
-                </h2>
-                <p>Bred: {getBreedingDisplay(animal)}</p>
-                <p>Est Farrow Date: {getFarrowingDisplay(animal)}</p>
-                <p>Sire: {getSireName(animal.bredTo)}</p>
-              </div>
-              <img
-                class="right-arrow"
-                src={`${baseUrl}/right-arrow.png`}
-                alt="Right Arrow"
-              />
-            </a>
-          ))}
-        </div>
-      )
-    }
-  </body>
+  <a class="back-link" href={`${baseUrl}/herd/`}>Back to Herd</a>
+  {
+    bredAnimals.length === 0 ? (
+      <p class="message">No bred sows at this time.</p>
+    ) : (
+      <div class="animals-list">
+        {bredAnimals.map((animal: any) => (
+          <a href={`${baseUrl}/herd/sow/${animal._id}`} class="animal-card">
+            <div class="animal-info">
+              <h2>
+                {animal.name}: {animal.earNotch}
+              </h2>
+              <p>Bred: {getBreedingDisplay(animal)}</p>
+              <p>Est Farrow Date: {getFarrowingDisplay(animal)}</p>
+            </div>
+            <img
+              class="right-arrow"
+              src={`${baseUrl}/right-arrow.png`}
+              alt="Right Arrow"
+            />
+          </a>
+        ))}
+      </div>
+    )
+  }
 </Layout>
 
 <style>

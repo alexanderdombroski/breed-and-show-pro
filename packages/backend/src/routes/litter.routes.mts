@@ -5,7 +5,7 @@ import {
   getLitterById,
   updateLitter,
   deleteLitter,
-} from "../services/litter.service.mts";
+} from "../controllers/litter.controller.mts";
 
 const router: Router = Router();
 

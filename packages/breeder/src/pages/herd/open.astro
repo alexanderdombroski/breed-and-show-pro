@@ -2,62 +2,57 @@
 import Layout from "../../../../shared/layouts/Layout.astro";
 import AddSowForm from "../../components/AddSowForm.svelte";
 import "../../styles/breeder-pages.css";
+
 const title = "Open";
 const baseUrl = import.meta.env.BASE_URL;
 
-import { BreederMockData } from "../../BreederMockData.js";
-
-const openAnimals = BreederMockData.animals.filter(
-  (animal) => animal.status === "open",
-);
-
-function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  const options: Intl.DateTimeFormatOptions = { month: "long", day: "numeric" };
-  return date.toLocaleDateString("en-US", options);
-}
-
-function getNextHeatDisplay(animal: any): string {
-  if (animal.nextHeatDate) {
-    return formatDate(animal.nextHeatDate);
+// Fetch open sows from API
+const API_BASE = "http://localhost:3000";
+let openAnimals = [];
+try {
+  const res = await fetch(`${API_BASE}/api/pigs`, {
+    headers: { "Content-Type": "application/json" },
+  });
+  if (res.ok) {
+    const pigs = await res.json();
+    openAnimals = pigs.filter(
+      (pig: any) => pig.status === "open" && pig.sex === "sow",
+    );
   } else {
-    return "unknown";
+    console.error("API error:", res.status, res.statusText);
   }
+} catch (err) {
+  console.error("Failed to fetch open sows:", err);
 }
 ---
 
 <Layout title={title}>
-  <body>
-    <a class="back-link" href="/herd/">Back to Herd</a>
-
-    <div class="form-btns">
-      <AddSowForm client:load />
-    </div>
-
-    {
-      openAnimals.length === 0 ? (
-        <p class="message">No open sows at this time.</p>
-      ) : (
-        <div class="animals-list">
-          {openAnimals.map((animal) => (
-            <a href={`/herd/sow/${animal.id}`} class="animal-card">
-              <div class="animal-info">
-                <h2>
-                  {animal.name}: {animal.earNotch}
-                </h2>
-                <p>Next Heat: {getNextHeatDisplay(animal)}</p>
-              </div>
-              <img
-                class="right-arrow"
-                src={`${baseUrl}/right-arrow.png`}
-                alt="Right Arrow"
-              />
-            </a>
-          ))}
-        </div>
-      )
-    }
-  </body>
+  <a class="back-link" href={`${baseUrl}/herd/`}>Back to Herd</a>
+  <div class="form-btns">
+    <AddSowForm client:load />
+  </div>
+  {
+    openAnimals.length === 0 ? (
+      <p class="message">No open sows at this time.</p>
+    ) : (
+      <div class="animals-list">
+        {openAnimals.map((animal: any) => (
+          <a href={`${baseUrl}/herd/sow/${animal._id}`} class="animal-card">
+            <div class="animal-info">
+              <h2>
+                {animal.name}: {animal.earNotch}
+              </h2>
+            </div>
+            <img
+              class="right-arrow"
+              src={`${baseUrl}/right-arrow.png`}
+              alt="Right Arrow"
+            />
+          </a>
+        ))}
+      </div>
+    )
+  }
 </Layout>
 
 <style>
@@ -94,12 +89,6 @@ function getNextHeatDisplay(animal: any): string {
     margin: 0;
     font-size: 1.1em;
     font-weight: 600;
-  }
-
-  .animal-info p {
-    margin: 4px 0 0 0;
-    font-size: 0.9em;
-    color: #666;
   }
 
   @media (min-width: 1000px) {

@@ -1,147 +1,17 @@
 ---
 import Layout from "../../../../../shared/layouts/Layout.astro";
 import "../../../styles/breeder-pages.css";
-import HeatDatesWidget from "../../../components/HeatDatesWidget.svelte";
-import { BreederMockData } from "../../../BreederMockData.js";
+import PigDetail from "../../../components/PigDetail.svelte";
 
 const title = "Sow Info";
+const baseUrl = import.meta.env.BASE_URL;
 
-export async function getStaticPaths() {
-  return BreederMockData.animals
-    .filter((a) => a.sex === "sow")
-    .map((a) => ({ params: { id: a.id.toString() } }));
-}
-
-const { id } = Astro.params;
-
-const pig = BreederMockData.animals.find((a) => a.id === Number(id));
-
-function getSire(sireId: number) {
-  return BreederMockData.animals.find((a) => a.id === sireId);
-}
-
-const sire = pig?.sireId ? getSire(pig.sireId) : null;
+const id = Astro.params.id;
+if (!id) throw new Error("Sow id is required");
+export const prerender = false;
 ---
 
---- // ... existing code ... ---
-
 <Layout title={title}>
-  <body>
-    <a class="back-link" href="/herd/">Back to Herd</a>
-
-    {
-      !pig || pig.sex !== "sow" ? (
-        <p class="message">This is not a sow.</p>
-      ) : (
-        <div class="animal-detail">
-          <div class="animal-info">
-            <h1>{pig.name}</h1>
-
-            <div class="info-section">
-              <h3>Basic Information</h3>
-              <p>
-                <strong>Ear Notch:</strong> {pig.earNotch}
-              </p>
-              <p>
-                <strong>Breed:</strong> {pig.breed}
-              </p>
-              <p>
-                <strong>Date of Birth:</strong>{" "}
-                {new Date(pig.birthDate).toLocaleDateString()}
-              </p>
-              <p>
-                <strong>Sex:</strong> Female (Sow/Gilt)
-              </p>
-              <p>
-                <strong>Status:</strong> {pig.status}
-              </p>
-            </div>
-
-            {sire && (
-              <div class="info-section">
-                <h3>Sire</h3>
-                <p>
-                  <a href={`/herd/sire/${sire.id}`} class="animal-link">
-                    {sire.name} ({sire.earNotch})
-                  </a>
-                </p>
-              </div>
-            )}
-
-            <div class="info-section">
-              <h3>Heat Cycle</h3>
-              {/* @ts-ignore - Svelte component props not recognized by Astro TypeScript */}
-              <HeatDatesWidget client:load heatDates={pig.heatDates || []} />
-            </div>
-
-            {pig.lastFarrowDate && (
-              <div class="info-section">
-                <h3>Last Farrow</h3>
-                <p>
-                  <a
-                    href={`/herd/litter/${pig.litterNumber}`}
-                    class="animal-link"
-                  >
-                    {new Date(pig.lastFarrowDate).toLocaleDateString()}
-                  </a>
-                </p>
-              </div>
-            )}
-
-            {pig.notes && (
-              <div class="info-section">
-                <h3>Notes</h3>
-                <p>{pig.notes}</p>
-              </div>
-            )}
-          </div>
-        </div>
-      )
-    }
-  </body>
+  <a class="back-link" href={`${baseUrl}/herd/`}>Back to Herd</a>
+  <PigDetail client:load {id} expectedSex="sow" />
 </Layout>
-
-<style>
-  .animal-detail {
-    max-width: 800px;
-    margin: 20px auto;
-    width: 90%;
-  }
-
-  .animal-info h1 {
-    margin: 0 0 20px 0;
-    color: #333;
-    font-size: 2em;
-  }
-
-  .info-section {
-    background-color: white;
-    border: 1px solid #e0e0e0;
-    border-left: 4px solid #f2af29ff;
-    border-radius: 8px;
-    padding: 15px 20px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .info-section h3 {
-    margin: 0 0 10px 0;
-    color: #f2af29ff;
-    font-size: 1.2em;
-  }
-
-  .info-section p {
-    margin: 5px 0;
-    line-height: 1.4;
-  }
-
-  .animal-link {
-    color: #f2af29ff;
-    text-decoration: none;
-    font-weight: 600;
-  }
-
-  .animal-link:hover {
-    text-decoration: underline;
-  }
-</style>

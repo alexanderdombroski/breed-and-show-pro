@@ -1,50 +1,61 @@
 ---
 import Layout from "../../../../shared/layouts/Layout.astro";
 import "../../styles/breeder-pages.css";
+
 const title = "Archived";
 const baseUrl = import.meta.env.BASE_URL;
 
-import { BreederMockData } from "../../BreederMockData.js";
+// Fetch archived pigs from API
+const API_BASE = "http://localhost:3000";
+let archivedAnimals = [];
+try {
+  const res = await fetch(`${API_BASE}/api/pigs`, {
+    headers: { "Content-Type": "application/json" },
+  });
+  if (res.ok) {
+    const pigs = await res.json();
+    archivedAnimals = pigs.filter((pig: any) => pig.isArchived === true);
+  } else {
+    console.error("API error:", res.status, res.statusText);
+  }
+} catch (err) {
+  console.error("Failed to fetch archived pigs:", err);
+}
 
-const archivedAnimals = BreederMockData.animals.filter(
-  (animal) => animal.status === "archived",
-);
+function getDetailUrl(animal: any): string {
+  const detailPath =
+    animal.sex === "boar"
+      ? `/herd/sire/${animal._id}`
+      : `/herd/sow/${animal._id}`;
+  return `${baseUrl}${detailPath}`;
+}
 ---
 
 <Layout title={title}>
-  <body>
-    <a class="back-link" href="/herd/">Back to Herd</a>
-    {
-      archivedAnimals.length === 0 ? (
-        <p class="message">No archived animals at this time.</p>
-      ) : (
-        <div class="animals-list">
-          {archivedAnimals.map((animal) => (
-            <a
-              href={
-                animal.sex === "boar"
-                  ? `/herd/sire/${animal.id}`
-                  : `/herd/sow/${animal.id}`
-              }
-              class="animal-card"
-            >
-              <div class="animal-info">
-                <h2>
-                  {animal.name}: {animal.earNotch}
-                </h2>
-                <p>{animal.sex}</p>
-              </div>
-              <img
-                class="right-arrow"
-                src={`${baseUrl}/right-arrow.png`}
-                alt="Right Arrow"
-              />
-            </a>
-          ))}
-        </div>
-      )
-    }
-  </body>
+  <a class="back-link" href={`${baseUrl}/herd/`}>Back to Herd</a>
+  {
+    archivedAnimals.length === 0 ? (
+      <p class="message">No archived animals at this time.</p>
+    ) : (
+      <div class="animals-list">
+        {archivedAnimals.map((animal: any) => (
+          <a href={getDetailUrl(animal)} class="animal-card">
+            <div class="animal-info">
+              <h2>
+                {animal.name}: {animal.earNotch}
+              </h2>
+              <p>{animal.sex}</p>
+            </div>
+            <img
+              class="right-arrow"
+              src={`${baseUrl}/right-arrow.png`}
+              alt="Right Arrow"
+            />
+          </a>
+        ))}
+      </div>
+    )
+  }
 </Layout>
 
 <style>

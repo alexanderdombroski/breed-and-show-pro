@@ -2,9 +2,11 @@
   import { BreederMockData } from "../BreederMockData.js";
   import "../styles/breeder-pages.css";
 
+  const BREEDER_BASE_URL = import.meta.env.BASE_URL || "/breed-and-show-pro/breeder";
+
   interface UpcomingDate {
     date: string;
-    type: 'heat' | 'farrowing' | 'task' | 'confirm';
+    type: "heat" | "farrowing" | "task" | "confirm";
     title: string;
     description?: string;
     animalName?: string;
@@ -26,7 +28,7 @@
     if (animal.nextHeatDate && isFutureDate(animal.nextHeatDate)) {
       upcomingDates.push({
         date: animal.nextHeatDate,
-        type: 'heat',
+        type: "heat",
         title: `${animal.name} - Heat Expected`,
         animalName: animal.name,
         description: `${animal.breed} sow (${animal.earNotch})`
@@ -39,7 +41,7 @@
     if (animal.expectedFarrowDate && isFutureDate(animal.expectedFarrowDate)) {
       upcomingDates.push({
         date: animal.expectedFarrowDate,
-        type: 'farrowing',
+        type: "farrowing",
         title: `${animal.name} - Expected Farrowing`,
         animalName: animal.name,
         description: `${animal.breed} sow (${animal.earNotch})`
@@ -49,16 +51,16 @@
 
   // Add confirmation dates (21 days after breeding)
   BreederMockData.animals.forEach(animal => {
-    if (animal.status === 'bred' && animal.breedingDate) {
+    if (animal.status === "bred" && animal.breedingDate) {
       const breedingDate = new Date(animal.breedingDate);
       const confirmDate = new Date(breedingDate);
       confirmDate.setDate(confirmDate.getDate() + 21);
-      const confirmDateString = confirmDate.toISOString().split('T')[0];
+      const confirmDateString = confirmDate.toISOString().split("T")[0];
       
       if (isFutureDate(confirmDateString)) {
         upcomingDates.push({
           date: confirmDateString,
-          type: 'confirm',
+          type: "confirm",
           title: `${animal.name} - Confirm Breeding`,
           animalName: animal.name,
           description: `Check if breeding was successful (${animal.breed} ${animal.earNotch})`
@@ -72,7 +74,7 @@
     if (task.dueDate && !task.completed && isFutureDate(task.dueDate)) {
       upcomingDates.push({
         date: task.dueDate,
-        type: 'task',
+        type: "task",
         title: task.title,
         description: task.description
       });
@@ -82,21 +84,21 @@
   // Sort by date (earliest first)
   upcomingDates.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
-  type FilterType = 'all' | 'heat' | 'farrowing' | 'task' | 'confirm';
-  let selectedFilter = $state<FilterType>('all');
+  type FilterType = "all" | "heat" | "farrowing" | "task" | "confirm";
+  let selectedFilter = $state<FilterType>("all");
   
   // Filter dates based on selected type
   const filteredDates = $derived(() => {
-    if (selectedFilter === 'all') return upcomingDates;
+    if (selectedFilter === "all") return upcomingDates;
     return upcomingDates.filter(date => date.type === selectedFilter);
   });
   
   // Format date for display
   function formatDate(dateString: string): string {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      month: 'short', 
-      day: 'numeric' 
+    return date.toLocaleDateString("en-US", { 
+      month: "short", 
+      day: "numeric" 
     });
   }
   
@@ -114,50 +116,50 @@
   // Get type badge color
   function getTypeBadgeClass(type: string): string {
     switch(type) {
-      case 'heat': return 'badge-heat';
-      case 'farrowing': return 'badge-farrowing';
-      case 'task': return 'badge-task';
-      case 'confirm': return 'badge-confirm';
-      default: return '';
+      case "heat": return "badge-heat";
+      case "farrowing": return "badge-farrowing";
+      case "task": return "badge-task";
+      case "confirm": return "badge-confirm";
+      default: return "";
     }
   }
 </script>
 
 <section class="widget-container">
   <div class="title">
-    <a href="/upcomingDates/" class="widget-link">
+    <a href={`${BREEDER_BASE_URL}/upcomingDates/`} class="widget-link">
       <h3>Upcoming Dates</h3>
     </a>
   </div>
 
   <div class="filter-buttons">
     <button 
-      class:active={selectedFilter === 'all'} 
-      onclick={() => selectedFilter = 'all'}
+      class:active={selectedFilter === "all"} 
+      onclick={() => selectedFilter = "all"}
     >
       All
     </button>
     <button 
-      class:active={selectedFilter === 'heat'} 
-      onclick={() => selectedFilter = 'heat'}
+      class:active={selectedFilter === "heat"} 
+      onclick={() => selectedFilter = "heat"}
     >
       Heat
     </button>
     <button 
-      class:active={selectedFilter === 'farrowing'} 
-      onclick={() => selectedFilter = 'farrowing'}
+      class:active={selectedFilter === "farrowing"} 
+      onclick={() => selectedFilter = "farrowing"}
     >
       Farrow
     </button>
     <button 
-      class:active={selectedFilter === 'confirm'} 
-      onclick={() => selectedFilter = 'confirm'}
+      class:active={selectedFilter === "confirm"} 
+      onclick={() => selectedFilter = "confirm"}
     >
       Confirm
     </button>
     <button 
-      class:active={selectedFilter === 'task'} 
-      onclick={() => selectedFilter = 'task'}
+      class:active={selectedFilter === "task"} 
+      onclick={() => selectedFilter = "task"}
     >
       Tasks
     </button>
@@ -171,13 +173,13 @@
         <div class="date-card">
           <div class="date-header">
             <span class={`type-badge ${getTypeBadgeClass(upcomingDate.type)}`}>
-              {upcomingDate.type === 'heat' ? 'HEAT' : upcomingDate.type === 'farrowing' ? 'FARROW' : upcomingDate.type === 'confirm' ? 'CONFIRM' : 'TASK'}
+              {upcomingDate.type === "heat" ? "HEAT" : upcomingDate.type === "farrowing" ? "FARROW" : upcomingDate.type === "confirm" ? "CONFIRM" : "TASK"}
             </span>
             <span class="days-until">
               {getDaysUntil(upcomingDate.date) === 0 
-                ? 'Today' 
+                ? "Today" 
                 : getDaysUntil(upcomingDate.date) === 1 
-                ? 'Tomorrow'
+                ? "Tomorrow"
                 : `${getDaysUntil(upcomingDate.date)}d`
               }
             </span>
