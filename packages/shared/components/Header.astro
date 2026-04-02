@@ -1,25 +1,39 @@
 ---
 import Login from "./auth/Login.svelte";
 import LoginPopover from "./auth/LoginPopover.svelte";
+
+const baseUrl = import.meta.env.BASE_URL;
+const breederBaseUrl = "/breed-and-show-pro/breeder";
+const exhibitorBaseUrl = "/breed-and-show-pro/exhibitor";
 ---
 
 <header class="header">
-  <div class="logo">Breed and Show Pro</div>
+  <a class="logo" href={baseUrl}>Breed and Show Pro</a>
   <nav class="nav">
-    <a href="/" class="active">My Animals</a>
-    <a href="/">Show Calendar</a>
-    <div class="dropdown">
+    <a href={baseUrl} class="active">My Animals</a>
+    <a href={baseUrl}>Show Calendar</a>
+    <div class="dropdown breeder-dropdown">
       <button class="dropdown-toggle" id="breeder-dropdown">
         Breeder
         <span class="dropdown-arrow">▼</span>
       </button>
       <div class="dropdown-menu" id="breeder-menu">
-        <a href="/index.html">Dashboard</a>
-        <a href="/herd/">Herd</a>
-        <a href="/upcomingDates/">Upcoming Dates</a>
-        <a href="/task/">Tasks</a>
-        <a href="/">Breeding Calculator</a>
-        <a href="/profile/index.html">Profile</a>
+        <a href={breederBaseUrl}>Dashboard</a>
+        <a href={`${breederBaseUrl}/herd`}>Herd</a>
+        <a href={`${breederBaseUrl}/upcomingDates`}>Upcoming Dates</a>
+        <a href={`${breederBaseUrl}/task`}>Tasks</a>
+        <a href={baseUrl}>Breeding Calculator</a>
+        <a href={`${breederBaseUrl}/profile`}>Profile</a>
+      </div>
+    </div>
+    <div class="dropdown exhibitor-dropdown">
+      <button class="dropdown-toggle" id="exhibitor-dropdown">
+        Exhibitor
+        <span class="dropdown-arrow">▼</span>
+      </button>
+      <div class="dropdown-menu" id="exhibitor-menu">
+        <a href={exhibitorBaseUrl}>Dashboard</a>
+        <a href={`${exhibitorBaseUrl}/profile`}>Profile</a>
       </div>
     </div>
   </nav>
@@ -30,23 +44,27 @@ import LoginPopover from "./auth/LoginPopover.svelte";
 </header>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const dropdownToggle = document.getElementById("breeder-dropdown");
-    const dropdownMenu = document.getElementById("breeder-menu");
-
-    if (dropdownToggle && dropdownMenu) {
-      dropdownToggle.addEventListener("click", (e) => {
+  function initDropdown(selector: string) {
+    const dropdown = document.querySelector(selector) as Element;
+    const menu = dropdown.querySelector(".dropdown-menu");
+    const toggle = dropdown.querySelector(".dropdown-toggle");
+    if (toggle && menu) {
+      toggle.addEventListener("click", (e) => {
         e.stopPropagation();
-        dropdownMenu.classList.toggle("show");
-        dropdownToggle.classList.toggle("active");
+        menu.classList.toggle("show");
+        toggle.classList.toggle("active");
       });
 
       // Close dropdown when clicking outside
       document.addEventListener("click", () => {
-        dropdownMenu.classList.remove("show");
-        dropdownToggle.classList.remove("active");
+        menu.classList.remove("show");
+        toggle.classList.remove("active");
       });
     }
+  }
+  document.addEventListener("DOMContentLoaded", () => {
+    initDropdown(".breeder-dropdown");
+    initDropdown(".exhibitor-dropdown");
   });
 </script>
 
@@ -118,3 +136,31 @@ import LoginPopover from "./auth/LoginPopover.svelte";
     background-color: #f5f5f5;
   }
 </style>
+
+<!-- If prettier fails because of this line it is a bug. Use git commit --no-verify -->
+{import.meta.env.DEV && (
+  baseUrl.includes("exhibitor") ? (
+  <script is:inline>
+    document.querySelectorAll(".breeder-dropdown .dropdown-menu a").forEach((a) => {
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        const targetHref = a.href.includes("4321")
+          ? a.href.replace("4321", "4322")
+          : a.href.replace("4322", "4321");
+        window.location.href = targetHref;
+      });
+    });
+  </script>
+) : (
+  <script is:inline>
+    document.querySelectorAll(".exhibitor-dropdown .dropdown-menu a").forEach((a) => {
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        const targetHref = a.href.includes("4321")
+          ? a.href.replace("4321", "4322")
+          : a.href.replace("4322", "4321");
+        window.location.href = targetHref;
+      });
+    });
+  </script>
+))}
