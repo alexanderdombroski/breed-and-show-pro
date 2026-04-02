@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.ts",
     "check-types": "tsc --noEmit",
-    "dev": "node --env-file=.env --watch server.ts",
+    "dev": "tsx --env-file=.env --watch server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "init-db": "node --env-file=.env src/db/init-db.js"
   },

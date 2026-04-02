@@ -1,0 +1,10 @@
+---
+import Layout from "../../../../shared/layouts/Layout.svelte.astro";
+import Form from "../../components/Form.svelte";
+const title = "Breeding Calculator";
+---
+
+<Layout title={title}>
+  <h1 style="margin-left: 75px;">{title}</h1>
+  <Form client:load />
+</Layout>
