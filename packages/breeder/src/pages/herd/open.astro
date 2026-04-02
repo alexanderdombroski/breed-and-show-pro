@@ -35,6 +35,7 @@ function getNextHeatDisplay(animal: any): string {
       <AddSowForm client:load />
     </div>
 
+    <OpenSowList client:load />
     {
       openAnimals.length === 0 ? (
         <p class="message">No open sows at this time.</p>
