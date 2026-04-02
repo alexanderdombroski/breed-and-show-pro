@@ -2,6 +2,7 @@
 import Layout from "../../../../shared/layouts/Layout.astro";
 import "../../styles/breeder-pages.css";
 const title = "Bred";
+const baseUrl = import.meta.env.BASE_URL;
 
 import { BreederMockData } from "../../BreederMockData.js";
 
@@ -58,7 +59,7 @@ function getSireName(sireId: number | undefined): string {
               </div>
               <img
                 class="right-arrow"
-                src="/right-arrow.png"
+                src={`${baseUrl}/right-arrow.png`}
                 alt="Right Arrow"
               />
             </a>

@@ -1,7 +1,7 @@
 /* Common styles for all breeder pages (except dashboard) */
 
 body {
-  background-image: url(/grass-background-blur.jpg);
+  background-image: url(/breed-and-show-pro/breeder/grass-background-blur.jpg);
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;

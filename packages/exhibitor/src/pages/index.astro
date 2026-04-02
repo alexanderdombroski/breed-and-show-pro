@@ -3,6 +3,8 @@ import Login from "../../../shared/components/auth/Login.svelte";
 import Layout from "../../../shared/layouts/Layout.astro";
 import "../../styles/index.css";
 import "../../../shared/layouts/layout.css";
+
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <Layout>
@@ -39,7 +41,7 @@ import "../../../shared/layouts/layout.css";
         </div>
 
         <div class="card-image">
-          <img src="../../public/cows.jpg" alt="Champion Cow" />
+          <img src={`${baseUrl}/cows.jpg`} alt="Champion Cow" />
         </div>
 
         <div class="card card-tan">
