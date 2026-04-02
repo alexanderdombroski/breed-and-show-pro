@@ -1,80 +1,55 @@
 ---
 import Layout from "../../../../shared/layouts/Layout.astro";
 import "../../styles/breeder-pages.css";
-import { BreederMockData } from "../../BreederMockData.js";
 
 const title = "Farrowed";
 const baseUrl = import.meta.env.BASE_URL;
 
-const farrowedAnimals = BreederMockData.animals.filter(
-  (animal) => animal.status === "farrowed",
-);
-
-function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  const options: Intl.DateTimeFormatOptions = { month: "long", day: "numeric" };
-  return date.toLocaleDateString("en-US", options);
-}
-
-function getFarrowingDisplay(animal: any): string {
-  const litter = BreederMockData.litters.find(
-    (l) => l.id === animal.litterNumber,
-  );
-  if (litter && litter.farrowDate) {
-    return formatDate(litter.farrowDate);
+// Fetch farrowed sows from API
+const API_BASE = "http://localhost:3000";
+let farrowedAnimals = [];
+try {
+  const res = await fetch(`${API_BASE}/api/pigs`, {
+    headers: { "Content-Type": "application/json" },
+  });
+  if (res.ok) {
+    const pigs = await res.json();
+    // Filter for pigs with farrowed status
+    farrowedAnimals = pigs.filter(
+      (pig: any) => pig.status === "farrowed" && pig.sex === "sow",
+    );
+  } else {
+    console.error("API error:", res.status, res.statusText);
   }
-  if (animal.lastFarrowDate) {
-    return formatDate(animal.lastFarrowDate);
-  }
-  return "unknown";
-}
-
-function getSireName(sireId: number | undefined): string {
-  if (!sireId) return "unknown";
-  const sire = BreederMockData.animals.find((animal) => animal.id === sireId);
-  return sire ? sire.name : "unknown";
-}
-
-function getSireNameFromAnimal(animal: any): string {
-  const litter = BreederMockData.litters.find(
-    (l) => l.id === animal.litterNumber,
-  );
-  if (litter && litter.sireId) {
-    return getSireName(litter.sireId);
-  }
-  return getSireName(animal.bredTo);
+} catch (err) {
+  console.error("Failed to fetch farrowed sows:", err);
 }
 ---
 
 <Layout title={title}>
-  <body>
-    <a class="back-link" href={`${baseUrl}/herd/`}>Back to Herd</a>
-    {
-      farrowedAnimals.length === 0 ? (
-        <p class="message">No farrowed sows at this time.</p>
-      ) : (
-        <div class="animals-list">
-          {farrowedAnimals.map((animal) => (
-            <a href={`${baseUrl}/herd/sow/${animal.id}`} class="animal-card">
-              <div class="animal-info">
-                <h2>
-                  {animal.name}: {animal.earNotch}
-                </h2>
-                <p>Litter Number: {animal.litterNumber}</p>
-                <p>Farrowed: {getFarrowingDisplay(animal)}</p>
-                <p>Sire: {getSireNameFromAnimal(animal)}</p>
-              </div>
-              <img
-                class="right-arrow"
-                src={`${baseUrl}/right-arrow.png`}
-                alt="Right Arrow"
-              />
-            </a>
-          ))}
-        </div>
-      )
-    }
-  </body>
+  <a class="back-link" href={`${baseUrl}/herd/`}>Back to Herd</a>
+  {
+    farrowedAnimals.length === 0 ? (
+      <p class="message">No farrowed sows at this time.</p>
+    ) : (
+      <div class="animals-list">
+        {farrowedAnimals.map((animal: any) => (
+          <a href={`${baseUrl}/herd/sow/${animal._id}`} class="animal-card">
+            <div class="animal-info">
+              <h2>
+                {animal.name}: {animal.earNotch}
+              </h2>
+            </div>
+            <img
+              class="right-arrow"
+              src={`${baseUrl}/right-arrow.png`}
+              alt="Right Arrow"
+            />
+          </a>
+        ))}
+      </div>
+    )
+  }
 </Layout>
 
 <style>

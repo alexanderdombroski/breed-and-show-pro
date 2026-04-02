@@ -60,7 +60,7 @@
         <div class="animal-info">
           <h2>{sire.name}: {sire.earNotch}</h2>
         </div>
-        <img class="right-arrow" src="/right-arrow.png" alt="Right Arrow" />
+        <img class="right-arrow" src={`${BASE_URL}/right-arrow.png`} alt="Right Arrow" />
       </a>
     {/each}
   </div>

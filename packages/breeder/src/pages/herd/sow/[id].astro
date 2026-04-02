@@ -12,8 +12,6 @@ export const prerender = false;
 ---
 
 <Layout title={title}>
-  <body>
-    <a class="back-link" href={`${baseUrl}/herd/`}>Back to Herd</a>
-    <PigDetail client:load {id} expectedSex="sow" />
-  </body>
+  <a class="back-link" href={`${baseUrl}/herd/`}>Back to Herd</a>
+  <PigDetail client:load {id} expectedSex="sow" />
 </Layout>

@@ -3,6 +3,7 @@
 
   export let id: string;
   export let expectedSex: "sow" | "boar" | undefined;
+  export let skipSexValidation = false;
 
   function getApiBase() {
     const raw = import.meta.env.PUBLIC_API_URL ?? import.meta.env.PUBLIC_SERVER_URL ?? "http://localhost:3000";
@@ -65,7 +66,8 @@
         throw new Error(`Failed to load pig: ${res.statusText}`);
       }
       pig = await res.json();
-      if (expectedSex && pig.sex !== expectedSex) {
+      // Validate sex matches expected if expectedSex is provided
+      if (expectedSex && !skipSexValidation && pig.sex !== expectedSex) {
         error = `This pig is not a ${expectedSex}.`;
       }
       // Fetch sire name if pig has a sireId
