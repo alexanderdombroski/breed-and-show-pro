@@ -54,7 +54,7 @@
     <a href="/herd/">Herd</a>
     <a href="/upcomingDates/">Upcoming Dates</a>
     <a href="/task/">Tasks</a>
-    <a href="/">Breeding Calculator</a>
+    <a href="/breedingCalculator/">Breeding Calculator</a>
     <a href="/">Archived</a>
     <a href="/profile/index.html">Profile</a>
     <a href="/login/index.html">Login</a>
