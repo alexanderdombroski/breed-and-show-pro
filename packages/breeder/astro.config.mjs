@@ -3,9 +3,14 @@ import { defineConfig, fontProviders } from "astro/config";
 import path from "node:path";
 
 import svelte from "@astrojs/svelte";
+import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
+  output: "server",
+  adapter: node({
+    mode: "standalone",
+  }),
   integrations: [svelte()],
   outDir: path.resolve(import.meta.dirname, "..", "..", "dist", "breeder"),
   base: "/breed-and-show-pro/breeder",

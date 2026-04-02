@@ -1,24 +1,20 @@
 ---
 import Layout from "../../../../shared/layouts/Layout.astro";
 import "../../styles/breeder-pages.css";
+import { BreederMockData } from "../../BreederMockData.js";
+
 const title = "Past Litters";
 const baseUrl = import.meta.env.BASE_URL;
 
-import { BreederMockData } from "../../BreederMockData.js";
-
 const pastLitters = BreederMockData.litters.filter((litter) => {
-  // Include if weaned
   if (litter.weanedDate !== undefined) {
     return true;
   }
-
-  // Include if 30+ days past farrowing
   const farrowDate = new Date(litter.farrowDate);
   const today = new Date();
   const daysSinceFarrowing = Math.floor(
     (today.getTime() - farrowDate.getTime()) / (1000 * 60 * 60 * 24),
   );
-
   return daysSinceFarrowing >= 30;
 });
 
@@ -41,14 +37,14 @@ function getDamName(damId: number): string {
 
 <Layout title={title}>
   <body>
-    <a class="back-link" href="/herd/">Back to Herd</a>
+    <a class="back-link" href={`${baseUrl}/herd/`}>Back to Herd</a>
     {
       pastLitters.length === 0 ? (
         <p class="message">No past litters at this time.</p>
       ) : (
         <div class="litters-list">
           {pastLitters.map((litter) => (
-            <a href={`/herd/litter/${litter.id}`} class="litter-card">
+            <a href={`${baseUrl}/herd/litter/${litter.id}`} class="litter-card">
               <div class="litter-info">
                 <p>Litter Number: {litter.id}</p>
                 <p>Farrowed: {formatDate(litter.farrowDate)}</p>

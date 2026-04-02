@@ -2,6 +2,8 @@
   import { BreederMockData } from "../BreederMockData.js";
   import "../styles/breeder-pages.css";
 
+  const BREEDER_BASE_URL = import.meta.env.BASE_URL || "/breed-and-show-pro/breeder";
+
   interface UpcomingDate {
     date: string;
     type: "heat" | "farrowing" | "task" | "confirm";
@@ -125,7 +127,7 @@
 
 <section class="widget-container">
   <div class="title">
-    <a href="/upcomingDates/" class="widget-link">
+    <a href={`${BREEDER_BASE_URL}/upcomingDates/`} class="widget-link">
       <h3>Upcoming Dates</h3>
     </a>
   </div>

@@ -1,9 +1,6 @@
 <script lang="ts">
-  // import { BreederMockData } from "../BreederMockData.js";
-  // const tasks = BreederMockData.tasks;
-  // const incompleteTasks = tasks.filter(t => !t.completed);
-
   const BASE_URL = import.meta.env.PUBLIC_SERVER_URL;
+  const BREEDER_BASE_URL = import.meta.env.BASE_URL || "/breed-and-show-pro/breeder";
   
   // Use same date logic as task page
   const isDatePast = (dateString: string) => {
@@ -49,7 +46,7 @@
 
 <section class="widget-container">
   <div class="title">
-    <a href="/task/" class="widget-link">
+    <a href={`${BREEDER_BASE_URL}/task/`} class="widget-link">
         <h3>Tasks</h3>
     </a>
   </div>

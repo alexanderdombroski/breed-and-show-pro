@@ -31,33 +31,33 @@ function countPastLitters() {
 
 <section class="widget-container">
   <div class="title">
-    <a href="/herd/" class="widget-link">
+    <a href={`${baseUrl}/herd/`} class="widget-link">
         <h3>Herd</h3>
     </a>
   </div>
 
   <div class="herd-container">
-    <a href="/herd/open" class="herd-button">
+    <a href={`${baseUrl}/herd/open`} class="herd-button">
       <span>({countByStatus("open")}) Open</span>
       <img src={`${baseUrl}/right-arrow.png`} alt="right-arrow" class="right-arrow" />
     </a>
-    <a href="/herd/bred" class="herd-button">
+    <a href={`${baseUrl}/herd/bred`} class="herd-button">
       <span>({countByStatus("bred")}) Bred</span>
       <img src={`${baseUrl}/right-arrow.png`} alt="right-arrow" class="right-arrow" />
     </a>
-    <a href="/herd/farrowed" class="herd-button">
+    <a href={`${baseUrl}/herd/farrowed`} class="herd-button">
       <span>({countByStatus("farrowed")}) Farrow</span>
       <img src={`${baseUrl}/right-arrow.png`} alt="right-arrow" class="right-arrow" />
     </a>
-    <a href="/herd/sires" class="herd-button">
+    <a href={`${baseUrl}/herd/sires`} class="herd-button">
       <span>({countByStatus("active")}) Sires</span>
       <img src={`${baseUrl}/right-arrow.png`} alt="right-arrow" class="right-arrow" />
     </a>
-    <a href="/herd/pastLitters" class="herd-button">
+    <a href={`${baseUrl}/herd/pastLitters`} class="herd-button">
       <span>({countPastLitters()}) Past Litters</span>
       <img src={`${baseUrl}/right-arrow.png`} alt="right-arrow" class="right-arrow" />
     </a>
-    <a href="/herd/archived" class="herd-button">
+    <a href={`${baseUrl}/herd/archived`} class="herd-button">
       <span>({countByStatus("archived")}) Archived</span>
       <img src={`${baseUrl}/right-arrow.png`} alt="right-arrow" class="right-arrow" />
     </a>

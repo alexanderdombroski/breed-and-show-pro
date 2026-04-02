@@ -7,7 +7,12 @@
     return clean.replace(/\/api$/i, "");
   }
 
+  function getBaseUrl() {
+    return import.meta.env.BASE_URL || "/breed-and-show-pro/breeder";
+  }
+
   const API_BASE = getApiBase();
+  const BASE_URL = getBaseUrl();
 
   type Pig = {
     _id: string;
@@ -51,7 +56,7 @@
 {:else}
   <div class="animals-list">
     {#each activeSires as sire}
-      <a href={`/herd/sire/${sire._id}`} class="animal-card">
+      <a href={`${BASE_URL}/herd/sire/${sire._id}`} class="animal-card">
         <div class="animal-info">
           <h2>{sire.name}: {sire.earNotch}</h2>
         </div>

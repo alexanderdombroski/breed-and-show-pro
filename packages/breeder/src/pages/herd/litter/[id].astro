@@ -4,6 +4,7 @@ import "../../../styles/breeder-pages.css";
 import { BreederMockData } from "../../../BreederMockData.js";
 
 const title = "Litter Info";
+const baseUrl = import.meta.env.BASE_URL;
 
 export async function getStaticPaths() {
   return BreederMockData.litters.map((l) => ({
@@ -30,7 +31,7 @@ const sire = litter?.sireId ? getAnimal(litter.sireId) : null;
 
 <Layout title={title}>
   <body>
-    <a class="back-link" href="/herd/">Back to Herd</a>
+    <a class="back-link" href={`${baseUrl}/herd/`}>Back to Herd</a>
 
     {
       !litter ? (
@@ -44,14 +45,17 @@ const sire = litter?.sireId ? getAnimal(litter.sireId) : null;
               <h3>Parents</h3>
               <p>
                 <strong>Dam:</strong>
-                <a href={`/herd/sow/${dam?.id}`} class="animal-link">
+                <a href={`${baseUrl}/herd/sow/${dam?.id}`} class="animal-link">
                   {dam?.name || "Unknown"}{" "}
                   {dam?.earNotch ? `(${dam.earNotch})` : ""}
                 </a>
               </p>
               <p>
                 <strong>Sire:</strong>
-                <a href={`/herd/sire/${sire?.id}`} class="animal-link">
+                <a
+                  href={`${baseUrl}/herd/sire/${sire?.id}`}
+                  class="animal-link"
+                >
                   {sire?.name || "Unknown"}{" "}
                   {sire?.earNotch ? `(${sire.earNotch})` : ""}
                 </a>

@@ -1,10 +1,10 @@
 ---
 import Layout from "../../../../shared/layouts/Layout.astro";
 import "../../styles/breeder-pages.css";
+import { BreederMockData } from "../../BreederMockData.js";
+
 const title = "Farrowed";
 const baseUrl = import.meta.env.BASE_URL;
-
-import { BreederMockData } from "../../BreederMockData.js";
 
 const farrowedAnimals = BreederMockData.animals.filter(
   (animal) => animal.status === "farrowed",
@@ -22,10 +22,10 @@ function getFarrowingDisplay(animal: any): string {
   );
   if (litter && litter.farrowDate) {
     return formatDate(litter.farrowDate);
-  } else if (animal.lastFarrowDate) {
+  }
+  if (animal.lastFarrowDate) {
     return formatDate(animal.lastFarrowDate);
   }
-
   return "unknown";
 }
 
@@ -36,29 +36,26 @@ function getSireName(sireId: number | undefined): string {
 }
 
 function getSireNameFromAnimal(animal: any): string {
-  // First try to get sire from litter data
   const litter = BreederMockData.litters.find(
     (l) => l.id === animal.litterNumber,
   );
   if (litter && litter.sireId) {
     return getSireName(litter.sireId);
   }
-
-  // Fall back to animal's bredTo
   return getSireName(animal.bredTo);
 }
 ---
 
 <Layout title={title}>
   <body>
-    <a class="back-link" href="/herd/">Back to Herd</a>
+    <a class="back-link" href={`${baseUrl}/herd/`}>Back to Herd</a>
     {
       farrowedAnimals.length === 0 ? (
         <p class="message">No farrowed sows at this time.</p>
       ) : (
         <div class="animals-list">
           {farrowedAnimals.map((animal) => (
-            <a href={`/herd/sow/${animal.id}`} class="animal-card">
+            <a href={`${baseUrl}/herd/sow/${animal.id}`} class="animal-card">
               <div class="animal-info">
                 <h2>
                   {animal.name}: {animal.earNotch}

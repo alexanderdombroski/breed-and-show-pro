@@ -3,10 +3,10 @@ import Layout from "../../../../shared/layouts/Layout.astro";
 import AddSireForm from "../../components/AddSireForm.svelte";
 import SireList from "../../components/SireList.svelte";
 import "../../styles/breeder-pages.css";
+import { BreederMockData } from "../../BreederMockData.js";
+
 const title = "Sires";
 const baseUrl = import.meta.env.BASE_URL;
-
-import { BreederMockData } from "../../BreederMockData.js";
 
 const activeSires = BreederMockData.animals.filter(
   (animal) => animal.status === "active" && animal.sex === "boar",
@@ -16,11 +16,9 @@ const activeSires = BreederMockData.animals.filter(
 <Layout title={title}>
   <body>
     <a class="back-link" href="/herd/">Back to Herd</a>
-
     <div class="form-btns">
       <AddSireForm client:load />
     </div>
-
     <SireList client:load />
     {
       activeSires.length === 0 ? (

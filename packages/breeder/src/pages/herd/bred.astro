@@ -1,10 +1,10 @@
 ---
 import Layout from "../../../../shared/layouts/Layout.astro";
 import "../../styles/breeder-pages.css";
+import { BreederMockData } from "../../BreederMockData.js";
+
 const title = "Bred";
 const baseUrl = import.meta.env.BASE_URL;
-
-import { BreederMockData } from "../../BreederMockData.js";
 
 const bredAnimals = BreederMockData.animals.filter(
   (animal) => animal.status === "bred",
@@ -19,17 +19,15 @@ function formatDate(dateString: string): string {
 function getFarrowingDisplay(animal: any): string {
   if (animal.expectedFarrowDate) {
     return formatDate(animal.expectedFarrowDate);
-  } else {
-    return "unknown";
   }
+  return "unknown";
 }
 
 function getBreedingDisplay(animal: any): string {
   if (animal.breedingDate) {
     return formatDate(animal.breedingDate);
-  } else {
-    return "unknown";
   }
+  return "unknown";
 }
 
 function getSireName(sireId: number | undefined): string {
@@ -41,14 +39,14 @@ function getSireName(sireId: number | undefined): string {
 
 <Layout title={title}>
   <body>
-    <a class="back-link" href="/herd/">Back to Herd</a>
+    <a class="back-link" href={`${baseUrl}/herd/`}>Back to Herd</a>
     {
       bredAnimals.length === 0 ? (
         <p class="message">No bred sows at this time.</p>
       ) : (
         <div class="animals-list">
           {bredAnimals.map((animal) => (
-            <a href={`/herd/sow/${animal.id}`} class="animal-card">
+            <a href={`${baseUrl}/herd/sow/${animal.id}`} class="animal-card">
               <div class="animal-info">
                 <h2>
                   {animal.name}: {animal.earNotch}
