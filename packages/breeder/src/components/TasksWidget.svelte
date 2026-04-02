@@ -19,7 +19,10 @@
     return allTasks;
   }
   
-  async function toggleTaskCompletion(taskId: string, isCompleted: boolean) {
+  async function toggleTaskCompletion(taskId: string, isCompleted: boolean, event: Event) {
+    // Stop propagation to prevent navigation when clicking checkbox
+    event.stopPropagation();
+    
     try {
       const response = await fetch(`${BASE_URL}/tasks/${taskId}`, {
         method: 'PUT',
@@ -42,6 +45,17 @@
       console.error('Error updating task:', error);
     }
   }
+
+  function navigateToTaskPage() {
+    window.location.href = `${BREEDER_BASE_URL}/task/`;
+  }
+
+  function handleTaskCardKeydown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      navigateToTaskPage();
+    }
+  }
 </script>
 
 <section class="widget-container">
@@ -54,12 +68,18 @@
   {#if allTasks.length > 0}
     <div class="tasks-list">
         {#each allTasks as task (task._id)}
-            <div class="task-card">
+            <div 
+              class="task-card" 
+              onclick={navigateToTaskPage} 
+              onkeydown={handleTaskCardKeydown}
+              role="button" 
+              tabindex="0"
+            >
                 <input 
                   class="checkbox" 
                   type="checkbox" 
                   checked={task.isCompleted}
-                  onchange={() => toggleTaskCompletion(task._id, !task.isCompleted)}
+                  onchange={(e) => toggleTaskCompletion(task._id, !task.isCompleted, e)}
                 />
                 <div class="task-info">
                     <h2>{task.title}</h2>
@@ -107,6 +127,10 @@
   .task-card:hover {
     background-color: #fff3e0;
     box-shadow: 0 2px 6px rgba(255, 165, 0, 0.2);
+  }
+
+  .task-info {
+    flex: 1;
   }
 
   .task-info h2 {

@@ -3,7 +3,25 @@
   // const tasks = BreederMockData.tasks;
   const baseURL = import.meta.env.PUBLIC_SERVER_URL;
 
+  let { isEdit = false, taskData = null, onTaskUpdated = () => {} } = $props();
+  
   let showModal = $state(false);
+  let title = $state('');
+  let description = $state('');
+  let dueDate = $state('');
+
+  // Update form values when taskData changes
+  $effect(() => {
+    if (taskData) {
+      title = taskData.title || '';
+      description = taskData.description || '';
+      dueDate = taskData.dueDate ? new Date(taskData.dueDate).toISOString().split('T')[0] : '';
+    } else {
+      title = '';
+      description = '';
+      dueDate = '';
+    }
+  });
 
   function openModal() {
     showModal = true;
@@ -11,39 +29,51 @@
 
   function closeModal() {
     showModal = false;
+    if (!isEdit) {
+      // Reset form for create mode
+      title = '';
+      description = '';
+      dueDate = '';
+    }
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const taskData = {
+    const payload = {
       _type: 'task',
       title: formData.get('title'),
       description: formData.get('description'),
-      dueDate: formData.get('dueDate')
+      dueDate: formData.get('dueDate') || null
     };
 
-    const response = await fetch(`${baseURL}/tasks`, {
-      method: 'POST',
+    const url = isEdit ? `${baseURL}/tasks/${taskData._id}` : `${baseURL}/tasks`;
+    const method = isEdit ? 'PUT' : 'POST';
+
+    const response = await fetch(url, {
+      method,
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(taskData)
+      body: JSON.stringify(payload)
     });
 
-    const data = await response.json();
-
     if (response.ok) {
-      console.log('Task successfully created:', data);
-      // Reload page to show new task
+      const data = isEdit ? await response.json() : await response.json();
+      console.log(`Task successfully ${isEdit ? 'updated' : 'created'}:`, data);
+      // Notify parent component
+      onTaskUpdated();
+      closeModal();
+      // Reload page to show updated task
       window.location.reload();
     } else {
-      console.error('Failed to create task:', data);
+      const errorData = await response.json();
+      console.error(`Failed to ${isEdit ? 'update' : 'create'} task:`, errorData);
     }
     
-    // Close modal and reset form
-    closeModal();
-    event.target.reset();
+    if (!isEdit) {
+      event.target.reset();
+    }
   }
 
   function handleBackdropClick(event) {
@@ -57,11 +87,14 @@
       closeModal();
     }
   }
+
 </script>
 
+{#if !isEdit}
 <button class="create-task-btn" onclick={openModal}>
   + Create New Task
 </button>
+{/if}
 
 {#if showModal}
   <div 
@@ -73,7 +106,7 @@
   >
     <div class="modal-content">
       <div class="modal-header">
-        <h2>Create New Task</h2>
+        <h2>{isEdit ? 'Edit Task' : 'Create New Task'}</h2>
         <button class="close-btn" onclick={closeModal}>&times;</button>
     </div>
       
@@ -85,6 +118,7 @@
             id="title"
             name="title"
             placeholder="Enter task title" 
+            bind:value={title}
             required 
           />
         </div>
@@ -95,6 +129,7 @@
             id="description"
             name="description"
             placeholder="Enter task description (optional)" 
+            bind:value={description}
             rows="4"
           ></textarea>
         </div>
@@ -105,6 +140,7 @@
             type="date" 
             id="dueDate"
             name="dueDate"
+            bind:value={dueDate}
           />
         </div>
 
@@ -115,7 +151,7 @@
             Cancel
           </button>
           <button type="submit" class="submit-btn">
-            Add Task
+            {isEdit ? 'Update Task' : 'Add Task'}
           </button>
         </div>
       </form>
