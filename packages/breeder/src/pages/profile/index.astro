@@ -4,11 +4,13 @@ import "../../styles/breeder-pages.css";
 import { BreederMockData } from "../../BreederMockData.js";
 const title = "Profile";
 const profile = BreederMockData.user;
+
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <Layout title={title}>
   <body>
-    <a class="back-link" href="/">Back to Dashboard</a>
+    <a class="back-link" href={baseUrl}>Back to Dashboard</a>
     <div class="profile-card">
       <h2>{profile.farmName}</h2>
       <h3>{profile.name}</h3>
