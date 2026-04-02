@@ -5,6 +5,7 @@ import UpcomingDatesFilter from "../../components/UpcomingDatesFilter.svelte";
 import { BreederMockData } from "../../BreederMockData.js";
 
 const title = "Upcoming Dates";
+const breederBaseUrl = "/breed-and-show-pro/breeder";
 
 // Helper to check if date is in the future
 const isFutureDate = (dateString: string) => {
@@ -91,7 +92,7 @@ upcomingDates.sort(
 
 <Layout title={title}>
   <body>
-    <a class="back-link" href="/">Back to Dashboard</a>
+    <a class="back-link" href={`${breederBaseUrl}/`}>Back to Dashboard</a>
 
     <UpcomingDatesFilter upcomingDates={upcomingDates} client:load />
   </body>

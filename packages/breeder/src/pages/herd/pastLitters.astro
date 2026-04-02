@@ -5,6 +5,7 @@ import { BreederMockData } from "../../BreederMockData.js";
 
 const title = "Past Litters";
 const baseUrl = import.meta.env.BASE_URL;
+const breederBaseUrl = "/breed-and-show-pro/breeder";
 
 const pastLitters = BreederMockData.litters.filter((litter) => {
   if (litter.weanedDate !== undefined) {
@@ -37,7 +38,7 @@ function getDamName(damId: number): string {
 
 <Layout title={title}>
   <body>
-    <a class="back-link" href={`${baseUrl}/herd/`}>Back to Herd</a>
+    <a class="back-link" href={`${breederBaseUrl}/herd/`}>Back to Herd</a>
     {
       pastLitters.length === 0 ? (
         <p class="message">No past litters at this time.</p>

@@ -3,6 +3,7 @@ import Layout from "../../../../shared/layouts/Layout.svelte.astro";
 import "../../styles/breeder-pages.css";
 import TaskModal from "../../components/TaskModal.svelte";
 const title = "Tasks";
+const breederBaseUrl = "/breed-and-show-pro/breeder";
 
 const isDatePast = (dateString: string) => {
   const dueDate = new Date(dateString);
@@ -40,7 +41,7 @@ const completedTasks = tasks.filter((task: any) => task.isCompleted);
 
 <Layout title={title}>
   <body>
-    <a class="back-link" href="/">Back to Dashboard</a>
+    <a class="back-link" href={`${breederBaseUrl}/`}>Back to Dashboard</a>
 
     <div class="form-btns">
       <TaskModal client:load />
