@@ -8,9 +8,7 @@ import svelte from "@astrojs/svelte";
 export default defineConfig({
   integrations: [svelte()],
   outDir: path.resolve(import.meta.dirname, "..", "..", "dist", "exhibitor"),
-  vite: {
-    base: "/breed-and-show-pro/exhibitor",
-  },
+  base: "/breed-and-show-pro/exhibitor",
   devToolbar: {
     enabled: false,
   },

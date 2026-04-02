@@ -8,9 +8,7 @@ import svelte from "@astrojs/svelte";
 export default defineConfig({
   integrations: [svelte()],
   outDir: path.resolve(import.meta.dirname, "..", "..", "dist", "breeder"),
-  vite: {
-    base: "/breed-and-show-pro/breeder",
-  },
+  base: "/breed-and-show-pro/breeder",
   fonts: [
     {
       name: "Fira Sans Extra Condensed",
