@@ -4,6 +4,7 @@
   "exclude": ["dist"],
   "compilerOptions": {
     "jsx": "preserve",
-    "jsxImportSource": "svelte"
+    "jsxImportSource": "svelte",
+    "allowImportingTsExtensions": true
   }
 }

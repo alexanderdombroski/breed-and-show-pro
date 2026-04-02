@@ -1,8 +1,8 @@
 import { Router } from "express";
 import {
   getPigs,
-  createPig,
   getPigById,
+  createPig,
   updatePig,
   deletePig,
   addBreeding,
@@ -14,11 +14,23 @@ import {
 
 const router: Router = Router();
 
-router.get("/", getPigs);
+// This route handles GET requests to http://localhost:3000/pigs
+router.get("/", async (req, res, next) => {
+  try {
+    const pigsFromDatabase = await getPigs(req, res, next);
+
+    res.json(pigsFromDatabase);
+  } catch (error) {
+    next(error);
+  }
+});
 router.post("/", createPig);
-router.get("/:id", getPigById);
-router.put("/:id", updatePig);
-router.delete("/:id", deletePig);
+router.get("/:id", async (req, res) => {
+  const pig = await getPigById(req, res, () => {});
+  res.json(pig);
+});
+router.put("/pigs/:id", (req, res, next) => updatePig(req, res, next));
+router.delete("/pigs/:id", deletePig);
 
 router.post("/:id/breeding", addBreeding);
 router.post("/:id/farrowing", addFarrowing);

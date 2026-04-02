@@ -4,11 +4,26 @@ import type { Pig } from "../../../shared/types/schemas.ts";
 const pigCollection = async () => (await getDb()).collection<Pig>("pigs");
 
 export async function getAllPigs() {
-  return (await pigCollection()).find().toArray();
+  // 1. Grab the active database connection
+  const db = getDb();
+
+  // 2. Point to the specific collection in Atlas (case-sensitive!)
+  const pigsCollection = (await db).collection("pigs");
+
+  // 3. Find all documents and convert them from Mongo objects to a standard JavaScript array
+  const allPigs = await pigsCollection.find({}).toArray();
+
+  // 4. Return the data
+  return allPigs;
 }
 
 export async function getPigById(id: string) {
-  return (await pigCollection()).findOne({ _id: id });
+  const db = await getDb();
+  const pigsCollection = db.collection("pigs");
+
+  const pig = await pigsCollection.findOne({ _id: id } as any);
+
+  return pig;
 }
 
 export async function createPig(pig: Pig) {
