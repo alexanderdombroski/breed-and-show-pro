@@ -2,7 +2,7 @@
 const { pigId } = Astro.params as { pigId: string };
 const response = await fetch(`http://localhost:3000/pigs/${pigId}`);
 const pig = await response.json();
-import Layout from "../../../../shared/layouts/Layout.svelte.astro";
+import Layout from "../../../../shared/layouts/Layout.astro";
 ---
 
 <Layout>
