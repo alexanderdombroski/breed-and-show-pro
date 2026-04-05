@@ -1,90 +1,57 @@
 <script lang="ts">
-  import { BreederMockData } from "../BreederMockData.js";
   import "../styles/breeder-pages.css";
+  import { onMount } from "svelte";
 
   const BREEDER_BASE_URL = import.meta.env.BASE_URL || "/breed-and-show-pro/breeder";
+  const API_BASE = import.meta.env.PUBLIC_API_URL ?? "http://localhost:3000";
 
   interface UpcomingDate {
     date: string;
-    type: "heat" | "farrowing" | "task" | "confirm";
+    type: "heat" | "farrowing" | "task" | "confirm" | "breed" | "weaning" | "vaccination";
     title: string;
     description?: string;
-    animalName?: string;
   }
 
-  // Helper to check if date is in the future
-  const isFutureDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return date >= today;
-  };
+  // State for upcoming dates
+  let upcomingDates = $state<UpcomingDate[]>([]);
+  let isLoading = $state(true);
+  let error = $state<string | null>(null);
 
-  // Collect all upcoming dates
-  const upcomingDates: UpcomingDate[] = [];
-
-  // Add heat dates from animals
-  BreederMockData.animals.forEach(animal => {
-    if (animal.nextHeatDate && isFutureDate(animal.nextHeatDate)) {
-      upcomingDates.push({
-        date: animal.nextHeatDate,
-        type: "heat",
-        title: `${animal.name} - Heat Expected`,
-        animalName: animal.name,
-        description: `${animal.breed} sow (${animal.earNotch})`
-      });
-    }
-  });
-
-  // Add farrowing dates from animals
-  BreederMockData.animals.forEach(animal => {
-    if (animal.expectedFarrowDate && isFutureDate(animal.expectedFarrowDate)) {
-      upcomingDates.push({
-        date: animal.expectedFarrowDate,
-        type: "farrowing",
-        title: `${animal.name} - Expected Farrowing`,
-        animalName: animal.name,
-        description: `${animal.breed} sow (${animal.earNotch})`
-      });
-    }
-  });
-
-  // Add confirmation dates (21 days after breeding)
-  BreederMockData.animals.forEach(animal => {
-    if (animal.status === "bred" && animal.breedingDate) {
-      const breedingDate = new Date(animal.breedingDate);
-      const confirmDate = new Date(breedingDate);
-      confirmDate.setDate(confirmDate.getDate() + 21);
-      const confirmDateString = confirmDate.toISOString().split("T")[0];
+  // Fetch upcoming dates from API
+  async function fetchUpcomingDates() {
+    try {
+      isLoading = true;
+      error = null;
       
-      if (isFutureDate(confirmDateString)) {
-        upcomingDates.push({
-          date: confirmDateString,
-          type: "confirm",
-          title: `${animal.name} - Confirm Breeding`,
-          animalName: animal.name,
-          description: `Check if breeding was successful (${animal.breed} ${animal.earNotch})`
-        });
+      const response = await fetch(`${API_BASE}/api/upcoming-dates`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch upcoming dates: ${response.statusText}`);
       }
+      
+      const apiDates = await response.json();
+      
+      console.log('📅 Widget received upcoming dates:', apiDates);
+      
+      // Use API dates directly (already sorted by backend)
+      upcomingDates = apiDates.map((item: any) => ({
+        date: item.date,
+        type: item.type,
+        title: item.title,
+        description: item.description,
+      }));
+    } catch (err) {
+      console.error("Error fetching upcoming dates:", err);
+      error = err instanceof Error ? err.message : "Failed to load upcoming dates";
+    } finally {
+      isLoading = false;
     }
+  }
+
+  onMount(() => {
+    fetchUpcomingDates();
   });
 
-  // Add task due dates
-  BreederMockData.tasks.forEach(task => {
-    if (task.dueDate && !task.completed && isFutureDate(task.dueDate)) {
-      upcomingDates.push({
-        date: task.dueDate,
-        type: "task",
-        title: task.title,
-        description: task.description
-      });
-    }
-  });
-
-  // Sort by date (earliest first)
-  upcomingDates.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-
-  type FilterType = "all" | "heat" | "farrowing" | "task" | "confirm";
+type FilterType = "all" | "heat" | "farrowing" | "task" | "confirm";
   let selectedFilter = $state<FilterType>("all");
   
   // Filter dates based on selected type
@@ -120,7 +87,24 @@
       case "farrowing": return "badge-farrowing";
       case "task": return "badge-task";
       case "confirm": return "badge-confirm";
+      case "breed": return "badge-breed";
+      case "weaning": return "badge-weaning";
+      case "vaccination": return "badge-vaccination";
       default: return "";
+    }
+  }
+
+  // Get type display label
+  function getTypeLabel(type: string): string {
+    switch(type) {
+      case "heat": return "HEAT";
+      case "farrowing": return "FARROW";
+      case "task": return "TASK";
+      case "confirm": return "CONFIRM";
+      case "breed": return "BREED";
+      case "weaning": return "WEAN";
+      case "vaccination": return "VAX";
+      default: return type.toUpperCase();
     }
   }
 </script>
@@ -165,7 +149,11 @@
     </button>
   </div>
 
-  {#if filteredDates().length === 0}
+  {#if isLoading}
+    <p class="no-message">Loading upcoming dates...</p>
+  {:else if error}
+    <p class="error-message">{error}</p>
+  {:else if filteredDates().length === 0}
     <p class="no-message">No upcoming dates found.</p>
   {:else}
     <div class="dates-list">
@@ -173,7 +161,7 @@
         <div class="date-card">
           <div class="date-header">
             <span class={`type-badge ${getTypeBadgeClass(upcomingDate.type)}`}>
-              {upcomingDate.type === "heat" ? "HEAT" : upcomingDate.type === "farrowing" ? "FARROW" : upcomingDate.type === "confirm" ? "CONFIRM" : "TASK"}
+              {getTypeLabel(upcomingDate.type)}
             </span>
             <span class="days-until">
               {getDaysUntil(upcomingDate.date) === 0 
@@ -284,6 +272,21 @@
     background-color: #fff3e0;
     color: #ef6c00;
   }
+
+  .badge-breed {
+    background-color: #f3e5f5;
+    color: #7b1fa2;
+  }
+
+  .badge-weaning {
+    background-color: #e0f2f1;
+    color: #00695c;
+  }
+
+  .badge-vaccination {
+    background-color: #e1f5fe;
+    color: #0277bd;
+  }
   
   .days-until {
     font-size: 0.8rem;
@@ -310,5 +313,14 @@
     font-size: 0.75rem;
     color: #666;
     line-height: 1.3;
+  }
+
+  .error-message {
+    color: #d32f2f;
+    font-size: 0.9rem;
+    padding: 10px;
+    background-color: #ffebee;
+    border-radius: 4px;
+    text-align: center;
   }
 </style>

@@ -1,13 +1,44 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+
+  const API_BASE = import.meta.env.PUBLIC_API_URL ?? "http://localhost:3000";
+
   interface UpcomingDate {
     date: string;
-    type: "heat" | "farrowing" | "task" | "confirm";
+    type: "heat" | "farrowing" | "task" | "confirm" | "breed" | "weaning" | "vaccination";
     title: string;
     description?: string;
-    animalName?: string;
   }
 
-  let { upcomingDates }: { upcomingDates: UpcomingDate[] } = $props();
+  let upcomingDates = $state<UpcomingDate[]>([]);
+  let isLoading = $state(true);
+  let error = $state<string | null>(null);
+
+  // Fetch upcoming dates from API
+  async function fetchUpcomingDates() {
+    try {
+      isLoading = true;
+      error = null;
+      
+      const response = await fetch(`${API_BASE}/api/upcoming-dates`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch upcoming dates: ${response.statusText}`);
+      }
+      
+      const apiDates = await response.json();
+      console.log('📅 Received upcoming dates from API:', apiDates);
+      upcomingDates = apiDates;
+    } catch (err) {
+      console.error("Error fetching upcoming dates:", err);
+      error = err instanceof Error ? err.message : "Failed to load upcoming dates";
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  onMount(() => {
+    fetchUpcomingDates();
+  });
   
   type FilterType = "all" | "heat" | "farrowing" | "task" | "confirm";
   let selectedFilter = $state<FilterType>("all");
@@ -47,71 +78,80 @@
       case "farrowing": return "badge-farrowing";
       case "task": return "badge-task";
       case "confirm": return "badge-confirm";
+      case "breed": return "badge-breed";
+      case "weaning": return "badge-weaning";
+      case "vaccination": return "badge-vaccination";
       default: return "";
     }
   }
 </script>
 
-<div class="filter-buttons">
-  <button 
-    class:active={selectedFilter === "all"} 
-    onclick={() => selectedFilter = "all"}
-  >
-    All
-  </button>
-  <button 
-    class:active={selectedFilter === "heat"} 
-    onclick={() => selectedFilter = "heat"}
-  >
-    Heat Dates
-  </button>
-  <button 
-    class:active={selectedFilter === "farrowing"} 
-    onclick={() => selectedFilter = "farrowing"}
-  >
-    Farrowing
-  </button>
-  <button 
-    class:active={selectedFilter === "confirm"} 
-    onclick={() => selectedFilter = "confirm"}
-  >
-    Confirm Breeding
-  </button>
-  <button 
-    class:active={selectedFilter === "task"} 
-    onclick={() => selectedFilter = "task"}
-  >
-    Tasks
-  </button>
-</div>
-
-{#if filteredDates().length === 0}
-  <p class="message">No upcoming dates found.</p>
+{#if isLoading}
+  <p class="message">Loading upcoming dates...</p>
+{:else if error}
+  <p class="error-message">{error}</p>
 {:else}
-  <div class="dates-list">
-    {#each filteredDates() as upcomingDate}
-      <div class="date-card">
-        <div class="date-header">
-          <span class={`type-badge ${getTypeBadgeClass(upcomingDate.type)}`}>
-            {upcomingDate.type.toUpperCase()}
-          </span>
-          <span class="days-until">
-            {getDaysUntil(upcomingDate.date) === 0 
-              ? "Today" 
-              : getDaysUntil(upcomingDate.date) === 1 
-              ? "Tomorrow"
-              : `In ${getDaysUntil(upcomingDate.date)} days`
-            }
-          </span>
-        </div>
-        <h2>{upcomingDate.title}</h2>
-        <p class="date-display">{formatDate(upcomingDate.date)}</p>
-        {#if upcomingDate.description}
-          <p class="description">{upcomingDate.description}</p>
-        {/if}
-      </div>
-    {/each}
+  <div class="filter-buttons">
+    <button 
+      class:active={selectedFilter === "all"} 
+      onclick={() => selectedFilter = "all"}
+    >
+      All
+    </button>
+    <button 
+      class:active={selectedFilter === "heat"} 
+      onclick={() => selectedFilter = "heat"}
+    >
+      Heat
+    </button>
+    <button 
+      class:active={selectedFilter === "farrowing"} 
+      onclick={() => selectedFilter = "farrowing"}
+    >
+      Farrowing
+    </button>
+    <button 
+      class:active={selectedFilter === "confirm"} 
+      onclick={() => selectedFilter = "confirm"}
+    >
+      Confirm
+    </button>
+    <button 
+      class:active={selectedFilter === "task"} 
+      onclick={() => selectedFilter = "task"}
+    >
+      Tasks
+    </button>
   </div>
+
+  {#if filteredDates().length === 0}
+    <p class="message">No upcoming dates found.</p>
+  {:else}
+    <div class="dates-list">
+      {#each filteredDates() as upcomingDate}
+        <div class="date-card">
+          <div class="date-header">
+            <span class={`type-badge ${getTypeBadgeClass(upcomingDate.type)}`}>
+              {upcomingDate.type.toUpperCase()}
+            </span>
+            <span class="days-until">
+              {getDaysUntil(upcomingDate.date) === 0 
+                ? "Today" 
+                : getDaysUntil(upcomingDate.date) === 1 
+                ? "Tomorrow"
+                : `In ${getDaysUntil(upcomingDate.date)} days`
+              }
+            </span>
+          </div>
+          <h2>{upcomingDate.title}</h2>
+          <p class="date-display">{formatDate(upcomingDate.date)}</p>
+          {#if upcomingDate.description}
+            <p class="description">{upcomingDate.description}</p>
+          {/if}
+        </div>
+      {/each}
+    </div>
+  {/if}
 {/if}
 
 <style>
@@ -203,6 +243,21 @@
     background-color: #fff3e0;
     color: #ef6c00;
   }
+
+  .badge-breed {
+    background-color: #f3e5f5;
+    color: #6a1b9a;
+  }
+
+  .badge-weaning {
+    background-color: #e0f2f1;
+    color: #00695c;
+  }
+
+  .badge-vaccination {
+    background-color: #fce4ec;
+    color: #ad1457;
+  }
   
   .days-until {
     font-size: 0.9rem;
@@ -234,6 +289,13 @@
     text-align: center;
     font-size: 1.2em;
     color: #555;
+    margin-top: 40px;
+  }
+
+  .error-message {
+    text-align: center;
+    font-size: 1.2em;
+    color: #c62828;
     margin-top: 40px;
   }
 </style>
