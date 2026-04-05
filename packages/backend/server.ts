@@ -7,6 +7,7 @@ import { isDev } from "./src/utils/index.ts";
 import { getMongoClient } from "./src/db/index.mts";
 import { limiter } from "./src/middleware/rateLimit.ts";
 import pigRoutes from "./src/routes/pig.routes.mts";
+import noteRoutes from "./src/routes/exhibitor.notes.routes.mts";
 import {
   error404Handler,
   globalErrorHandler,
@@ -31,6 +32,7 @@ app.use(express.json());
 
 app.use("/api", router);
 app.use("/pigs", pigRoutes);
+app.use("/pigs/:id/notes", noteRoutes);
 
 // --- ERROR HANDLING ---
 app.use(error404Handler);
