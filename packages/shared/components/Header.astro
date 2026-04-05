@@ -1,6 +1,5 @@
 ---
-import Login from "./auth/Login.svelte";
-import LoginPopover from "./auth/LoginPopover.svelte";
+import AuthButtons from "./auth/AuthButtons.svelte";
 
 const baseUrl = import.meta.env.BASE_URL;
 const breederBaseUrl = "/breed-and-show-pro/breeder";
@@ -38,10 +37,7 @@ const exhibitorBaseUrl = "/breed-and-show-pro/exhibitor";
       </div>
     </div>
   </nav>
-  <div class="auth-buttons">
-    <LoginPopover client:only="svelte" />
-    <Login className="btn-primary" loginText="Login with Google" client:load />
-  </div>
+  <AuthButtons client:only="svelte" />
 </header>
 
 <script>
@@ -164,11 +160,3 @@ const exhibitorBaseUrl = "/breed-and-show-pro/exhibitor";
     });
   </script>
 ))}
-
-<style>
-  .auth-buttons {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-</style>
