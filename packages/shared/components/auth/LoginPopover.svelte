@@ -27,7 +27,7 @@
 </script>
 
 <Popover.Root>
-  <Popover.Trigger class="btn-secondary">Login with Email</Popover.Trigger>
+  <Popover.Trigger class="btn-secondary" style="width: 100%;"><span>Login with Email</span></Popover.Trigger>
 
   <Popover.Portal>
     <Popover.Content class="login-popover" sideOffset={8}>
@@ -61,6 +61,11 @@
 </Popover.Root>
 
 <style>
+  span {
+    display: block;
+    margin-inline: auto;
+  }
+
   :global(.login-popover) {
     position: relative;
     z-index: 20000;

@@ -1,6 +1,5 @@
 ---
-import Login from "./auth/Login.svelte";
-import LoginPopover from "./auth/LoginPopover.svelte";
+import AuthButtons from "./auth/AuthButtons.svelte";
 
 const baseUrl = import.meta.env.BASE_URL;
 const breederBaseUrl = "/breed-and-show-pro/breeder";
@@ -10,8 +9,8 @@ const exhibitorBaseUrl = "/breed-and-show-pro/exhibitor";
 <header class="header">
   <a class="logo" href={baseUrl}>Breed and Show Pro</a>
   <nav class="nav">
-    <a href={`${exhibitorBaseUrl}/pigs`} class="active">My Animals</a>
-    <a href={`${exhibitorBaseUrl}/calendar`}>Show Calendar</a>
+    <!-- Commenting out the calendar unless its a feature we want to implement -->
+    <!-- <a href={`${exhibitorBaseUrl}/calendar`}>Show Calendar</a> -->
     <div class="dropdown breeder-dropdown">
       <button class="dropdown-toggle" id="breeder-dropdown">
         Breeder
@@ -34,13 +33,11 @@ const exhibitorBaseUrl = "/breed-and-show-pro/exhibitor";
       <div class="dropdown-menu" id="exhibitor-menu">
         <a href={exhibitorBaseUrl}>Dashboard</a>
         <a href={`${exhibitorBaseUrl}/profile`}>Profile</a>
+        <a href={`${exhibitorBaseUrl}/pigs`} class="active">My Animals</a>
       </div>
     </div>
   </nav>
-  <div class="auth-buttons">
-    <LoginPopover client:only="svelte" />
-    <Login className="btn-primary" loginText="Login with Google" client:load />
-  </div>
+  <AuthButtons client:only="svelte" />
 </header>
 
 <script>

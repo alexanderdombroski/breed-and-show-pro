@@ -52,12 +52,6 @@ body {
   padding-bottom: 5px;
 }
 
-.auth-buttons {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
 .btn-primary,
 .btn-secondary {
   display: flex;
