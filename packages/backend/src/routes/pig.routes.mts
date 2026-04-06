@@ -29,8 +29,8 @@ router.get("/:id", async (req, res) => {
   const pig = await getPigById(req, res, () => {});
   res.json(pig);
 });
-router.put("/pigs/:id", (req, res, next) => updatePig(req, res, next));
-router.delete("/pigs/:id", deletePig);
+router.put("/:id", updatePig);
+router.delete("/:id", deletePig);
 
 router.post("/:id/breeding", addBreeding);
 router.post("/:id/farrowing", addFarrowing);

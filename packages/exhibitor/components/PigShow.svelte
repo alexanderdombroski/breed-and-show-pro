@@ -12,6 +12,7 @@
     showDate = new Date(pig.show?.date ?? new Date());
   });
 
+  const serverBase = import.meta.env.PUBLIC_SERVER_URL;
   async function handleShowDateUpdate(event: SubmitEvent) {
     event.preventDefault();
     const form = event.currentTarget as HTMLFormElement;
@@ -21,6 +22,14 @@
     const date = new Date(String(data.get("show-date")));
 
     const updatedPig: Pig = { ...pig, show: { name, date } };
+
+    await fetch(`${serverBase}/api/pigs/${pig._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedPig),
+    });
   }
 </script>
 
