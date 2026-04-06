@@ -1,4 +1,6 @@
 ---
+import type { Pig } from "../../shared/types/schemas.ts";
+import PigShow from "./PigShow.svelte";
 const SERVER_URL = import.meta.env.PUBLIC_SERVER_URL;
 const response = await fetch(`${SERVER_URL}/pigs`);
 const data = await response.json();
@@ -13,24 +15,20 @@ const exhibitorBaseUrl = "/breed-and-show-pro/exhibitor";
   {
     pigs.length > 0 ? (
       <div class="pig-grid">
-        {pigs.map((pig: any) => (
-          <a href={`${exhibitorBaseUrl}/pigs/${pig._id}`} class="pig-card" key-value={pig._id}>
+        {pigs.map((pig: Pig) => (
+          <div class="pig-card">
             <div class="card-content">
-              <h3 class="pig-name">{pig.name}</h3>
+              <a
+                href={`${exhibitorBaseUrl}/pigs/${pig._id}`}
+                key-value={pig._id}
+              >
+                <h3 class="pig-name">{pig.name}</h3>
+              </a>
               <div class="divider" />
               <p class="pig-breed">{pig.breed}</p>
-
-              {pig.show && (
-                <div class="show-info">
-                  <span class="show-label">Upcoming Show:</span>
-                  <p class="show-name">{pig.show.name}</p>
-                  <p class="show-date">
-                    {new Date(pig.show.date).toLocaleDateString()}
-                  </p>
-                </div>
-              )}
+              <PigShow {pig} client:load />
             </div>
-          </a>
+          </div>
         ))}
       </div>
     ) : (
@@ -65,7 +63,6 @@ const exhibitorBaseUrl = "/breed-and-show-pro/exhibitor";
   /* The "Island" Card */
   .pig-card {
     background: white;
-    text-decoration: none; /* Removes underline from link */
     color: inherit;
     border-radius: 12px;
     padding: 1.5rem;
@@ -78,11 +75,19 @@ const exhibitorBaseUrl = "/breed-and-show-pro/exhibitor";
     flex-direction: column;
   }
 
+  .pig-card a {
+    text-decoration: none; /* Removes underline from link */
+  }
+
   /* Hover Effects */
   .pig-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-2px);
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-    border-color: #3b82f6; /* Subtle blue highlight */
+  }
+
+  .pig-card a:hover h3 {
+    color: #f2af29ff;
+    text-decoration: underline;
   }
 
   .pig-name {
@@ -101,33 +106,6 @@ const exhibitorBaseUrl = "/breed-and-show-pro/exhibitor";
     color: #4b5563;
     font-weight: 500;
     margin-bottom: 1rem;
-  }
-
-  /* Show Info Section */
-  .show-info {
-    margin-top: auto; /* Pushes show info to the bottom */
-    background: #f9fafb;
-    padding: 0.75rem;
-    border-radius: 8px;
-    font-size: 0.9rem;
-  }
-
-  .show-label {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #9ca3af;
-  }
-
-  .show-name {
-    margin: 0.25rem 0 0 0;
-    font-weight: bold;
-    color: #374151;
-  }
-
-  .show-date {
-    margin: 0;
-    color: #6b7280;
   }
 
   .empty-state {
