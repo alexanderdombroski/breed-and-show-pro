@@ -57,13 +57,10 @@ export async function getPigById(
   }
 }
 
-export async function updatePig(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
+export async function updatePig(req: Request, res: Response) {
   try {
     const id = String(req.params.id);
+    console.info(`Updating pig ${id}`);
     const payload = req.body;
     const result = await updatePigRecord(id, {
       ...payload,
@@ -74,7 +71,7 @@ export async function updatePig(
     }
     res.json({ message: "Pig updated" });
   } catch (error) {
-    next(error);
+    throw new Error(`Error Updating Pig: ${error}`);
   }
 }
 
