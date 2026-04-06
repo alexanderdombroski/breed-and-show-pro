@@ -7,9 +7,20 @@
   };
 
   const { pig }: Props = $props();
+  let hasShow = $state(false);
+  $effect(() => {
+    hasShow = !!pig.show;
+  });
+
+  let errorMsg = $state("");
+
   let showDate = $state(new Date());
   $effect(() => {
     showDate = new Date(pig.show?.date ?? new Date());
+  });
+  let showName = $state("");
+  $effect(() => {
+    showName = pig.show?.name ?? "";
   });
 
   const serverBase = import.meta.env.PUBLIC_SERVER_URL;
@@ -23,13 +34,21 @@
 
     const updatedPig: Pig = { ...pig, show: { name, date } };
 
-    await fetch(`${serverBase}/api/pigs/${pig._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedPig),
-    });
+    try {
+      await fetch(`${serverBase}/api/pigs/${pig._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedPig),
+      });
+
+      showDate = date;
+      hasShow = true;
+    } catch (error) {
+      errorMsg = "Failed to update pig!";
+      console.error(error);
+    }
   }
 </script>
 
@@ -53,23 +72,33 @@
     <Popover.Content>
       <form class="edit-form" onsubmit={handleShowDateUpdate}>
         <label for="show-name">Show Name:</label>
-        <input type="text" name="show-name" id="show-name" required />
+        <input
+          type="text"
+          name="show-name"
+          bind:value={showName}
+          id="show-name"
+          required
+        />
         <label for="show-date">Show Date:</label>
+        <!-- value={`${showDate.getFullYear()}-${String(showDate.getMonth() + 1).padStart(2, "0")}-${String(showDate.getDate()).padStart(2, "0")}`} -->
         <input
           type="date"
-          value={`${showDate.getFullYear()}-${String(showDate.getMonth() + 1).padStart(2, "0")}-${String(showDate.getDate()).padStart(2, "0")}`}
+          value={showDate.toISOString().split("T")[0]}
           name="show-date"
           id="show-date"
           required
         />
         <button>Save</button>
+        {#if !!errorMsg}
+          <p class="error">{errorMsg}</p>
+        {/if}
       </form>
     </Popover.Content>
   </Popover.Root>
-  <p class="show-name">{pig.show?.name ?? "Not Set"}</p>
-  {#if pig.show?.date}
+  <p class="show-name">{showName ?? "Not Set"}</p>
+  {#if hasShow}
     <p class="show-date">
-      {new Date(pig.show.date).toLocaleDateString()}
+      {showDate.toLocaleDateString("en-US", { timeZone: "UTC" })}
     </p>
   {/if}
 </div>
@@ -136,6 +165,7 @@
     border: solid lightgray 0.25rem;
     border-radius: 1rem;
     corner-shape: squircle;
+    width: min(20rem, 100%);
 
     input {
       box-sizing: border-box;
@@ -178,5 +208,9 @@
         background-color: #f2af29ff;
       }
     }
+  }
+
+  .error {
+    color: red;
   }
 </style>
