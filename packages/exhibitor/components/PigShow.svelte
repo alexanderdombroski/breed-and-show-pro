@@ -7,15 +7,16 @@
   };
 
   const { pig }: Props = $props();
+  let showDate = $state(new Date());
+  $effect(() => {
+    showDate = new Date(pig.show?.date ?? new Date());
+  });
 </script>
 
 <div class="show-info">
   <span class="show-label">Upcoming Show:</span>
   <Popover.Root>
-    <Popover.Trigger
-      aria-label="edit"
-      class="edit"
-    >
+    <Popover.Trigger aria-label="edit" class="edit">
       <svg
         role="presentation"
         xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +31,18 @@
       >
     </Popover.Trigger>
     <Popover.Content>
-      <p>Hello World</p>
+      <form class="edit-form" onsubmit={(e) => e.preventDefault()}>
+        <label for="show-name">Show Name:</label>
+        <input type="text" name="show-name" id="show-name" required />
+        <label for="show-date">Show Date:</label>
+        <input type="text"  />
+        <input
+          type="date"
+          value={`${showDate.getFullYear()}-${String(showDate.getMonth() + 1).padStart(2, "0")}-${String(showDate.getDate()).padStart(2, "0")}`}
+          name="show-date" id="show-date" required
+        />
+        <button>Save</button>
+      </form>
     </Popover.Content>
   </Popover.Root>
   <p class="show-name">{pig.show?.name ?? "Not Set"}</p>
@@ -88,5 +100,60 @@
   .show-date {
     margin: 0;
     color: #6b7280;
+  }
+
+  /* Show Form */
+  .edit-form {
+    position: relative;
+    background-color: white;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    gap: 0.25rem;
+    padding: 0.5rem;
+    border: solid lightgray 0.25rem;
+    border-radius: 1rem;
+    corner-shape: squircle;
+
+    input {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.95rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #fff;
+      color: #333;
+      outline: none;
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+  
+    input:hover {
+      border-color: #bbb;
+    }
+  
+    input:focus {
+      border-color: #4a90e2;
+      box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.15);
+    }
+  
+    input:disabled {
+      background: #f5f5f5;
+      color: #999;
+      cursor: not-allowed;
+    }
+
+    button {
+      border-radius: 0.5rem;
+      background-color: transparent;
+      height: 2rem;
+      width: 100%;
+
+      &:hover {
+        cursor: pointer;
+        background-color: #f2af29ff;
+      }
+    }
   }
 </style>
