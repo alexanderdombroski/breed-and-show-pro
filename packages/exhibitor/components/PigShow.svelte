@@ -3,7 +3,7 @@
   import type { Pig } from "../../shared/types/schemas.ts";
 
   type Props = {
-    pig: Pick<Pig, "_id" | "show">;
+    pig: Pig;
   };
 
   const { pig }: Props = $props();
@@ -11,6 +11,17 @@
   $effect(() => {
     showDate = new Date(pig.show?.date ?? new Date());
   });
+
+  async function handleShowDateUpdate(event: SubmitEvent) {
+    event.preventDefault();
+    const form = event.currentTarget as HTMLFormElement;
+    const data = new FormData(form, event.submitter);
+
+    const name = String(data.get("show-name"));
+    const date = new Date(String(data.get("show-date")));
+
+    const updatedPig: Pig = { ...pig, show: { name, date } };
+  }
 </script>
 
 <div class="show-info">
@@ -31,15 +42,16 @@
       >
     </Popover.Trigger>
     <Popover.Content>
-      <form class="edit-form" onsubmit={(e) => e.preventDefault()}>
+      <form class="edit-form" onsubmit={handleShowDateUpdate}>
         <label for="show-name">Show Name:</label>
         <input type="text" name="show-name" id="show-name" required />
         <label for="show-date">Show Date:</label>
-        <input type="text"  />
         <input
           type="date"
           value={`${showDate.getFullYear()}-${String(showDate.getMonth() + 1).padStart(2, "0")}-${String(showDate.getDate()).padStart(2, "0")}`}
-          name="show-date" id="show-date" required
+          name="show-date"
+          id="show-date"
+          required
         />
         <button>Save</button>
       </form>
@@ -117,6 +129,8 @@
     corner-shape: squircle;
 
     input {
+      box-sizing: border-box;
+      width: 100%;
       padding: 0.5rem 0.75rem;
       font-size: 0.95rem;
       border: 1px solid #ddd;
@@ -128,16 +142,16 @@
         border-color 0.2s ease,
         box-shadow 0.2s ease;
     }
-  
+
     input:hover {
       border-color: #bbb;
     }
-  
+
     input:focus {
       border-color: #4a90e2;
       box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.15);
     }
-  
+
     input:disabled {
       background: #f5f5f5;
       color: #999;
