@@ -69,7 +69,7 @@
         ></svg
       >
     </Popover.Trigger>
-    <Popover.Content style="transform: translateX(-50px);">
+    <Popover.Content style="transform: translateX(-50px); z-index: 9999;">
       <form class="edit-form" onsubmit={handleShowDateUpdate}>
         <label for="show-name">Show Name:</label>
         <input
