@@ -56,12 +56,14 @@ const exhibitorBaseUrl = "/breed-and-show-pro/exhibitor";
   .pig-grid {
     display: grid;
     /* This creates as many 280px columns as will fit, then grows them */
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 2fr));
+    column-gap: 50px;
     gap: 1.5rem;
   }
 
   /* The "Island" Card */
   .pig-card {
+    border: 2px solid transparent;
     background: white;
     color: inherit;
     border-radius: 12px;
@@ -81,12 +83,12 @@ const exhibitorBaseUrl = "/breed-and-show-pro/exhibitor";
 
   /* Hover Effects */
   .pig-card:hover {
-    transform: translateY(-2px);
+    border-color: #3b82f6;
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
   }
 
-  .pig-card a:hover h3 {
-    color: #f2af29ff;
+  .pig-card:hover a h3 {
+    color: #3b82f6;
     text-decoration: underline;
   }
 
