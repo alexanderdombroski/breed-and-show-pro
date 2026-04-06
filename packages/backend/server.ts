@@ -32,7 +32,7 @@ app.use(express.json());
 
 app.use("/api", router);
 app.use("/pigs", pigRoutes);
-app.use("/pigs/:id/notes", noteRoutes);
+app.use("/notes", noteRoutes);
 
 // --- ERROR HANDLING ---
 app.use(error404Handler);
