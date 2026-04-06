@@ -16,18 +16,19 @@ const exhibitorBaseUrl = "/breed-and-show-pro/exhibitor";
     pigs.length > 0 ? (
       <div class="pig-grid">
         {pigs.map((pig: Pig) => (
-          <a
-            href={`${exhibitorBaseUrl}/pigs/${pig._id}`}
-            class="pig-card"
-            key-value={pig._id}
-          >
+          <div class="pig-card">
             <div class="card-content">
-              <h3 class="pig-name">{pig.name}</h3>
+              <a
+                href={`${exhibitorBaseUrl}/pigs/${pig._id}`}
+                key-value={pig._id}
+              >
+                <h3 class="pig-name">{pig.name}</h3>
+              </a>
               <div class="divider" />
               <p class="pig-breed">{pig.breed}</p>
               <PigShow {pig} client:load />
             </div>
-          </a>
+          </div>
         ))}
       </div>
     ) : (
@@ -62,7 +63,6 @@ const exhibitorBaseUrl = "/breed-and-show-pro/exhibitor";
   /* The "Island" Card */
   .pig-card {
     background: white;
-    text-decoration: none; /* Removes underline from link */
     color: inherit;
     border-radius: 12px;
     padding: 1.5rem;
@@ -75,11 +75,19 @@ const exhibitorBaseUrl = "/breed-and-show-pro/exhibitor";
     flex-direction: column;
   }
 
+  .pig-card a {
+    text-decoration: none; /* Removes underline from link */
+  }
+
   /* Hover Effects */
   .pig-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-2px);
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-    border-color: #3b82f6; /* Subtle blue highlight */
+  }
+
+  .pig-card a:hover h3 {
+    color: #f2af29ff;
+    text-decoration: underline;
   }
 
   .pig-name {
