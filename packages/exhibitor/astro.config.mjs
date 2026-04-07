@@ -13,6 +13,13 @@ export default defineConfig({
   devToolbar: {
     enabled: false,
   },
+
+  vite: {
+    ssr: {
+      noExternal: ["bits-ui"],
+    },
+  },
+
   fonts: [
     {
       name: "Fira Sans Extra Condensed",
