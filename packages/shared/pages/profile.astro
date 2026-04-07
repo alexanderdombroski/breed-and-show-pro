@@ -1,0 +1,8 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ProfileComponent from "../components/auth/Profile.svelte";
+---
+
+<Layout>
+  <ProfileComponent client:only="svelte" />
+</Layout>
