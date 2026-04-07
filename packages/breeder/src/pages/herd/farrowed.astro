@@ -35,7 +35,10 @@ try {
     ) : (
       <div class="animals-list">
         {farrowedAnimals.map((animal: any) => (
-          <a href={`${baseUrl}/herd/sow/${animal._id}`} class="animal-card">
+          <a
+            href={`${baseUrl}/herd/sow?id=${encodeURIComponent(animal._id)}`}
+            class="animal-card"
+          >
             <div class="animal-info">
               <h2>
                 {animal.name}: {animal.earNotch}
