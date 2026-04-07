@@ -4,22 +4,24 @@
   const baseURL = import.meta.env.PUBLIC_SERVER_URL;
 
   let { isEdit = false, taskData = null, onTaskUpdated = () => {} } = $props();
-  
+
   let showModal = $state(false);
-  let title = $state('');
-  let description = $state('');
-  let dueDate = $state('');
+  let title = $state("");
+  let description = $state("");
+  let dueDate = $state("");
 
   // Update form values when taskData changes
   $effect(() => {
     if (taskData) {
-      title = taskData.title || '';
-      description = taskData.description || '';
-      dueDate = taskData.dueDate ? new Date(taskData.dueDate).toISOString().split('T')[0] : '';
+      title = taskData.title || "";
+      description = taskData.description || "";
+      dueDate = taskData.dueDate
+        ? new Date(taskData.dueDate).toISOString().split("T")[0]
+        : "";
     } else {
-      title = '';
-      description = '';
-      dueDate = '';
+      title = "";
+      description = "";
+      dueDate = "";
     }
   });
 
@@ -31,9 +33,9 @@
     showModal = false;
     if (!isEdit) {
       // Reset form for create mode
-      title = '';
-      description = '';
-      dueDate = '';
+      title = "";
+      description = "";
+      dueDate = "";
     }
   }
 
@@ -41,26 +43,29 @@
     event.preventDefault();
     const formData = new FormData(event.target);
     const payload = {
-      _type: 'task',
-      title: formData.get('title'),
-      description: formData.get('description'),
-      dueDate: formData.get('dueDate') || null
+      _type: "task",
+      title: formData.get("title"),
+      description: formData.get("description"),
+      dueDate: formData.get("dueDate") || null,
     };
 
-    const url = isEdit ? `${baseURL}/tasks/${taskData._id}` : `${baseURL}/tasks`;
-    const method = isEdit ? 'PUT' : 'POST';
+    const url = isEdit
+      ? `${baseURL}/tasks/${taskData._id}`
+      : `${baseURL}/tasks`;
+    const method = isEdit ? "PUT" : "POST";
 
     const response = await fetch(url, {
       method,
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
     });
 
     if (response.ok) {
       const data = isEdit ? await response.json() : await response.json();
-      console.log(`Task successfully ${isEdit ? 'updated' : 'created'}:`, data);
+      // eslint-disable-next-line no-console
+      console.log(`Task successfully ${isEdit ? "updated" : "created"}:`, data);
       // Notify parent component
       onTaskUpdated();
       closeModal();
@@ -68,9 +73,12 @@
       window.location.reload();
     } else {
       const errorData = await response.json();
-      console.error(`Failed to ${isEdit ? 'update' : 'create'} task:`, errorData);
+      console.error(
+        `Failed to ${isEdit ? "update" : "create"} task:`,
+        errorData,
+      );
     }
-    
+
     if (!isEdit) {
       event.target.reset();
     }
@@ -83,22 +91,21 @@
   }
 
   function handleBackdropKeydown(event) {
-    if (event.key === 'Escape') {
+    if (event.key === "Escape") {
       closeModal();
     }
   }
-
 </script>
 
 {#if !isEdit}
-<button class="create-task-btn" onclick={openModal}>
-  + Create New Task
-</button>
+  <button class="create-task-btn" onclick={openModal}>
+    + Create New Task
+  </button>
 {/if}
 
 {#if showModal}
-  <div 
-    class="modal-backdrop" 
+  <div
+    class="modal-backdrop"
     role="button"
     tabindex="0"
     onclick={handleBackdropClick}
@@ -106,29 +113,29 @@
   >
     <div class="modal-content">
       <div class="modal-header">
-        <h2>{isEdit ? 'Edit Task' : 'Create New Task'}</h2>
+        <h2>{isEdit ? "Edit Task" : "Create New Task"}</h2>
         <button class="close-btn" onclick={closeModal}>&times;</button>
-    </div>
-      
+      </div>
+
       <form class="task-form" onsubmit={handleSubmit}>
         <div class="form-group">
           <label for="title">Task Title *</label>
-          <input 
-            type="text" 
+          <input
+            type="text"
             id="title"
             name="title"
-            placeholder="Enter task title" 
+            placeholder="Enter task title"
             bind:value={title}
-            required 
+            required
           />
         </div>
 
         <div class="form-group">
           <label for="description">Description</label>
-          <textarea 
+          <textarea
             id="description"
             name="description"
-            placeholder="Enter task description (optional)" 
+            placeholder="Enter task description (optional)"
             bind:value={description}
             rows="4"
           ></textarea>
@@ -136,12 +143,7 @@
 
         <div class="form-group">
           <label for="dueDate">Due Date (optional)</label>
-          <input 
-            type="date" 
-            id="dueDate"
-            name="dueDate"
-            bind:value={dueDate}
-          />
+          <input type="date" id="dueDate" name="dueDate" bind:value={dueDate} />
         </div>
 
         <p class="required-message">* items are required</p>
@@ -151,7 +153,7 @@
             Cancel
           </button>
           <button type="submit" class="submit-btn">
-            {isEdit ? 'Update Task' : 'Add Task'}
+            {isEdit ? "Update Task" : "Add Task"}
           </button>
         </div>
       </form>
@@ -166,7 +168,7 @@
     padding: 12px 24px;
     border: none;
     border-radius: 5px;
-    font-size: 1em;
+    font-size: var(--step--1);
     cursor: pointer;
     font-weight: 500;
     transition: background-color 0.2s;
@@ -231,14 +233,14 @@
 
   .modal-header h2 {
     margin: 0;
-    font-size: 1.5em;
+    font-size: var(--step-1);
     color: #333;
   }
 
   .close-btn {
     background: none;
     border: none;
-    font-size: 2em;
+    font-size: var(--step-3);
     color: #666;
     cursor: pointer;
     padding: 0;
@@ -269,7 +271,7 @@
     margin-bottom: 6px;
     font-weight: 500;
     color: #333;
-    font-size: 0.95em;
+    font-size: var(--step--1);
   }
 
   .form-group input,
@@ -279,7 +281,7 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     font-family: inherit;
-    font-size: 1em;
+    font-size: var(--step--1);
     box-sizing: border-box;
     transition: border-color 0.2s;
   }
