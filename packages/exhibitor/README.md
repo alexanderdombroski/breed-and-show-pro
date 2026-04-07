@@ -2,7 +2,7 @@
 
 [https://alexanderdombroski.github.io/breed-and-show-pro/exhibitor](https://alexanderdombroski.github.io/breed-and-show-pro/exhibitor)
 
-## Overview
+## Vision
 
 Breed and Show Pro is a comprehensive web application designed to help livestock exhibitors manage their animal information for shows and fairs. The application provides a user-friendly interface for tracking detailed animal data, including photos, identification, health records, and show preparation metrics. Built with modern web technologies, the app ensures efficient data management and real-time insights to support exhibitors in preparing their animals for competitive events
 
@@ -19,10 +19,7 @@ link for professor's page: https://course-tools.netlify.app/wdd360/-->
 - Alex D
 - Ammon J
 
-[Software Demo Video](insert link here)
-
-## Setup and Installation Instructions
-
-## API documentation
-
 ## Known issues or future improvements
+
+- The flow can be improved for add weights.
+- It would be more helpful to add weights and track pig weights change over time
