@@ -13,6 +13,7 @@ import {
   globalErrorHandler,
 } from "./src/middleware/error.middleware.mts";
 import helmet from "helmet";
+import eventRoutes from "./src/routes/event-routes.mts";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -33,6 +34,7 @@ app.use(express.json());
 app.use("/api", router);
 app.use("/pigs", pigRoutes);
 app.use("/notes", noteRoutes);
+app.use("/events", eventRoutes);
 
 // --- ERROR HANDLING ---
 app.use(error404Handler);
