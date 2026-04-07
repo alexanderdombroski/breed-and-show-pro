@@ -6,6 +6,15 @@ import { isDev } from "../utils/index.ts";
 const baseURL = process.env.BETTER_AUTH_URL;
 const db = await getDb();
 
+const trustedOrigins = [
+  "https://alexanderdombroski.github.io",
+  "https://alexanderdombroski.com",
+];
+
+if (isDev) {
+  trustedOrigins.push("http://localhost:4321", "http://localhost:4322");
+}
+
 export const auth = betterAuth({
   appName: "Breed and Show Pro",
   database: mongodbAdapter(db),
@@ -37,10 +46,5 @@ export const auth = betterAuth({
   account: {
     skipStateCookieCheck: isDev,
   },
-  trustedOrigins: [
-    "http://localhost:4321",
-    "http://localhost:4322",
-    "https://alexanderdombroski.github.io",
-    "https://alexanderdombroski.com",
-  ],
+  trustedOrigins,
 });
