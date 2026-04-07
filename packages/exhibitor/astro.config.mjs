@@ -15,7 +15,7 @@ export default defineConfig({
   },
 
   vite: {
-    ssr: {
+    resolve: {
       noExternal: ["bits-ui"],
     },
   },
