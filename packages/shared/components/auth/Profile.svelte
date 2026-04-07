@@ -1,23 +1,9 @@
 <script lang="ts">
-  import { onDestroy } from "svelte";
-  import { authClient } from "./auth.svelte";
-  import type { User } from "../../types/schemas";
+  import { userData } from "./auth.svelte";
 
   const baseUrl = import.meta.env.BASE_URL;
-  const serverUrl = import.meta.env.PUBLIC_SERVER_URL;
 
-  let profile: User | null = $state(null);
-
-  const session = authClient.useSession();
-  const stopListener = session.listen(async (s) => {
-    if (s.data) {
-      const res = await fetch(`${serverUrl}/api/users/me`, {
-        credentials: "include",
-      });
-      profile = await res.json();
-    }
-  });
-  onDestroy(stopListener);
+  const { user: profile } = $derived(userData);
 </script>
 
 <a class="back-link" href={baseUrl}>Back to Dashboard</a>

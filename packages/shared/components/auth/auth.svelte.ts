@@ -1,3 +1,4 @@
+import type { User } from "better-auth";
 import { createAuthClient } from "better-auth/svelte";
 
 const sitePath = import.meta.env.BASE_URL;
@@ -7,12 +8,15 @@ export const authClient = createAuthClient({
   basePath: "/api/auth",
 });
 
+export const userData: { user?: User } = $state({});
+
 const res = authClient.getSession();
 
 res.then((session) => {
   if (session.data) {
     // User is logged in, 'data' contains the session and user info
     console.info("Logged in as:", session.data.user.email);
+    userData.user = session.data.user;
   } else {
     console.info("Not logged in");
   }

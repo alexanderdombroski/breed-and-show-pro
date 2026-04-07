@@ -5,7 +5,7 @@
   import { Popover } from "bits-ui";
   import { onDestroy } from "svelte";
 
-  const breederBaseUrl = "/breed-and-show-pro/breeder";
+  const baseUrl = import.meta.env.BASE_URL;
 
   let loggedIn = $state(false);
 
@@ -38,7 +38,7 @@
   <Popover.Content>
     <div class="auth-buttons">
       {#if loggedIn}
-        <a href={`${breederBaseUrl}/profile`}>Profile</a>
+        <a href={`${baseUrl}/profile`}>Profile</a>
         <button onclick={logout} class="btn-secondary">Logout</button>
       {:else}
         <LoginPopover />
