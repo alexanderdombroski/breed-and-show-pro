@@ -1,52 +1,16 @@
 ---
+// src/pages/events/details.astro (or wherever this file lives)
 import Layout from "../../../../shared/layouts/Layout.astro";
-const id = Astro.url.searchParams.get("id");
+import EventDetailsClient from "../../../components/EventDetailsClient.svelte";
+
 const SERVER_URL = import.meta.env.PUBLIC_SERVER_URL;
 const BASE_URL = import.meta.env.BASE_URL;
-const response = await fetch(`${SERVER_URL}/events/${id}`);
-const event = await response.json();
-const pigResponse = await fetch(`${SERVER_URL}/pigs/${event.pigId}`);
-const pig = await pigResponse.json();
 ---
 
 <Layout>
-  <div class="event-details">
-    <h1>{event.label}</h1>
-    <p><strong>Event ID:</strong> {event._id}</p>
-    <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
-    <p>
-      <strong>Pig:</strong>
-      <a href={`${BASE_URL}/pigs/${pig._id}`} class="pig-link">{pig.name}</a>
-    </p>
-  </div>
+  <EventDetailsClient
+    serverUrl={SERVER_URL as string}
+    baseUrl={BASE_URL as string}
+    client:load
+  />
 </Layout>
-
-<style>
-  .event-details {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    font-family: system-ui, sans-serif;
-    background: rgba(
-      255,
-      255,
-      255,
-      0.25
-    ); /* Semi-transparent white background */
-    backdrop-filter: blur(14px); /* This creates the frosted glass blur */
-    -webkit-backdrop-filter: blur(12px); /* Needed for Safari support */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.4); /* Subtle top/bottom edge lighting */
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05); /* Soft shadow for depth */
-    padding: 4%;
-    border-radius: 8px;
-  }
-
-  .pig-link {
-    color: #007acc;
-    text-decoration: none;
-  }
-
-  .pig-link:hover {
-    text-decoration: underline;
-  }
-</style>
