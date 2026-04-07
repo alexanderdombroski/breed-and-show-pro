@@ -8,7 +8,7 @@ export async function getAllPigs() {
   const db = getDb();
 
   // 2. Point to the specific collection in Atlas (case-sensitive!)
-  const pigsCollection = (await db).collection("pigs");
+  const pigsCollection = (await db).collection<Pig>("pigs");
 
   // 3. Find all documents and convert them from Mongo objects to a standard JavaScript array
   const allPigs = await pigsCollection.find({}).toArray();
@@ -19,7 +19,7 @@ export async function getAllPigs() {
 
 export async function getPigById(id: string) {
   const db = await getDb();
-  const pigsCollection = db.collection("pigs");
+  const pigsCollection = db.collection<Pig>("pigs");
 
   const pig = await pigsCollection.findOne({ _id: id } as any);
 
