@@ -2,7 +2,6 @@ import type { Request, Response, NextFunction } from "express";
 import {
   getHerdSummaryCounts,
   getHerdCountByStatus,
-  // @ts-expect-error
 } from "../models/herd.model.mts";
 
 export async function getHerdSummary(

@@ -30,7 +30,9 @@ export async function createTask(
     const payload = req.body;
     const task = {
       _id: randomUUID(),
+      _type: "task" as const,
       ...payload,
+      dueDate: payload.dueDate ? new Date(payload.dueDate) : undefined,
       isCompleted: payload.isCompleted ?? false,
       completedAt: payload.completedAt ?? null,
       createdAt: new Date(),
@@ -71,10 +73,17 @@ export async function updateTask(
   try {
     const id = String(req.params.id);
     const payload = req.body;
-    const result = await updateTaskRecord(id, {
+    const updateData: any = {
       ...payload,
       updatedAt: new Date(),
-    });
+    };
+
+    // Convert dueDate to Date object if present
+    if (payload.dueDate) {
+      updateData.dueDate = new Date(payload.dueDate);
+    }
+
+    const result = await updateTaskRecord(id, updateData);
     if (!result.matchedCount) {
       return res.status(404).json({ message: "Task not found" });
     }

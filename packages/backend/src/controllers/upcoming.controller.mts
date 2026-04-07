@@ -1,5 +1,4 @@
 import type { Request, Response, NextFunction } from "express";
-// @ts-expect-error
 import { getAllUpcomingDates } from "../models/upcoming.model.mts";
 
 export async function getUpcomingDates(

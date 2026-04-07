@@ -74,16 +74,6 @@ export type Session = {
   updatedAt: Date;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type verification = {
-  _id: string;
-  identifier: string;
-  value: string;
-  expiresAt: Date;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
 // -------------------- EVENTS COLLECTION --------------------
 
 // Used for future events. Events can be converted to notes

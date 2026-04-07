@@ -8,9 +8,9 @@ export async function getAllNotes() {
   return (await noteCollection()).find().toArray();
 }
 
- export async function getNoteById(id: string) {
+export async function getNoteById(id: string) {
   return (await noteCollection()).findOne({ _id: id });
-} 
+}
 
 export async function getNoteByPigId(pigId: string) {
   return (await noteCollection()).findOne({ pigId: pigId });

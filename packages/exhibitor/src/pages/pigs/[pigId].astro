@@ -112,7 +112,8 @@ const note = await noteResponse.json();
 
         form.setAttribute("data-has-note", "true");
 
-        const submitBtn = form.querySelector("button[type=\"submit\"]");
+        // eslint-disable-next-line
+        const submitBtn = form.querySelector('button[type="submit"]');
         if (submitBtn) submitBtn.textContent = "Update Note";
       } else {
         console.error(`Failed to ${hasNote ? "update" : "create"} note`);
@@ -132,7 +133,7 @@ const note = await noteResponse.json();
       if (response.ok) {
         alert("Note deleted successfully");
         window.location.reload();
-        if (noteDisplay) noteDisplay.textContent = `No notes for ` + pigName;
+        if (noteDisplay) noteDisplay.textContent = `No notes for ${pigName}`;
       } else {
         console.error("Failed to delete note");
       }

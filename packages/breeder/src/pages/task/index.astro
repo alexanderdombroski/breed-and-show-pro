@@ -14,8 +14,11 @@ const isDatePast = (dateString: string) => {
 
 async function fetchTasks() {
   const BASE_URL = import.meta.env.PUBLIC_SERVER_URL;
-  const response = await fetch(`${BASE_URL}/tasks`, {
+  const response = await fetch(`${BASE_URL}/api/tasks`, {
     method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
   });
   const tasks = await response.json();
   const allTasks = tasks.filter((task: any) => task._type === "task");
