@@ -6,14 +6,16 @@ export const authClient = createAuthClient({
   baseURL: import.meta.env.PUBLIC_SERVER_URL,
 });
 
-const { data } = await authClient.getSession();
+const res = authClient.getSession();
 
-if (data) {
-  // User is logged in, 'data' contains the session and user info
-  console.info("Logged in as:", data.user.email);
-} else {
-  console.info("Not logged in");
-}
+res.then((session) => {
+  if (session.data) {
+    // User is logged in, 'data' contains the session and user info
+    console.info("Logged in as:", session.data.user.email);
+  } else {
+    console.info("Not logged in");
+  }
+});
 
 /** @param redirectPath - ie /dashboard or /settings */
 export async function login(redirectPath: string) {
