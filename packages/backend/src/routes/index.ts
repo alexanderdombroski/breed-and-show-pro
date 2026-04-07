@@ -1,5 +1,5 @@
 import express, { type Router } from "express";
-import { router as usersRouter } from "./users.ts";
+import { router as usersRouter } from "./users.routes.mts";
 import tasksRouter from "./task.routes.mts";
 import pigRouter from "./pig.routes.mts";
 import herdRoutes from "./herd.routes.mts";

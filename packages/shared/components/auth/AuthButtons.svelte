@@ -5,6 +5,8 @@
   import { Popover } from "bits-ui";
   import { onDestroy } from "svelte";
 
+  const breederBaseUrl = "/breed-and-show-pro/breeder";
+
   let loggedIn = $state(false);
 
   const session = authClient.useSession();
@@ -36,6 +38,7 @@
   <Popover.Content>
     <div class="auth-buttons">
       {#if loggedIn}
+        <a href={`${breederBaseUrl}/profile`}>Profile</a>
         <button onclick={logout} class="btn-secondary">Logout</button>
       {:else}
         <LoginPopover />
@@ -64,6 +67,23 @@
     align-items: center;
     gap: 20px;
     background-color: #fff;
-    border: black solid 0.125rem;
+    border-radius: 0.5rem;
+  }
+
+  a {
+    align-content: center;
+    color: black;
+    text-decoration: none;
+    height: 2rem;
+    border-radius: 2rem;
+    padding: 0.25rem;
+    width: 80%;
+    text-align: center;
+  }
+
+  a,
+  button {
+    font-size: 1rem;
+    background-color: lightgray;
   }
 </style>

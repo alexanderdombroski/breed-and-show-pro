@@ -1,47 +1,6 @@
 ---
-import Layout from "../../../../shared/layouts/Layout.astro";
+import Profile from "../../../../shared/pages/profile.astro";
 import "../../styles/breeder-pages.css";
-import { BreederMockData } from "../../BreederMockData.js";
-const title = "Profile";
-const profile = BreederMockData.user;
-
-const baseUrl = import.meta.env.BASE_URL;
 ---
 
-<Layout title={title}>
-  <body>
-    <a class="back-link" href={baseUrl}>Back to Dashboard</a>
-    <div class="profile-card">
-      <h2>{profile.farmName}</h2>
-      <h3>{profile.name}</h3>
-      <p>Email: {profile.email}</p>
-      <button>Edit Profile</button>
-    </div>
-  </body>
-</Layout>
-
-<style>
-  .profile-card {
-    display: flex;
-    flex-direction: column;
-    max-width: 400px;
-    margin-top: 30px;
-    margin: 0 auto;
-    margin-bottom: 30px;
-    text-align: center;
-  }
-
-  .profile-card h2 {
-    margin: 0;
-    font-size: 1.5em;
-  }
-
-  .profile-card h3 {
-    margin: 5px 0 5px 0;
-    color: #555;
-  }
-
-  .profile-card p {
-    margin: 0 0 15px 0;
-  }
-</style>
+<Profile />
