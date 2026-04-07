@@ -77,19 +77,13 @@ const exhibitorNotes: Omit<ExhibitorNote, "_id">[] = _exhibitorNotes.map(
 const _breedingNotes: Omit<BreedingNote, SharedOmitFields>[] = [
   {
     pigId: "1",
-    eventDate: new Date("2024-11-15"),
+    eventDate: new Date("2026-03-15"), // Bred recently
     method: "ai",
     notes: "Daisy artificially inseminated with Titan genetics",
   },
   {
-    pigId: "4",
-    eventDate: new Date("2025-01-05"),
-    method: "natural",
-    notes: "Rosie bred naturally with Crusher",
-  },
-  {
     pigId: "7",
-    eventDate: new Date("2024-12-20"),
+    eventDate: new Date("2026-03-20"), // Bred recently
     method: "ai",
     notes: "Maxine AI breeding session completed",
   },
@@ -104,17 +98,12 @@ const breedingNotes: Omit<BreedingNote, "_id">[] = _breedingNotes.map((n) => ({
 const _heatNotes: Omit<HeatNote, SharedOmitFields>[] = [
   {
     pigId: "4",
-    eventDate: new Date("2025-01-02"),
+    eventDate: new Date("2026-03-25"),
     notes: "Rosie entered heat cycle - observed standing reflex",
   },
   {
-    pigId: "7",
-    eventDate: new Date("2024-12-15"),
-    notes: "Maxine showing clear heat signs",
-  },
-  {
     pigId: "8",
-    eventDate: new Date("2025-01-08"),
+    eventDate: new Date("2026-03-28"),
     notes: "Patches in heat - preparing for breeding",
   },
 ];
@@ -207,30 +196,28 @@ const _taskNotes: Omit<TaskNote, SharedOmitFields>[] = [
     pigId: "0",
     title: "Schedule health check",
     userId: "1",
-    dueDate: new Date("2025-02-15"),
+    dueDate: new Date("2026-04-15"),
     isCompleted: false,
   },
   {
     pigId: "5",
     title: "Monitor weight gain",
     userId: "1",
-    dueDate: new Date("2025-02-01"),
-    isCompleted: true,
-    completedAt: new Date("2025-01-28"),
+    dueDate: new Date("2026-04-10"),
+    isCompleted: false,
   },
   {
     pigId: "4",
     title: "Prepare breeding records",
     userId: "1",
-    dueDate: new Date("2025-01-25"),
-    isCompleted: true,
-    completedAt: new Date("2025-01-20"),
+    dueDate: new Date("2026-04-20"),
+    isCompleted: false,
   },
   {
     pigId: "8",
     title: "Follow up post-vaccination",
     userId: "1",
-    dueDate: new Date("2025-02-05"),
+    dueDate: new Date("2026-04-12"),
     isCompleted: false,
   },
 ];

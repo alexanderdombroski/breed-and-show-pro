@@ -64,8 +64,11 @@
 
     if (response.ok) {
       const data = isEdit ? await response.json() : await response.json();
-      // eslint-disable-next-line no-console
-      console.log(`Task successfully ${isEdit ? "updated" : "created"}:`, data);
+
+      console.info(
+        `Task successfully ${isEdit ? "updated" : "created"}:`,
+        data,
+      );
       // Notify parent component
       onTaskUpdated();
       closeModal();
