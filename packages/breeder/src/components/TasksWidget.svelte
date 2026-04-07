@@ -12,7 +12,7 @@
   };
 
   async function fetchTasks() {
-    const response = await fetch(`${BASE_URL}/tasks`, {
+    const response = await fetch(`${BASE_URL}/api/tasks`, {
       method: "GET",
     });
     const tasks = await response.json();
@@ -31,7 +31,7 @@
     event.stopPropagation();
 
     try {
-      const response = await fetch(`${BASE_URL}/tasks/${taskId}`, {
+      const response = await fetch(`${BASE_URL}/api/tasks/${taskId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

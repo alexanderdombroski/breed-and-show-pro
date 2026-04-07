@@ -301,7 +301,7 @@ const completedTasks = tasks.filter((task: any) => task.isCompleted);
           };
 
           try {
-            const response = await fetch(`${BASE_URL}/tasks/${taskId}`, {
+            const response = await fetch(`${BASE_URL}/api/tasks/${taskId}`, {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
@@ -352,7 +352,7 @@ const completedTasks = tasks.filter((task: any) => task.isCompleted);
             }
 
             try {
-              const response = await fetch(`${BASE_URL}/tasks/${taskId}`, {
+              const response = await fetch(`${BASE_URL}/api/tasks/${taskId}`, {
                 method: "DELETE",
               });
 
@@ -381,7 +381,7 @@ const completedTasks = tasks.filter((task: any) => task.isCompleted);
             const taskCard = target.closest(".task-card");
 
             try {
-              const response = await fetch(`${BASE_URL}/tasks/${taskId}`, {
+              const response = await fetch(`${BASE_URL}/api/tasks/${taskId}`, {
                 method: "PUT",
                 headers: {
                   "Content-Type": "application/json",

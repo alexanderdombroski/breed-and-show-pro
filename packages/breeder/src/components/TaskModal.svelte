@@ -50,8 +50,8 @@
     };
 
     const url = isEdit
-      ? `${baseURL}/tasks/${taskData._id}`
-      : `${baseURL}/tasks`;
+      ? `${baseURL}/api/tasks/${taskData._id}`
+      : `${baseURL}/api/tasks`;
     const method = isEdit ? "PUT" : "POST";
 
     const response = await fetch(url, {
