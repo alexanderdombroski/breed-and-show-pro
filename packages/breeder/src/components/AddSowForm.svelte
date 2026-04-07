@@ -41,7 +41,9 @@
 
       if (!response.ok) {
         const errText = await response.text();
-        throw new Error(`Pig create failed: ${response.status} ${response.statusText} ${errText}`);
+        throw new Error(
+          `Pig create failed: ${response.status} ${response.statusText} ${errText}`,
+        );
       }
 
       const createdPig = await response.json();
@@ -57,7 +59,8 @@
       window.location.reload();
     } catch (error) {
       console.error("Error creating sow:", error);
-      errorMessage = error instanceof Error ? error.message : "Failed to create sow";
+      errorMessage =
+        error instanceof Error ? error.message : "Failed to create sow";
     } finally {
       isSubmitting = false;
     }
@@ -76,13 +79,11 @@
   }
 </script>
 
-<button class="create-btn" onclick={openModal}>
-  + Add New Sow
-</button>
+<button class="create-btn" onclick={openModal}> + Add New Sow </button>
 
 {#if showModal}
-  <div 
-    class="modal-backdrop" 
+  <div
+    class="modal-backdrop"
     role="button"
     tabindex="0"
     onclick={handleBackdropClick}
@@ -93,37 +94,33 @@
         <h2>Add New Sow</h2>
         <button class="close-btn" onclick={closeModal}>&times;</button>
       </div>
-      
+
       <form class="pig-form" onsubmit={handleSubmit}>
         <div class="form-group">
           <label for="name">Name *</label>
-          <input 
-            type="text" 
+          <input
+            type="text"
             id="name"
             name="name"
-            placeholder="Enter sow name" 
-            required 
+            placeholder="Enter sow name"
+            required
           />
         </div>
 
         <div class="form-group">
           <label for="earNotch">Ear Notch *</label>
-          <input 
-            type="text" 
+          <input
+            type="text"
             id="earNotch"
             name="earNotch"
-            placeholder="e.g., 3-2" 
-            required 
+            placeholder="e.g., 3-2"
+            required
           />
         </div>
 
         <div class="form-group">
           <label for="breed">Breed *</label>
-          <select 
-            id="breed"
-            name="breed"
-            required
-          >
+          <select id="breed" name="breed" required>
             <option value="">Select breed</option>
             <option value="Yorkshire">Yorkshire</option>
             <option value="Duroc">Duroc</option>
@@ -137,29 +134,20 @@
 
         <div class="form-group">
           <label for="birthDate">Birth Date *</label>
-          <input 
-            type="date" 
-            id="birthDate"
-            name="birthDate"
-            required
-          />
+          <input type="date" id="birthDate" name="birthDate" required />
         </div>
 
         <div class="form-group">
           <label for="lastHeatDate">Last Heat Date (optional)</label>
-          <input 
-            type="date" 
-            id="lastHeatDate"
-            name="lastHeatDate"
-          />
+          <input type="date" id="lastHeatDate" name="lastHeatDate" />
         </div>
 
         <div class="form-group">
           <label for="notes">Notes</label>
-          <textarea 
+          <textarea
             id="notes"
             name="notes"
-            placeholder="Enter any additional notes (optional)" 
+            placeholder="Enter any additional notes (optional)"
             rows="4"
           ></textarea>
         </div>
@@ -171,7 +159,12 @@
         {/if}
 
         <div class="form-actions">
-          <button type="button" class="cancel-btn" onclick={closeModal} disabled={isSubmitting}>
+          <button
+            type="button"
+            class="cancel-btn"
+            onclick={closeModal}
+            disabled={isSubmitting}
+          >
             Cancel
           </button>
           <button type="submit" class="submit-btn" disabled={isSubmitting}>
@@ -190,7 +183,7 @@
     padding: 12px 24px;
     border: none;
     border-radius: 5px;
-    font-size: 1em;
+    font-size: var(--step--1);
     cursor: pointer;
     font-weight: 500;
     transition: background-color 0.2s;
@@ -256,14 +249,14 @@
 
   .modal-header h2 {
     margin: 0;
-    font-size: 1.5em;
+    font-size: var(--step-1);
     color: #333;
   }
 
   .close-btn {
     background: none;
     border: none;
-    font-size: 2em;
+    font-size: var(--step-3);
     color: #666;
     cursor: pointer;
     padding: 0;
@@ -301,7 +294,7 @@
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 1em;
+    font-size: var(--step--1);
     box-sizing: border-box;
     font-family: inherit;
   }
@@ -320,7 +313,7 @@
   }
 
   .required-message {
-    font-size: 0.9em;
+    font-size: var(--step--1);
     color: #666;
     margin-bottom: 20px;
   }
@@ -336,7 +329,7 @@
     padding: 10px 24px;
     border: none;
     border-radius: 4px;
-    font-size: 1em;
+    font-size: var(--step--1);
     cursor: pointer;
     font-weight: 500;
     transition: background-color 0.2s;

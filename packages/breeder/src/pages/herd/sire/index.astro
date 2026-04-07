@@ -1,17 +1,13 @@
 ---
-import Layout from "../../../../../shared/layouts/Layout.svelte.astro";
+import Layout from "../../../../../shared/layouts/Layout.astro";
 import "../../../styles/breeder-pages.css";
 import PigDetail from "../../../components/PigDetail.svelte";
 
 const title = "Sire Info";
 const baseUrl = import.meta.env.BASE_URL;
-
-const id = Astro.params.id;
-if (!id) throw new Error("Sire id is required");
-export const prerender = false;
 ---
 
 <Layout title={title}>
   <a class="back-link" href={`${baseUrl}/herd/`}>Back to Herd</a>
-  <PigDetail client:load {id} expectedSex="boar" />
+  <PigDetail client:only="svelte" expectedSex="boar" />
 </Layout>

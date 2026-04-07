@@ -1,5 +1,5 @@
 ---
-import Layout from "../../../../shared/layouts/Layout.svelte.astro";
+import Layout from "../../../../shared/layouts/Layout.astro";
 import AddSireForm from "../../components/AddSireForm.svelte";
 import "../../styles/breeder-pages.css";
 
@@ -38,7 +38,10 @@ try {
     ) : (
       <div class="animals-list">
         {activeSires.map((animal: any) => (
-          <a href={`${baseUrl}/herd/sire/${animal._id}`} class="animal-card">
+          <a
+            href={`${baseUrl}/herd/sire?id=${encodeURIComponent(animal._id)}`}
+            class="animal-card"
+          >
             <div class="animal-info">
               <h2>
                 {animal.name}: {animal.earNotch}

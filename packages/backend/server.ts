@@ -7,11 +7,13 @@ import { isDev } from "./src/utils/index.ts";
 import { getMongoClient } from "./src/db/index.mts";
 import { limiter } from "./src/middleware/rateLimit.ts";
 import pigRoutes from "./src/routes/pig.routes.mts";
+import noteRoutes from "./src/routes/exhibitor.notes.routes.mts";
 import {
   error404Handler,
   globalErrorHandler,
 } from "./src/middleware/error.middleware.mts";
 import helmet from "helmet";
+import eventRoutes from "./src/routes/event-routes.mts";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -31,6 +33,8 @@ app.use(express.json());
 
 app.use("/api", router);
 app.use("/pigs", pigRoutes);
+app.use("/notes", noteRoutes);
+app.use("/events", eventRoutes);
 
 // --- ERROR HANDLING ---
 app.use(error404Handler);

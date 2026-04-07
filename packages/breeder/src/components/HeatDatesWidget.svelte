@@ -14,8 +14,9 @@
   $: lastHeat = heatDates.length > 0 ? heatDates[heatDates.length - 1] : null;
 
   $: nextHeat = lastHeat
-    ? new Date(new Date(lastHeat).setDate(new Date(lastHeat).getDate() + 21))
-        .toLocaleDateString()
+    ? new Date(
+        new Date(lastHeat).setDate(new Date(lastHeat).getDate() + 21),
+      ).toLocaleDateString()
     : "N/A";
 </script>
 
@@ -50,7 +51,7 @@
   .heat-list h4 {
     margin: 0 0 8px 0;
     color: #333;
-    font-size: 1em;
+    font-size: var(--step-0);
   }
 
   .heat-list ul {
@@ -100,6 +101,6 @@
 
   .next-heat p {
     margin: 0;
-    font-size: 0.9em;
+    font-size: var(--step--1);
   }
 </style>

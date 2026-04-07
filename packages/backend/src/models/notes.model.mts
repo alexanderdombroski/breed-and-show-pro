@@ -12,6 +12,10 @@ export async function getNoteById(id: string) {
   return (await noteCollection()).findOne({ _id: id });
 }
 
+export async function getNoteByPigId(pigId: string) {
+  return (await noteCollection()).findOne({ pigId: pigId });
+}
+
 export async function createNote(note: GenericNote) {
   return (await noteCollection()).insertOne(note);
 }
@@ -21,5 +25,5 @@ export async function updateNote(id: string, update: Partial<GenericNote>) {
 }
 
 export async function deleteNote(id: string) {
-  return (await noteCollection()).deleteOne({ _id: id });
+  return (await noteCollection()).deleteOne({ pigId: id });
 }

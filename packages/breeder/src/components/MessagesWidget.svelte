@@ -1,21 +1,21 @@
 <script>
-    import "../styles/breeder-pages.css";
-    let messages = [
-        { 
-            name: "John Doe", 
-            text: "Hey breeder, I'm interested in buying a pig for grant county fair." 
-        },
-        { 
-            name: "Sarah Smith", 
-            text: "Hello, I wanted to ask about the availability of pigs for the upcoming fair." 
-        }
-    ];
+  import "../styles/breeder-pages.css";
+  let messages = [
+    {
+      name: "John Doe",
+      text: "Hey breeder, I'm interested in buying a pig for grant county fair.",
+    },
+    {
+      name: "Sarah Smith",
+      text: "Hello, I wanted to ask about the availability of pigs for the upcoming fair.",
+    },
+  ];
 </script>
 
 <section class="widget-container">
   <div class="title">
     <a href="/messages/" class="widget-link">
-        <h3>Messages</h3>
+      <h3>Messages</h3>
     </a>
   </div>
 
@@ -58,14 +58,14 @@
     font-weight: 600;
     color: #f2af29ff;
     margin-bottom: 6px;
-    font-size: 1rem;
+    font-size: var(--step-0);
   }
 
   .message p {
     margin: 0;
     color: #333;
     line-height: 1.5;
-    font-size: 0.95rem;
+    font-size: var(--step--1);
   }
 
   .no-messages {
@@ -74,5 +74,4 @@
     padding: 20px;
     font-style: italic;
   }
-
 </style>
