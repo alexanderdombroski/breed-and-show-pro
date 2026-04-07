@@ -13,10 +13,18 @@
   let siresCount = 0;
   let archivedCount = 0;
 
-  $: openCount = pigs.filter((pig: any) => pig.status === "open" && pig.sex === "sow").length;
-  $: bredCount = pigs.filter((pig: any) => pig.status === "bred" && pig.sex === "sow").length;
-  $: farrowedCount = pigs.filter((pig: any) => pig.status === "farrowed" && pig.sex === "sow").length;
-  $: siresCount = pigs.filter((pig: any) => pig.status === "active" && pig.sex === "boar").length;
+  $: openCount = pigs.filter(
+    (pig: any) => pig.status === "open" && pig.sex === "sow",
+  ).length;
+  $: bredCount = pigs.filter(
+    (pig: any) => pig.status === "bred" && pig.sex === "sow",
+  ).length;
+  $: farrowedCount = pigs.filter(
+    (pig: any) => pig.status === "farrowed" && pig.sex === "sow",
+  ).length;
+  $: siresCount = pigs.filter(
+    (pig: any) => pig.status === "active" && pig.sex === "boar",
+  ).length;
   $: archivedCount = pigs.filter((pig: any) => pig.isArchived === true).length;
 
   onMount(async () => {
@@ -27,7 +35,11 @@
       if (res.ok) {
         pigs = await res.json();
       } else {
-        console.error("Failed to fetch pigs for HerdWidget:", res.status, res.statusText);
+        console.error(
+          "Failed to fetch pigs for HerdWidget:",
+          res.status,
+          res.statusText,
+        );
       }
     } catch (error) {
       console.error("HerdWidget API fetch error:", error);
@@ -38,34 +50,58 @@
 <section class="widget-container">
   <div class="title">
     <a href={`${baseUrl}/herd/`} class="widget-link">
-        <h3>Herd</h3>
+      <h3>Herd</h3>
     </a>
   </div>
 
   <div class="herd-container">
     <a href={`${baseUrl}/herd/open`} class="herd-button">
       <span>({openCount}) Open</span>
-      <img src={`${baseUrl}/right-arrow.png`} alt="right-arrow" class="right-arrow" />
+      <img
+        src={`${baseUrl}/right-arrow.png`}
+        alt="right-arrow"
+        class="right-arrow"
+      />
     </a>
     <a href={`${baseUrl}/herd/bred`} class="herd-button">
       <span>({bredCount}) Bred</span>
-      <img src={`${baseUrl}/right-arrow.png`} alt="right-arrow" class="right-arrow" />
+      <img
+        src={`${baseUrl}/right-arrow.png`}
+        alt="right-arrow"
+        class="right-arrow"
+      />
     </a>
     <a href={`${baseUrl}/herd/farrowed`} class="herd-button">
       <span>({farrowedCount}) Farrow</span>
-      <img src={`${baseUrl}/right-arrow.png`} alt="right-arrow" class="right-arrow" />
+      <img
+        src={`${baseUrl}/right-arrow.png`}
+        alt="right-arrow"
+        class="right-arrow"
+      />
     </a>
     <a href={`${baseUrl}/herd/sires`} class="herd-button">
       <span>({siresCount}) Sires</span>
-      <img src={`${baseUrl}/right-arrow.png`} alt="right-arrow" class="right-arrow" />
+      <img
+        src={`${baseUrl}/right-arrow.png`}
+        alt="right-arrow"
+        class="right-arrow"
+      />
     </a>
     <a href={`${baseUrl}/herd/pastLitters`} class="herd-button">
       <span>Past Litters</span>
-      <img src={`${baseUrl}/right-arrow.png`} alt="right-arrow" class="right-arrow" />
+      <img
+        src={`${baseUrl}/right-arrow.png`}
+        alt="right-arrow"
+        class="right-arrow"
+      />
     </a>
     <a href={`${baseUrl}/herd/archived`} class="herd-button">
       <span>({archivedCount}) Archived</span>
-      <img src={`${baseUrl}/right-arrow.png`} alt="right-arrow" class="right-arrow" />
+      <img
+        src={`${baseUrl}/right-arrow.png`}
+        alt="right-arrow"
+        class="right-arrow"
+      />
     </a>
   </div>
 </section>
@@ -83,12 +119,12 @@
     justify-content: space-between;
     align-items: center;
     text-decoration: none;
-    font-size: 16px;
+    font-size: var(--step-0);
     color: #333;
     background-color: #fafafa;
     border: 1px solid #e0e0e0;
     border-left: 3px solid #f2af29ff;
-    padding: 12px 15px;
+    padding: 16px 20px;
     border-radius: 4px;
     transition: all 0.2s;
   }

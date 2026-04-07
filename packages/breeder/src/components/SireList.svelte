@@ -89,7 +89,7 @@
   .animals-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
     margin: 20px auto;
     width: 90%;
   }
@@ -102,7 +102,7 @@
     background-color: #fafafa;
     border: 1px solid #e0e0e0;
     border-left: 3px solid #f2af29ff;
-    padding: 12px 15px;
+    padding: 10px 12px;
     border-radius: 4px;
     transition: all 0.2s;
   }
@@ -112,7 +112,7 @@
   }
   .animal-info h2 {
     margin: 0;
-    font-size: 1.1em;
+    font-size: var(--step-1);
     font-weight: 600;
   }
 </style>
