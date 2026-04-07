@@ -8,6 +8,7 @@ export const authClient = createAuthClient({
   basePath: "/api/auth",
 });
 
+// @ts-ignore - TS2304
 export const userData: { user?: User } = $state({});
 
 const res = authClient.getSession();
