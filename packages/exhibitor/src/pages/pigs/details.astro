@@ -1,0 +1,10 @@
+---
+import Layout from "../../../../shared/layouts/Layout.astro";
+import PigDetailsClient from "../../../components/PigDetailsClient.svelte";
+
+const SERVER_URL = import.meta.env.PUBLIC_SERVER_URL;
+---
+
+<Layout>
+  <PigDetailsClient serverUrl={SERVER_URL as string} client:load />
+</Layout>

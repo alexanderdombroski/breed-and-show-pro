@@ -7,7 +7,7 @@ import svelte from "@astrojs/svelte";
 // https://astro.build/config
 export default defineConfig({
   integrations: [svelte()],
-  output: "server",
+  output: "static",
   outDir: path.resolve(import.meta.dirname, "..", "..", "dist", "exhibitor"),
   base: "/breed-and-show-pro/exhibitor",
   devToolbar: {
