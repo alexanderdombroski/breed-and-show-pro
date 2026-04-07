@@ -8,6 +8,7 @@
   let events = $state<any[]>([]);
   let loading = $state(true);
   let errorMsg = $state("");
+  const baseUrl = new URL(window.location.href).origin;
 
   onMount(async () => {
     try {
@@ -33,7 +34,7 @@
     {:else if events.length > 0}
       {#each events as event (event._id)}
         <li class="event-card" id={`${event._id}`}>
-          <a href={`events/details?id=${event._id}`} class="card-link">
+          <a href={`${baseUrl}/details?id=${event._id}`} class="card-link">
             <div class="card-content">
               <h2 class="event-name">{event.label}</h2>
               <div class="divider"></div>
