@@ -6,8 +6,7 @@ export const authClient = createAuthClient({
   baseURL: import.meta.env.PUBLIC_SERVER_URL,
 });
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { data, error } = await authClient.getSession();
+const { data } = await authClient.getSession();
 
 if (data) {
   // User is logged in, 'data' contains the session and user info
