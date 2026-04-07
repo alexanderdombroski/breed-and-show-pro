@@ -1,9 +1,10 @@
 import { createAuthClient } from "better-auth/svelte";
 
-const BASE_URL = import.meta.env.BASE_URL;
+const sitePath = import.meta.env.BASE_URL;
 
 export const authClient = createAuthClient({
   baseURL: import.meta.env.PUBLIC_SERVER_URL,
+  basePath: "/api/auth",
 });
 
 const res = authClient.getSession();
@@ -21,7 +22,7 @@ res.then((session) => {
 export async function login(redirectPath: string) {
   await authClient.signIn.social({
     provider: "google",
-    callbackURL: `${BASE_URL}${redirectPath}`,
+    callbackURL: `${window.location.origin}${sitePath}${redirectPath}`,
   });
 }
 

@@ -8,11 +8,23 @@ const db = await getDb();
 
 const trustedOrigins = [
   "https://alexanderdombroski.github.io",
-  "https://alexanderdombroski.com",
+  "https://alexdombroski.com",
 ];
 
+let logger = {};
+
 if (isDev) {
-  trustedOrigins.push("http://localhost:4321", "http://localhost:4322");
+  trustedOrigins.push(
+    "http://localhost:4321",
+    "http://localhost:4322",
+    "http://127.0.0.1:4321",
+    "http://127.0.0.1:4322",
+  );
+  logger = {
+    disabled: false,
+    disableColors: false,
+    level: "warn",
+  };
 }
 
 export const auth = betterAuth({
@@ -47,4 +59,5 @@ export const auth = betterAuth({
     skipStateCookieCheck: isDev,
   },
   trustedOrigins,
+  logger,
 });
