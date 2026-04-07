@@ -2,11 +2,16 @@
 import Layout from "../../../../shared/layouts/Layout.astro";
 import EventList from "../../../components/EventList.svelte";
 const SERVER_URL = import.meta.env.PUBLIC_SERVER_URL;
+const BASE_URL = import.meta.env.BASE_URL;
 ---
 
 <Layout>
   <div class="event-container">
-    <EventList serverUrl={SERVER_URL as string} client:load />
+    <EventList
+      serverUrl={SERVER_URL as string}
+      baseUrl={BASE_URL as string}
+      client:load
+    />
   </div>
 </Layout>
 

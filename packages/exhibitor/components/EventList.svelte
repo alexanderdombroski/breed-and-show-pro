@@ -2,13 +2,13 @@
   import { onMount } from "svelte";
   interface Props {
     serverUrl: string;
+    baseUrl: string;
   }
 
-  let { serverUrl }: Props = $props();
+  let { serverUrl, baseUrl }: Props = $props();
   let events = $state<any[]>([]);
   let loading = $state(true);
   let errorMsg = $state("");
-  const baseUrl = new URL(window.location.href).origin;
 
   onMount(async () => {
     try {
