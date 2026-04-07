@@ -1,21 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  function getApiBase() {
-    const raw =
-      import.meta.env.PUBLIC_API_URL ??
-      import.meta.env.PUBLIC_SERVER_URL ??
-      "http://localhost:3000";
-    const clean = raw.replace(/\/+$/, "");
-    return clean.replace(/\/api$/i, "");
-  }
-
-  function getBaseUrl() {
-    return import.meta.env.BASE_URL || "/breed-and-show-pro/breeder";
-  }
-
-  const API_BASE = getApiBase();
-  const BASE_URL = getBaseUrl();
+  const API_BASE = import.meta.env.PUBLIC_SERVER_URL;
+  const BASE_URL = import.meta.env.BASE_URL;
 
   type Pig = {
     _id: string;

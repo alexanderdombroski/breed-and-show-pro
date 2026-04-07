@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  const API_BASE = import.meta.env.PUBLIC_API_URL ?? "http://localhost:3000";
+  const API_BASE = import.meta.env.PUBLIC_SERVER_URL;
 
   interface UpcomingDate {
     date: string;

@@ -1,13 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  function getApiBase() {
-    const raw = import.meta.env.PUBLIC_API_URL ?? import.meta.env.PUBLIC_SERVER_URL ?? "http://localhost:3000";
-    const clean = raw.replace(/\/+$/, "");
-    return clean.replace(/\/api$/i, "");
-  }
-
-  const API_BASE = getApiBase();
+  const API_BASE = import.meta.env.PUBLIC_SERVER_URL;
 
   type Pig = {
     _id: string;
@@ -41,10 +35,14 @@
         fetch(`${API_BASE}/api/litters`),
       ]);
 
-      if (pigsResp.status === 429) throw new Error("Too many pig requests; wait a minute and retry.");
-      if (littersResp.status === 429) throw new Error("Too many litter requests; wait a minute and retry.");
-      if (!pigsResp.ok) throw new Error(`Failed to load pigs: ${pigsResp.statusText}`);
-      if (!littersResp.ok) throw new Error(`Failed to load litters: ${littersResp.statusText}`);
+      if (pigsResp.status === 429)
+        throw new Error("Too many pig requests; wait a minute and retry.");
+      if (littersResp.status === 429)
+        throw new Error("Too many litter requests; wait a minute and retry.");
+      if (!pigsResp.ok)
+        throw new Error(`Failed to load pigs: ${pigsResp.statusText}`);
+      if (!littersResp.ok)
+        throw new Error(`Failed to load litters: ${littersResp.statusText}`);
 
       pigs = await pigsResp.json();
       litters = await littersResp.json();
@@ -65,7 +63,8 @@
   }
 
   function countSires() {
-    return pigs.filter((pig) => pig.status === "active" && pig.sex === "boar").length;
+    return pigs.filter((pig) => pig.status === "active" && pig.sex === "boar")
+      .length;
   }
 
   function countArchived() {
@@ -93,7 +92,9 @@
 <section class="herd-dashboard">
   <div class="dashboard-header">
     <h3>Herd Summary</h3>
-    <button class="refresh-btn" on:click={refresh} disabled={loading}>Refresh</button>
+    <button class="refresh-btn" on:click={refresh} disabled={loading}
+      >Refresh</button
+    >
   </div>
 
   {#if loading}
@@ -113,10 +114,37 @@
 </section>
 
 <style>
-  .herd-dashboard { width: 90%; max-width: 960px; margin: 0 auto; }
-  .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-  .refresh-btn { padding: 0.4rem 0.8rem; border: none; border-radius: 4px; background: #f2af29ff; cursor: pointer; }
-  .herd-grid { display: grid; grid-template-columns: repeat(2, minmax(120px, 1fr)); gap: 0.8rem; }
-  .tile { padding: 0.9rem; border: 1px solid #e0e0e0; border-left: 4px solid #f2af29ff; border-radius: 4px; font-weight: 700; }
-  .error { color: #d32f2f; }
+  .herd-dashboard {
+    width: 90%;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  .refresh-btn {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 4px;
+    background: #f2af29ff;
+    cursor: pointer;
+  }
+  .herd-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    gap: 0.8rem;
+  }
+  .tile {
+    padding: 0.9rem;
+    border: 1px solid #e0e0e0;
+    border-left: 4px solid #f2af29ff;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+  .error {
+    color: #d32f2f;
+  }
 </style>

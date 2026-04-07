@@ -3,7 +3,7 @@
   import "../styles/breeder-pages.css";
 
   const baseUrl = import.meta.env.BASE_URL;
-  const API_BASE = "http://localhost:3000";
+  const API_BASE = import.meta.env.PUBLIC_SERVER_URL;
 
   let pigs: any[] = [];
 

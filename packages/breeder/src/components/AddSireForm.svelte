@@ -13,7 +13,7 @@
     errorMessage = "";
   }
 
-  const API_BASE = import.meta.env.PUBLIC_API_URL ?? "http://localhost:3000";
+  const API_BASE = import.meta.env.PUBLIC_SERVER_URL;
 
   async function handleSubmit(event) {
     event.preventDefault();
