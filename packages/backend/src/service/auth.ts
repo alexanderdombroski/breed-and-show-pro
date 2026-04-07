@@ -56,7 +56,7 @@ export const auth = betterAuth({
     },
   },
   account: {
-    skipStateCookieCheck: isDev,
+    skipStateCookieCheck: true,
   },
   trustedOrigins,
   logger,
