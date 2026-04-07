@@ -10,10 +10,10 @@
 {#if profile?.name}
   <div class="profile-card">
     <div
-      style="border: solid black 1rem; border-radius: 50%; margin-bottom: 1rem;"
+      style="border: solid black 1rem; border-radius: 50%; margin-bottom: 1rem; object-fit: cover; overflow: hidden;"
     >
       {#if profile.image}
-        <img src={profile.image} alt="Profile" />
+        <img src={profile.image} alt="Profile" style="width: 100%;" />
       {:else}
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
           ><g data-name="Layer 2"
