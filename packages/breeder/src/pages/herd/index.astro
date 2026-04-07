@@ -9,7 +9,7 @@ const baseUrl = import.meta.env.BASE_URL;
 const breederBaseUrl = "/breed-and-show-pro/breeder";
 
 // Fetch from API instead of using mock data
-const API_BASE = "http://localhost:3000";
+const API_BASE = import.meta.env.PUBLIC_SERVER_URL;
 let pigs: any[] = [];
 try {
   const res = await fetch(`${API_BASE}/api/pigs`, {
