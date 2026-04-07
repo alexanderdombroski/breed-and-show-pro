@@ -1,12 +1,16 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  export let id: string;
+  export const id = new URLSearchParams(window.location.search).get("id");
+
   export let expectedSex: "sow" | "boar" | undefined;
   export let skipSexValidation = false;
 
   function getApiBase() {
-    const raw = import.meta.env.PUBLIC_API_URL ?? import.meta.env.PUBLIC_SERVER_URL ?? "http://localhost:3000";
+    const raw =
+      import.meta.env.PUBLIC_API_URL ??
+      import.meta.env.PUBLIC_SERVER_URL ??
+      "http://localhost:3000";
     const clean = raw.replace(/\/+$/, "");
     return clean.replace(/\/api$/i, "");
   }
@@ -30,7 +34,7 @@
 
   function formatHeatDates(heatDates: string[] | undefined): string {
     if (!heatDates || heatDates.length === 0) return "None recorded";
-    return heatDates.map(d => formatDate(d)).join(", ");
+    return heatDates.map((d) => formatDate(d)).join(", ");
   }
 
   async function fetchSireName(sireId: number | undefined) {
@@ -124,7 +128,10 @@
           <h3>Heat Information</h3>
           <p><strong>Next Heat Date:</strong> {formatDate(pig.nextHeatDate)}</p>
           {#if pig.heatDates}
-            <p><strong>Recent Heat Dates:</strong> {formatHeatDates(pig.heatDates)}</p>
+            <p>
+              <strong>Recent Heat Dates:</strong>
+              {formatHeatDates(pig.heatDates)}
+            </p>
           {/if}
         </div>
       {/if}
@@ -133,7 +140,10 @@
         <div class="info-section">
           <h3>Breeding Information</h3>
           <p><strong>Breeding Date:</strong> {formatDate(pig.breedingDate)}</p>
-          <p><strong>Expected Farrow Date:</strong> {formatDate(pig.expectedFarrowDate)}</p>
+          <p>
+            <strong>Expected Farrow Date:</strong>
+            {formatDate(pig.expectedFarrowDate)}
+          </p>
           {#if pig.sireId}
             <p><strong>Sire:</strong> {sireName}</p>
           {/if}
@@ -143,7 +153,10 @@
       {#if pig.status === "farrowed" && pig.sex === "sow"}
         <div class="info-section">
           <h3>Farrowing Information</h3>
-          <p><strong>Last Farrow Date:</strong> {formatDate(pig.lastFarrowDate)}</p>
+          <p>
+            <strong>Last Farrow Date:</strong>
+            {formatDate(pig.lastFarrowDate)}
+          </p>
           {#if pig.litterNumber}
             <p><strong>Last Litter Number:</strong> {pig.litterNumber}</p>
           {/if}
@@ -151,7 +164,10 @@
             <p><strong>Last Sire:</strong> {sireName}</p>
           {/if}
           {#if pig.nextHeatDate}
-            <p><strong>Next Heat Date:</strong> {formatDate(pig.nextHeatDate)}</p>
+            <p>
+              <strong>Next Heat Date:</strong>
+              {formatDate(pig.nextHeatDate)}
+            </p>
           {/if}
         </div>
       {/if}
@@ -171,12 +187,41 @@
 {/if}
 
 <style>
-  .message { color: #666; }
-  .animal-detail { max-width: 800px; margin: 20px auto; width: 90%; }
-  .animal-info h1 { margin: 0 0 20px; }
-  .info-section { margin-bottom: 15px; padding: 15px 20px; background: white; border: 1px solid #e0e0e0; border-left: 4px solid #f2af29ff; border-radius: 8px; }
-  .info-section h3 { margin: 0 0 10px; color: #f2af29ff; }
-  .actions { margin-top: 20px; }
-  .delete-btn { background: #d32f2f; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; }
-  .delete-btn:hover { background: #b71c1c; }
+  .message {
+    color: #666;
+  }
+  .animal-detail {
+    max-width: 800px;
+    margin: 20px auto;
+    width: 90%;
+  }
+  .animal-info h1 {
+    margin: 0 0 20px;
+  }
+  .info-section {
+    margin-bottom: 15px;
+    padding: 15px 20px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-left: 4px solid #f2af29ff;
+    border-radius: 8px;
+  }
+  .info-section h3 {
+    margin: 0 0 10px;
+    color: #f2af29ff;
+  }
+  .actions {
+    margin-top: 20px;
+  }
+  .delete-btn {
+    background: #d32f2f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .delete-btn:hover {
+    background: #b71c1c;
+  }
 </style>

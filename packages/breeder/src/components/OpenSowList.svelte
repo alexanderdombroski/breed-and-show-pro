@@ -64,7 +64,10 @@
 {:else}
   <div class="animals-list">
     {#each openSows as sow}
-      <a href={`${BASE_URL}/herd/sow/${sow._id}`} class="animal-card">
+      <a
+        href={`${BASE_URL}/herd/sow?id=${encodeURIComponent(sow._id)}`}
+        class="animal-card"
+      >
         <div class="animal-info">
           <h2>{sow.name}: {sow.earNotch}</h2>
         </div>

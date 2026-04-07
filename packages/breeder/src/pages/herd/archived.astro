@@ -26,8 +26,8 @@ try {
 function getDetailUrl(animal: any): string {
   const detailPath =
     animal.sex === "boar"
-      ? `/herd/sire/${animal._id}`
-      : `/herd/sow/${animal._id}`;
+      ? `/herd/sire?id=${encodeURIComponent(animal._id)}`
+      : `/herd/sow?id=${encodeURIComponent(animal._id)}`;
   return `${baseUrl}${detailPath}`;
 }
 ---

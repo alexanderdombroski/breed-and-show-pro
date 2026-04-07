@@ -62,7 +62,10 @@
 {:else}
   <div class="animals-list">
     {#each activeSires as sire}
-      <a href={`${BASE_URL}/herd/sire/${sire._id}`} class="animal-card">
+      <a
+        href={`${BASE_URL}/herd/sire?id=${encodeURIComponent(sire._id)}`}
+        class="animal-card"
+      >
         <div class="animal-info">
           <h2>{sire.name}: {sire.earNotch}</h2>
         </div>

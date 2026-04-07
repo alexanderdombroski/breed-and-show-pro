@@ -5,13 +5,9 @@ import PigDetail from "../../../components/PigDetail.svelte";
 
 const title = "Sow Info";
 const baseUrl = import.meta.env.BASE_URL;
-
-const id = Astro.params.id;
-if (!id) throw new Error("Sow id is required");
-export const prerender = false;
 ---
 
 <Layout title={title}>
   <a class="back-link" href={`${baseUrl}/herd/`}>Back to Herd</a>
-  <PigDetail client:load {id} expectedSex="sow" />
+  <PigDetail client:only="svelte" expectedSex="sow" />
 </Layout>

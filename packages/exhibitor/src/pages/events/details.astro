@@ -14,7 +14,10 @@ const pig = await pigResponse.json();
     <h1>{event.label}</h1>
     <p><strong>Event ID:</strong> {event._id}</p>
     <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
-    <p><strong>Pig:</strong> <a href={`${BASE_URL}/pigs/${pig._id}`} class="pig-link">{pig.name}</a></p>
+    <p>
+      <strong>Pig:</strong>
+      <a href={`${BASE_URL}/pigs/${pig._id}`} class="pig-link">{pig.name}</a>
+    </p>
   </div>
 </Layout>
 
@@ -46,3 +49,4 @@ const pig = await pigResponse.json();
   .pig-link:hover {
     text-decoration: underline;
   }
+</style>
