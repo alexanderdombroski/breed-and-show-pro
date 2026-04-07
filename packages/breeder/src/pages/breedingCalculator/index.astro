@@ -5,6 +5,13 @@ const title = "Breeding Calculator";
 ---
 
 <Layout title={title}>
-  <h1 style="margin-left: 75px;">{title}</h1>
+  <h1 class="page-title">{title}</h1>
   <Form client:load />
 </Layout>
+
+<style>
+  .page-title {
+    margin-left: 75px;
+    font-size: var(--step-3);
+  }
+</style>
