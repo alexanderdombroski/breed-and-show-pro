@@ -15,12 +15,22 @@ const baseUrl = import.meta.env.BASE_URL;
       <h2>{profile.farmName}</h2>
       <h3>{profile.name}</h3>
       <p>Email: {profile.email}</p>
-      <button>Edit Profile</button>
+      <button
+        onclick="window.location.href='/breed-and-show-pro/breeder/profile/edit-profile/'"
+        >Edit Profile</button
+      >
     </div>
   </body>
 </Layout>
 
 <style>
+  body {
+    background-image: url(/breed-and-show-pro/breeder/grass-background-blur.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    margin: 0;
+  }
   .profile-card {
     display: flex;
     flex-direction: column;
