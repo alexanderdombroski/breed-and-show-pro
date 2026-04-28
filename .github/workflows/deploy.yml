@@ -36,6 +36,10 @@ jobs:
         uses: actions/checkout@v6
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
+      - name: Warm Up Server
+        run:  curl -s --max-time 1 https://breed-and-show-pro.onrender.com/api/health || true
+      
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
